@@ -1,0 +1,70 @@
+{
+ "fps": 30,
+ "duration": 62.203,
+ "frames": 1866,
+ "beats": {
+  "hook": 0.25,
+  "million": 0.824,
+  "promesse": 4.577,
+  "spoiler": 4.577,
+  "facture": 8.143,
+  "total": 10.686,
+  "pib": 12.645,
+  "billets": 15.191,
+  "twist": 18.228,
+  "bce": 18.665,
+  "inflation": 24.322,
+  "lundi": 24.322,
+  "mardi": 26.43,
+  "stock": 30.459,
+  "prix": 33.433,
+  "def": 34.877,
+  "histoire": 38.716,
+  "allemagne": 38.716,
+  "dollar": 42.586,
+  "zimbabwe": 45.343,
+  "billet": 48.947,
+  "chute": 52.36,
+  "morale": 52.36,
+  "teaser": 54.54,
+  "next": 58.878
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.25,
+   "t1": 4.577
+  },
+  {
+   "id": "promesse",
+   "t0": 4.577,
+   "t1": 8.143
+  },
+  {
+   "id": "facture",
+   "t0": 8.143,
+   "t1": 18.228
+  },
+  {
+   "id": "twist",
+   "t0": 18.228,
+   "t1": 24.322
+  },
+  {
+   "id": "inflation",
+   "t0": 24.322,
+   "t1": 38.716
+  },
+  {
+   "id": "histoire",
+   "t0": 38.716,
+   "t1": 52.36
+  },
+  {
+   "id": "chute",
+   "t0": 52.36,
+   "t1": 62.203
+  }
+ ],
+ "title": "Et si l'État imprimait 1 million d'euros pour chaque Français ?"
+}

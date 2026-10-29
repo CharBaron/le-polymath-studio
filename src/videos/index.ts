@@ -1,0 +1,17 @@
+// Registre : dossier videos/<id> → scène Remotion.
+import {Proto} from './Proto';
+import {ImprimerArgent} from './ImprimerArgent';
+import {QuiPrete} from './QuiPrete';
+import {PrixBaguette} from './PrixBaguette';
+import {CoutSmic} from './CoutSmic';
+import {Logement} from './Logement';
+import {Achat} from './Achat';
+import {LivretA} from './LivretA';
+import {Interets} from './Interets';
+import {Bourse} from './Bourse';
+import {Aversion} from './Aversion';
+import {Gresham} from './Gresham';
+import {Asch} from './Asch';
+export const VIDEOS = {'00-proto': Proto, '01-imprimer-argent': ImprimerArgent, '02-qui-prete-a-la-france': QuiPrete, '03-prix-baguette': PrixBaguette, '04-vrai-cout-smic': CoutSmic, '06-logement': Logement, '07-acheter-ou-louer': Achat, '08-livret-a': LivretA, '09-interets-composes': Interets, '10-la-bourse': Bourse, '11-aversion-perte': Aversion, '12-loi-de-gresham': Gresham, '13-experience-asch': Asch} as const;
+// DA « Gravure » : la scène dessine elle-même fond, sous-titres et finition (pas de papier, de spirale ni d'habillage Carnet)
+export const BARE = new Set<string>(['11-aversion-perte', '12-loi-de-gresham', '13-experience-asch']);

@@ -1,0 +1,29 @@
+# Dépôt public de rendu : on n'envoie que ce qu'il faut pour rendre une vidéo.
+node_modules
+dist
+.DS_Store
+.env
+.env.*
+out
+
+# jamais : références d'autres créateurs, voix brutes, notes perso, outils lourds
+ref/
+kit_style_gravure/
+voices/
+serie/
+concepts/
+tests/
+.agents/
+CLAUDE.md
+PROMPT-reproduire-le-studio.md
+tools/*
+!tools/pipeline/
+tools/pipeline/__pycache__/
+
+# vidéos : seulement les sources (script, cue sheet, préparation des images), pas les rendus ni les images brutes
+videos/**/*.mp4
+videos/**/*.wav
+videos/**/img_src/
+videos/**/build/
+videos/**/v1/
+videos/**/v2/

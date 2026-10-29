@@ -1,0 +1,98 @@
+{
+ "fps": 30,
+ "duration": 60.861,
+ "frames": 1826,
+ "beats": {
+  "hook": 0.24,
+  "pas": 2.71,
+  "frais": 3.68,
+  "impots": 8.23,
+  "dmto": 11.04,
+  "point": 15.16,
+  "moyenne": 18.64,
+  "paris": 21.09,
+  "mulhouse": 23.32,
+  "opportunite": 25.22,
+  "cache": 25.22,
+  "ailleurs": 26.91,
+  "nom": 30.44,
+  "levier": 33.45,
+  "arme": 33.45,
+  "banque": 35.09,
+  "gain": 37.233,
+  "perte": 40.796,
+  "bonus": 43.389,
+  "zero": 49.97,
+  "chute": 51.65,
+  "question": 51.65,
+  "next": 54.67
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 3.68,
+   "scene": null,
+   "beats": [
+    "pas"
+   ]
+  },
+  {
+   "id": "frais",
+   "t0": 3.68,
+   "t1": 15.16,
+   "scene": null,
+   "beats": [
+    "impots",
+    "dmto"
+   ]
+  },
+  {
+   "id": "point",
+   "t0": 15.16,
+   "t1": 25.22,
+   "scene": null,
+   "beats": [
+    "moyenne",
+    "paris",
+    "mulhouse"
+   ]
+  },
+  {
+   "id": "opportunite",
+   "t0": 25.22,
+   "t1": 33.45,
+   "scene": null,
+   "beats": [
+    "cache",
+    "ailleurs",
+    "nom"
+   ]
+  },
+  {
+   "id": "levier",
+   "t0": 33.45,
+   "t1": 51.65,
+   "scene": null,
+   "beats": [
+    "arme",
+    "banque",
+    "gain",
+    "perte",
+    "bonus",
+    "zero"
+   ]
+  },
+  {
+   "id": "chute",
+   "t0": 51.65,
+   "t1": 60.861,
+   "scene": null,
+   "beats": [
+    "question",
+    "next"
+   ]
+  }
+ ],
+ "title": "Acheter ou louer ?"
+}

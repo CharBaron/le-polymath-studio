@@ -1,0 +1,146 @@
+{
+ "fps": 30,
+ "duration": 22.464,
+ "frames": 674,
+ "beats": {
+  "hook": 0.25,
+  "q": 1.856,
+  "chiffre": 4.159,
+  "n": 5.004,
+  "compare": 7.691,
+  "av": 8.132,
+  "ap": 8.724,
+  "camembert": 9.973,
+  "p1": 10.751,
+  "p2": 11.459,
+  "p3": 11.954,
+  "p4": 12.53,
+  "liste": 13.162,
+  "l1": 14.612,
+  "l2": 15.014,
+  "l3": 16.383,
+  "courbe": 17.166,
+  "c": 17.545,
+  "teaser": 18.555,
+  "tq": 19.295,
+  "ts": 19.833
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.25,
+   "t1": 4.159,
+   "scene": {
+    "type": "titre",
+    "titre": "le *kit* de Pierrot",
+    "dessin": "baguette",
+    "question": "oui"
+   },
+   "beats": [
+    "q"
+   ]
+  },
+  {
+   "id": "chiffre",
+   "t0": 4.159,
+   "t1": 7.691,
+   "scene": {
+    "type": "chiffre",
+    "titre": "un *chiffre* qui défile",
+    "valeur": "3600",
+    "prefixe": "≈",
+    "unite": "milliards d’euros",
+    "note": "soit 119 % du PIB",
+    "quand": "n",
+    "transition": "page"
+   },
+   "beats": [
+    "n"
+   ]
+  },
+  {
+   "id": "compare",
+   "t0": 7.691,
+   "t1": 9.973,
+   "scene": {
+    "type": "compare",
+    "titre": "avant / *après*",
+    "gauche": "avant 2020 | 0,88 €",
+    "droite": "aujourd'hui | 1 €",
+    "quand": "av, ap"
+   },
+   "beats": [
+    "av",
+    "ap"
+   ]
+  },
+  {
+   "id": "camembert",
+   "t0": 9.973,
+   "t1": 13.162,
+   "scene": {
+    "type": "camembert",
+    "titre": "qui *achète* ?",
+    "parts": "57,5 étranger | 10,5 banques | 9,6 assureurs | 22,4 autres",
+    "quand": "p1, p2, p3, p4"
+   },
+   "beats": [
+    "p1",
+    "p2",
+    "p3",
+    "p4"
+   ]
+  },
+  {
+   "id": "liste",
+   "t0": 13.162,
+   "t1": 17.166,
+   "scene": {
+    "type": "liste",
+    "titre": "après le *moulin*",
+    "items": "le four | l’électricité | le loyer",
+    "icones": "four | éclair | maison",
+    "quand": "l1, l2, l3",
+    "transition": "page"
+   },
+   "beats": [
+    "l1",
+    "l2",
+    "l3"
+   ]
+  },
+  {
+   "id": "courbe",
+   "t0": 17.166,
+   "t1": 18.555,
+   "scene": {
+    "type": "courbe",
+    "titre": "les *prix* s’envolent",
+    "valeurs": "1 | 1,2 | 1,6 | 2,5 | 4 | 7",
+    "labels": "lun. | | | | | sam.",
+    "unite": "prix",
+    "quand": "c"
+   },
+   "beats": [
+    "c"
+   ]
+  },
+  {
+   "id": "teaser",
+   "t0": 18.555,
+   "t1": 22.464,
+   "scene": {
+    "type": "teaser",
+    "titre": "et *ensuite* ?",
+    "suite": "la retraite par répartition",
+    "question": "oui",
+    "quand": "tq, ts"
+   },
+   "beats": [
+    "tq",
+    "ts"
+   ]
+  }
+ ],
+ "title": "Démo du kit de scènes"
+}

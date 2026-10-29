@@ -1,0 +1,135 @@
+{
+ "fps": 30,
+ "duration": 53.75,
+ "frames": 1612,
+ "beats": {
+  "hook": 0.22,
+  "h": 0.22,
+  "h2": 3.51,
+  "exp": 5.18,
+  "an": 5.18,
+  "question": 10.14,
+  "facile": 12.32,
+  "seul": 13.217,
+  "piege": 15.96,
+  "faux": 18.53,
+  "chiffres": 21.07,
+  "p74": 21.07,
+  "tiers": 25.83,
+  "nom": 27.73,
+  "peur": 30.56,
+  "allie": 35.11,
+  "sauf": 33.3,
+  "chute": 36.7,
+  "jamais": 39.05,
+  "quart": 39.05,
+  "seneque": 42.12,
+  "siecles": 40.85,
+  "quote": 43.43,
+  "fin": 48.32,
+  "toi": 48.32,
+  "regarde": 50.05,
+  "loop": 51.28
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.22,
+   "t1": 5.18,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 5.18,
+   "t1": 15.96,
+   "scene": null,
+   "beats": [
+    "an",
+    "question",
+    "facile",
+    "seul"
+   ]
+  },
+  {
+   "id": "piege",
+   "t0": 15.96,
+   "t1": 21.07,
+   "scene": null,
+   "beats": [
+    "faux"
+   ]
+  },
+  {
+   "id": "chiffres",
+   "t0": 21.07,
+   "t1": 27.73,
+   "scene": null,
+   "beats": [
+    "p74",
+    "tiers"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 27.73,
+   "t1": 35.11,
+   "scene": null,
+   "beats": [
+    "peur"
+   ]
+  },
+  {
+   "id": "allie",
+   "t0": 35.11,
+   "t1": 39.05,
+   "scene": null,
+   "beats": [
+    "sauf",
+    "chute"
+   ]
+  },
+  {
+   "id": "jamais",
+   "t0": 39.05,
+   "t1": 42.12,
+   "scene": null,
+   "beats": [
+    "quart"
+   ]
+  },
+  {
+   "id": "seneque",
+   "t0": 42.12,
+   "t1": 48.32,
+   "scene": null,
+   "beats": [
+    "siecles",
+    "quote"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 48.32,
+   "t1": 53.75,
+   "scene": null,
+   "beats": [
+    "toi",
+    "regarde",
+    "loop"
+   ]
+  }
+ ],
+ "title": "L'expérience d'Asch",
+ "hook": "3 sur 4|ont nié l'évidence",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu aurais cédé ?"
+ }
+}

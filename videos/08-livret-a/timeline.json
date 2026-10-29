@@ -1,0 +1,124 @@
+{
+ "fps": 30,
+ "duration": 74.338,
+ "frames": 2230,
+ "beats": {
+  "hook": 0.24,
+  "prix": 3.31,
+  "calcul": 6.147,
+  "reel": 6.54,
+  "moins": 12.22,
+  "moyen": 15.0,
+  "cent": 18.003,
+  "illusion": 21.15,
+  "solde": 21.15,
+  "fisher": 22.606,
+  "euros": 25.848,
+  "formule": 29.04,
+  "fevrier": 34.72,
+  "arrondi": 37.65,
+  "argent": 40.24,
+  "dort": 40.24,
+  "caisse": 41.9,
+  "hlm": 44.883,
+  "neufs": 46.713,
+  "quinzaine": 49.715,
+  "detail": 49.715,
+  "depot": 53.693,
+  "zero": 56.458,
+  "lep": 57.671,
+  "plus": 61.778,
+  "chute": 63.78,
+  "1818": 63.78,
+  "grossir": 66.91,
+  "next": 69.605
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 6.54,
+   "scene": null,
+   "beats": [
+    "prix",
+    "calcul"
+   ]
+  },
+  {
+   "id": "reel",
+   "t0": 6.54,
+   "t1": 21.15,
+   "scene": null,
+   "beats": [
+    "moins",
+    "moyen",
+    "cent"
+   ]
+  },
+  {
+   "id": "illusion",
+   "t0": 21.15,
+   "t1": 29.04,
+   "scene": null,
+   "beats": [
+    "solde",
+    "fisher",
+    "euros"
+   ]
+  },
+  {
+   "id": "formule",
+   "t0": 29.04,
+   "t1": 40.24,
+   "scene": null,
+   "beats": [
+    "fevrier",
+    "arrondi"
+   ]
+  },
+  {
+   "id": "argent",
+   "t0": 40.24,
+   "t1": 49.715,
+   "scene": null,
+   "beats": [
+    "dort",
+    "caisse",
+    "hlm",
+    "neufs"
+   ]
+  },
+  {
+   "id": "quinzaine",
+   "t0": 49.715,
+   "t1": 57.671,
+   "scene": null,
+   "beats": [
+    "detail",
+    "depot",
+    "zero"
+   ]
+  },
+  {
+   "id": "lep",
+   "t0": 57.671,
+   "t1": 63.78,
+   "scene": null,
+   "beats": [
+    "plus"
+   ]
+  },
+  {
+   "id": "chute",
+   "t0": 63.78,
+   "t1": 74.338,
+   "scene": null,
+   "beats": [
+    "1818",
+    "grossir",
+    "next"
+   ]
+  }
+ ],
+ "title": "Ton Livret A rapporte vraiment ?"
+}

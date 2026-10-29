@@ -1,0 +1,137 @@
+{
+ "fps": 30,
+ "duration": 84.668,
+ "frames": 2540,
+ "beats": {
+  "hook": 0.24,
+  "consigne": 4.35,
+  "promesse": 8.68,
+  "pourquoi": 8.68,
+  "principe": 12.16,
+  "ex": 15.8,
+  "an1": 17.877,
+  "an30": 19.97,
+  "courbe": 23.76,
+  "regle": 26.67,
+  "regle72": 26.67,
+  "divise": 29.9,
+  "livret": 33.71,
+  "temps": 38.35,
+  "vingt": 40.399,
+  "total1": 44.838,
+  "trente": 46.94,
+  "total2": 48.42,
+  "ecart": 50.55,
+  "twist": 53.72,
+  "contre": 53.72,
+  "usure": 55.72,
+  "double": 59.45,
+  "einstein": 63.13,
+  "faux": 66.76,
+  "pub": 68.34,
+  "franklin": 72.08,
+  "pari": 72.08,
+  "boston": 73.74,
+  "chute": 78.4,
+  "risques": 78.4,
+  "next": 81.46
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 8.68,
+   "scene": null,
+   "beats": [
+    "consigne"
+   ]
+  },
+  {
+   "id": "promesse",
+   "t0": 8.68,
+   "t1": 12.16,
+   "scene": null,
+   "beats": [
+    "pourquoi"
+   ]
+  },
+  {
+   "id": "principe",
+   "t0": 12.16,
+   "t1": 26.67,
+   "scene": null,
+   "beats": [
+    "ex",
+    "an1",
+    "an30",
+    "courbe"
+   ]
+  },
+  {
+   "id": "regle",
+   "t0": 26.67,
+   "t1": 38.35,
+   "scene": null,
+   "beats": [
+    "regle72",
+    "divise",
+    "livret"
+   ]
+  },
+  {
+   "id": "temps",
+   "t0": 38.35,
+   "t1": 53.72,
+   "scene": null,
+   "beats": [
+    "vingt",
+    "total1",
+    "trente",
+    "total2",
+    "ecart"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 53.72,
+   "t1": 63.13,
+   "scene": null,
+   "beats": [
+    "contre",
+    "usure",
+    "double"
+   ]
+  },
+  {
+   "id": "einstein",
+   "t0": 63.13,
+   "t1": 72.08,
+   "scene": null,
+   "beats": [
+    "faux",
+    "pub"
+   ]
+  },
+  {
+   "id": "franklin",
+   "t0": 72.08,
+   "t1": 78.4,
+   "scene": null,
+   "beats": [
+    "pari",
+    "boston"
+   ]
+  },
+  {
+   "id": "chute",
+   "t0": 78.4,
+   "t1": 84.668,
+   "scene": null,
+   "beats": [
+    "risques",
+    "next"
+   ]
+  }
+ ],
+ "title": "Les intérêts composés"
+}

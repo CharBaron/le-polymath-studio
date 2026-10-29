@@ -1,0 +1,140 @@
+{
+ "fps": 30,
+ "duration": 55.347,
+ "frames": 1660,
+ "beats": {
+  "hook": 0.24,
+  "deja": 2.2,
+  "principe": 3.62,
+  "normal": 3.62,
+  "cotises": 6.3,
+  "part": 6.815,
+  "paie": 8.436,
+  "demain": 10.59,
+  "montant": 13.14,
+  "total": 13.14,
+  "pib": 17.19,
+  "hic": 20.64,
+  "vieillit": 20.64,
+  "r2009": 23.32,
+  "r2025": 28.218,
+  "r2070": 30.81,
+  "twist": 34.061,
+  "jeunes": 34.061,
+  "cor": 39.19,
+  "chute": 43.671,
+  "leviers": 43.671,
+  "next": 50.275
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 3.62,
+   "scene": {
+    "type": "titre",
+    "titre": "ta cotisation *retraite*",
+    "sous": "de ce mois-ci…",
+    "dessin": "doc:FICHE DE PAIE",
+    "question": "oui",
+    "quand": "deja"
+   },
+   "beats": [
+    "deja"
+   ]
+  },
+  {
+   "id": "principe",
+   "t0": 3.62,
+   "t1": 13.14,
+   "scene": {
+    "type": "liste",
+    "titre": "la *répartition*",
+    "items": "tu cotises | l’argent part aussitôt | il paie les retraités | demain : les jeunes pour toi",
+    "icones": "billet | éclair | maison | chrono",
+    "quand": "cotises, part, paie, demain",
+    "transition": "page"
+   },
+   "beats": [
+    "normal",
+    "cotises",
+    "part",
+    "paie",
+    "demain"
+   ]
+  },
+  {
+   "id": "montant",
+   "t0": 13.14,
+   "t1": 20.64,
+   "scene": {
+    "type": "chiffre",
+    "titre": "ce que ça représente",
+    "valeur": "422",
+    "suffixe": "Md€",
+    "unite": "de pensions en 2025",
+    "note": "≈ 14 % de ce que produit la France",
+    "quand": "total",
+    "source": "COR, rapport annuel juin 2026"
+   },
+   "beats": [
+    "total",
+    "pib"
+   ]
+  },
+  {
+   "id": "hic",
+   "t0": 20.64,
+   "t1": 34.061,
+   "scene": {
+    "type": "barres",
+    "titre": "20-64 ans pour *un* senior",
+    "valeurs": "3,6 | 2,5 | 1,6",
+    "labels": "2009 | 2025 | ≈ 2070",
+    "quand": "r2009, r2025, r2070",
+    "source": "COR, rapport annuel juin 2026 (20-64 ans / 65 ans et +)",
+    "transition": "page"
+   },
+   "beats": [
+    "vieillit",
+    "r2009",
+    "r2025",
+    "r2070"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 34.061,
+   "t1": 43.671,
+   "scene": {
+    "type": "stickers",
+    "titre": "alors… *foutu* ?",
+    "items": "≈ 1 jeune sur 2 pense ne rien toucher | le COR : dépenses stables jusqu’en 2045",
+    "quand": "jeunes, cor",
+    "source": "COR, rapport annuel juin 2026 (enquête Pat€r 2020)"
+   },
+   "beats": [
+    "jeunes",
+    "cor"
+   ]
+  },
+  {
+   "id": "chute",
+   "t0": 43.671,
+   "t1": 55.347,
+   "scene": {
+    "type": "teaser",
+    "titre": "le vrai *débat*",
+    "suite": "pourquoi se loger coûte si cher",
+    "dessin": "maison",
+    "question": "oui",
+    "quand": "leviers, next"
+   },
+   "beats": [
+    "leviers",
+    "next"
+   ]
+  }
+ ],
+ "title": "La retraite par répartition"
+}

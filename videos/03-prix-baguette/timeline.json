@@ -1,0 +1,65 @@
+{
+ "fps": 30,
+ "duration": 48.866,
+ "frames": 1466,
+ "beats": {
+  "hook": 0.24,
+  "now": 3.706,
+  "pourquoi": 6.57,
+  "promesse": 7.57,
+  "spoiler": 7.57,
+  "ble": 10.46,
+  "centimes": 13.69,
+  "twist": 15.56,
+  "baisse": 15.56,
+  "stable": 19.5,
+  "aval": 22.1,
+  "reste": 22.1,
+  "liste": 25.826,
+  "inflation": 30.66,
+  "energie": 30.66,
+  "ipc": 34.92,
+  "def": 37.41,
+  "chute": 42.04,
+  "salaire": 42.04,
+  "next": 45.66
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 7.57
+  },
+  {
+   "id": "promesse",
+   "t0": 7.57,
+   "t1": 10.46
+  },
+  {
+   "id": "ble",
+   "t0": 10.46,
+   "t1": 15.56
+  },
+  {
+   "id": "twist",
+   "t0": 15.56,
+   "t1": 22.1
+  },
+  {
+   "id": "aval",
+   "t0": 22.1,
+   "t1": 30.66
+  },
+  {
+   "id": "inflation",
+   "t0": 30.66,
+   "t1": 42.04
+  },
+  {
+   "id": "chute",
+   "t0": 42.04,
+   "t1": 48.866
+  }
+ ],
+ "title": "Pourquoi ta baguette coûte plus cher ?"
+}

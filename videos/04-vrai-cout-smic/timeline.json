@@ -1,0 +1,108 @@
+{
+ "fps": 30,
+ "duration": 56.626,
+ "frames": 1699,
+ "beats": {
+  "hook": 0.24,
+  "cout": 4.01,
+  "promesse": 6.38,
+  "spoiler": 6.38,
+  "fiche": 9.45,
+  "brut": 9.45,
+  "cotis": 13.67,
+  "net": 15.98,
+  "patron": 18.37,
+  "plein": 21.97,
+  "twist": 25.49,
+  "reduc": 25.49,
+  "reel": 30.5,
+  "piege": 33.48,
+  "hausse": 33.48,
+  "cent": 38.29,
+  "debat": 43.26,
+  "chute": 47.63,
+  "retraite": 47.63,
+  "pasta": 51.26,
+  "next": 52.52
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 6.38,
+   "scene": null,
+   "beats": [
+    "cout"
+   ]
+  },
+  {
+   "id": "promesse",
+   "t0": 6.38,
+   "t1": 9.45,
+   "scene": null,
+   "beats": [
+    "spoiler"
+   ]
+  },
+  {
+   "id": "fiche",
+   "t0": 9.45,
+   "t1": 18.37,
+   "scene": null,
+   "beats": [
+    "brut",
+    "cotis",
+    "net"
+   ]
+  },
+  {
+   "id": "patron",
+   "t0": 18.37,
+   "t1": 25.49,
+   "scene": null,
+   "beats": [
+    "plein"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 25.49,
+   "t1": 33.48,
+   "scene": null,
+   "beats": [
+    "reduc",
+    "reel"
+   ]
+  },
+  {
+   "id": "piege",
+   "t0": 33.48,
+   "t1": 47.63,
+   "scene": null,
+   "beats": [
+    "hausse",
+    "cent",
+    "debat"
+   ]
+  },
+  {
+   "id": "chute",
+   "t0": 47.63,
+   "t1": 56.626,
+   "scene": null,
+   "beats": [
+    "retraite",
+    "pasta",
+    "next"
+   ]
+  }
+ ],
+ "title": "Le vrai coût d'un SMIC",
+ "retention": {
+  "choc": "1 460 € → ?",
+  "sous": "le vrai coût d'un SMIC pour ton patron",
+  "fin": 1.2,
+  "boucle": true,
+  "commente": "Tu savais pour les 250 € ?"
+ }
+}

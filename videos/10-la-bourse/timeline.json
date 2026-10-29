@@ -1,0 +1,184 @@
+{
+ "fps": 30,
+ "duration": 133.685,
+ "frames": 4011,
+ "beats": {
+  "hook": 0.24,
+  "an1602": 0.24,
+  "navires": 2.47,
+  "decoupe": 6.3,
+  "servante": 9.98,
+  "action": 11.79,
+  "actions": 11.79,
+  "deux": 13.67,
+  "dividende": 15.26,
+  "plusvalue": 19.63,
+  "carnet": 24.34,
+  "qui": 22.09,
+  "fourchette": 28.55,
+  "match": 30.87,
+  "cours": 33.16,
+  "krach": 34.9,
+  "vide": 34.9,
+  "k1987": 37.58,
+  "fuite": 41.65,
+  "chute": 43.38,
+  "pourtant": 47.98,
+  "grand8": 51.87,
+  "monte": 51.87,
+  "cent": 53.05,
+  "k1929": 57.62,
+  "k1973": 58.69,
+  "k2000": 59.73,
+  "k2008": 60.9,
+  "million": 62.03,
+  "billes": 65.92,
+  "bilan": 67.53,
+  "pire": 71.22,
+  "meilleure": 74.54,
+  "moyenne": 78.09,
+  "duree": 81.58,
+  "un": 83.58,
+  "dix": 85.94,
+  "vingt": 88.57,
+  "passe": 91.6,
+  "pari": 93.99,
+  "pros": 93.99,
+  "buffett": 94.92,
+  "indice": 98.89,
+  "resultat": 104.34,
+  "meilleur": 107.21,
+  "pirep": 109.04,
+  "france": 111.16,
+  "frais": 117.53,
+  "next": 130.22,
+  "foule": 120.36,
+  "tulipe": 122.83,
+  "legende": 128.29
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 11.79,
+   "scene": null,
+   "beats": [
+    "an1602",
+    "navires",
+    "decoupe",
+    "servante"
+   ]
+  },
+  {
+   "id": "action",
+   "t0": 11.79,
+   "t1": 24.34,
+   "scene": null,
+   "beats": [
+    "actions",
+    "deux",
+    "dividende",
+    "plusvalue"
+   ]
+  },
+  {
+   "id": "carnet",
+   "t0": 24.34,
+   "t1": 34.9,
+   "scene": null,
+   "beats": [
+    "qui",
+    "fourchette",
+    "match",
+    "cours"
+   ]
+  },
+  {
+   "id": "krach",
+   "t0": 34.9,
+   "t1": 51.87,
+   "scene": null,
+   "beats": [
+    "vide",
+    "k1987",
+    "fuite",
+    "chute",
+    "pourtant"
+   ]
+  },
+  {
+   "id": "grand8",
+   "t0": 51.87,
+   "t1": 65.92,
+   "scene": null,
+   "beats": [
+    "monte",
+    "cent",
+    "k1929",
+    "k1973",
+    "k2000",
+    "k2008",
+    "million"
+   ]
+  },
+  {
+   "id": "billes",
+   "t0": 65.92,
+   "t1": 81.58,
+   "scene": null,
+   "beats": [
+    "bilan",
+    "pire",
+    "meilleure",
+    "moyenne"
+   ]
+  },
+  {
+   "id": "duree",
+   "t0": 81.58,
+   "t1": 93.99,
+   "scene": null,
+   "beats": [
+    "un",
+    "dix",
+    "vingt",
+    "passe"
+   ]
+  },
+  {
+   "id": "pari",
+   "t0": 93.99,
+   "t1": 111.16,
+   "scene": null,
+   "beats": [
+    "pros",
+    "buffett",
+    "indice",
+    "resultat",
+    "meilleur",
+    "pirep"
+   ]
+  },
+  {
+   "id": "france",
+   "t0": 111.16,
+   "t1": 130.22,
+   "scene": null,
+   "beats": [
+    "frais"
+   ]
+  },
+  {
+   "id": "next",
+   "t0": 130.22,
+   "t1": 133.685,
+   "scene": null,
+   "beats": [
+    "foule",
+    "tulipe",
+    "legende"
+   ]
+  }
+ ],
+ "title": "La Bourse, comment ça marche vraiment ?"
+}

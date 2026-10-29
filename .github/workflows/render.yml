@@ -1,0 +1,27 @@
+# Rendu Remotion sur les machines gratuites de GitHub (dépôt public : 4 cœurs, 16 Go).
+# Lancé par `npm run cloud -- videos/<id>` (scripts/cloud.mjs) ; le mp4 revient en artefact « final ».
+name: render
+on:
+  workflow_dispatch:
+    inputs:
+      id: {description: 'dossier de la vidéo (ex. 13-experience-asch)', required: true}
+      comp: {description: 'composition Remotion (id de la vidéo ou kit)', required: true}
+      draft: {description: 'brouillon demi-résolution', required: false, default: 'false'}
+concurrency: {group: 'render-${{ inputs.id }}', cancel-in-progress: true}
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 24, cache: npm}
+      - run: npm ci --no-audit --no-fund
+      - run: npx remotion browser ensure
+      - name: rendu
+        run: |
+          Q="--crf=20 --audio-codec=aac --audio-bitrate=256k"
+          [ "${{ inputs.draft }}" = "true" ] && Q="--scale=0.5 --crf=28"
+          npx remotion render "${{ inputs.comp }}" out/final.mp4 --props='{"id":"${{ inputs.id }}"}' --concurrency=$(nproc) $Q
+      - uses: actions/upload-artifact@v4
+        with: {name: final, path: out/final.mp4, retention-days: 3, compression-level: 0}

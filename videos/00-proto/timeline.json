@@ -1,0 +1,38 @@
+{
+ "fps": 30,
+ "duration": 10.422,
+ "frames": 313,
+ "beats": {
+  "entree": 0.27,
+  "chiffre": 2.03,
+  "point": 2.03,
+  "count": 3.11,
+  "question": 4.52,
+  "shock": 4.84,
+  "chute": 6.79,
+  "spoiler": 6.79
+ },
+ "sections": [
+  {
+   "id": "entree",
+   "t0": 0.27,
+   "t1": 2.03
+  },
+  {
+   "id": "chiffre",
+   "t0": 2.03,
+   "t1": 4.52
+  },
+  {
+   "id": "question",
+   "t0": 4.52,
+   "t1": 6.79
+  },
+  {
+   "id": "chute",
+   "t0": 6.79,
+   "t1": 10.422
+  }
+ ],
+ "title": "Prototype — Pierrot pointe un chiffre"
+}

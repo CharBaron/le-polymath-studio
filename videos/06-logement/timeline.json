@@ -1,0 +1,103 @@
+{
+ "fps": 30,
+ "duration": 61.0,
+ "frames": 1830,
+ "beats": {
+  "hook": 0.24,
+  "paris": 6.05,
+  "pourquoi": 8.49,
+  "tunnel": 8.49,
+  "friggit": 8.49,
+  "dedans": 11.417,
+  "sortie": 18.06,
+  "credit": 20.13,
+  "d2001": 22.06,
+  "d2026": 24.766,
+  "mecanisme": 26.5,
+  "chantier": 30.38,
+  "neuf": 30.38,
+  "quart": 35.812,
+  "vacants": 37.75,
+  "rotation": 40.5,
+  "loyers": 46.13,
+  "pauvres": 49.88,
+  "double": 51.624,
+  "chute": 54.93,
+  "teaser": 54.93,
+  "next": 56.05
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 8.49,
+   "scene": null,
+   "beats": [
+    "paris",
+    "pourquoi"
+   ]
+  },
+  {
+   "id": "tunnel",
+   "t0": 8.49,
+   "t1": 20.13,
+   "scene": null,
+   "beats": [
+    "friggit",
+    "dedans",
+    "sortie"
+   ]
+  },
+  {
+   "id": "credit",
+   "t0": 20.13,
+   "t1": 30.38,
+   "scene": null,
+   "beats": [
+    "d2001",
+    "d2026",
+    "mecanisme"
+   ]
+  },
+  {
+   "id": "chantier",
+   "t0": 30.38,
+   "t1": 37.75,
+   "scene": null,
+   "beats": [
+    "neuf",
+    "quart"
+   ]
+  },
+  {
+   "id": "vacants",
+   "t0": 37.75,
+   "t1": 46.13,
+   "scene": null,
+   "beats": [
+    "rotation"
+   ]
+  },
+  {
+   "id": "loyers",
+   "t0": 46.13,
+   "t1": 54.93,
+   "scene": null,
+   "beats": [
+    "pauvres",
+    "double"
+   ]
+  },
+  {
+   "id": "chute",
+   "t0": 54.93,
+   "t1": 61.0,
+   "scene": null,
+   "beats": [
+    "teaser",
+    "next"
+   ]
+  }
+ ],
+ "title": "Pourquoi se loger coûte si cher ?"
+}

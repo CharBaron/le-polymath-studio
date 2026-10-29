@@ -1,0 +1,136 @@
+{
+ "fps": 30,
+ "duration": 56.166,
+ "frames": 1685,
+ "beats": {
+  "hook": 0.21,
+  "hook0": 0.21,
+  "vol": 4.98,
+  "avant": 6.41,
+  "p90": 10.372,
+  "loi": 11.62,
+  "meme": 15.05,
+  "tiroir": 16.72,
+  "calcul": 16.72,
+  "depense": 18.27,
+  "garde": 19.49,
+  "tiroirs": 20.54,
+  "nom": 23.05,
+  "chasse": 24.92,
+  "gresham": 26.85,
+  "thomas": 26.85,
+  "an1558": 30.714,
+  "copernic": 32.12,
+  "aristophane": 33.87,
+  "aristo": 33.87,
+  "an2400": 34.16,
+  "quote": 37.36,
+  "thiers": 47.6,
+  "sauf": 41.27,
+  "inverse": 42.782,
+  "zimb": 43.7,
+  "usd": 46.412,
+  "fin": 49.08,
+  "toi": 49.08,
+  "vieille": 50.49,
+  "loop": 52.96
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 6.41,
+   "scene": null,
+   "beats": [
+    "hook0",
+    "vol"
+   ]
+  },
+  {
+   "id": "avant",
+   "t0": 6.41,
+   "t1": 16.72,
+   "scene": null,
+   "beats": [
+    "p90",
+    "loi",
+    "meme"
+   ]
+  },
+  {
+   "id": "tiroir",
+   "t0": 16.72,
+   "t1": 23.05,
+   "scene": null,
+   "beats": [
+    "calcul",
+    "depense",
+    "garde",
+    "tiroirs"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 23.05,
+   "t1": 26.85,
+   "scene": null,
+   "beats": [
+    "chasse"
+   ]
+  },
+  {
+   "id": "gresham",
+   "t0": 26.85,
+   "t1": 33.87,
+   "scene": null,
+   "beats": [
+    "thomas",
+    "an1558",
+    "copernic"
+   ]
+  },
+  {
+   "id": "aristophane",
+   "t0": 33.87,
+   "t1": 47.6,
+   "scene": null,
+   "beats": [
+    "aristo",
+    "an2400",
+    "quote"
+   ]
+  },
+  {
+   "id": "thiers",
+   "t0": 47.6,
+   "t1": 49.08,
+   "scene": null,
+   "beats": [
+    "sauf",
+    "inverse",
+    "zimb",
+    "usd"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 49.08,
+   "t1": 56.166,
+   "scene": null,
+   "beats": [
+    "toi",
+    "vieille",
+    "loop"
+   ]
+  }
+ ],
+ "title": "La loi de Gresham",
+ "hook": "Elles ont disparu.|Personne ne les a volées.",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu gardes des vieilles pièces « au cas où » ?"
+ }
+}
