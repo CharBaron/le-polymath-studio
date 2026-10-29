@@ -39,7 +39,8 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     {t0: B.alex - 0.04, bg: 'marble', tr: 'zoom', pic: {name: 'loeb', w: 600}, crown: {at: 0.6, y: 360, w: 200}},
     {t0: B.demande - 0.04, bg: 'marble', tr: 'whip', pic: {name: 'alexandre', w: 580}},
     {t0: B.soleil - 0.04, bg: 'marble', tr: 'slam', rays: 'gold', pic: {name: 'tub', w: 760}, slam: {text: 'ÔTE-TOI|DE MON SOLEIL', at: W('ôte-toi', B.soleil) - B.soleil + 0.04, color: 'gold', y: 300}},
-    {t0: B.quote - 0.04, bg: 'velvet', tr: 'flashRed', quote: {lines: ['« Si je n’étais pas Alexandre,', 'je voudrais être Diogène. »'], sign: '— ALEXANDRE, SELON PLUTARQUE'}},
+    {t0: B.quote - 0.04, bg: 'velvet', tr: 'flashRed', quote: {lines: ['« Si je n’étais pas', 'Alexandre… »'], sign: '— ALEXANDRE, SELON PLUTARQUE'}},
+    {t0: W('voudrais', B.quote), bg: 'velvet', tr: 'slam', rays: 'gold', pic: {name: 'loeb', w: 560, y: 820}, slam: {text: 'JE VOUDRAIS|ÊTRE DIOGÈNE', at: 0.02, color: 'gold', y: 290}},
     // --- adresse + boucle (dernière image = première) ---
     {t0: B.toi - 0.04, bg: 'marble', tr: 'glitch', pic: {name: 'jarre', w: 620}},
     {t0: W('choses', B.toi), bg: 'velvet', tr: 'spin', pics: [
