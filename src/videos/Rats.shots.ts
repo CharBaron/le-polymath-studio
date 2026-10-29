@@ -10,7 +10,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
   const W = (w: string, after: number) => wordAt(words, w, after) - 0.04;
   return [
     // --- hook ---
-    {t0: 0, bg: 'marble', still: true, pic: {name: 'rat', w: 860}},
+    {t0: 0, bg: 'marble', still: true, pic: {name: 'rat', w: 860, zoom: 0}},
     {t0: 0.55, bg: 'marble', tr: 'zoom', pic: {name: 'rue_plein', w: 1080, full: true, zoom: 0.12}},
     {t0: W('rats', 0), bg: 'white', tr: 'slam', still: true, anim: {name: 'QueueCoupee', cut: W('sans', 0) - W('rats', 0) + 0.1, run: W('queue', 0) - W('rats', 0) + 0.4}},
     {t0: B.h2 - 0.04, bg: 'velvet', tr: 'glitch', pic: {name: 'ratsfr', w: 880}, stamp: {text: 'FRANÇAISE', at: W('française', B.h2) + 0.05}},
@@ -47,6 +47,6 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     {t0: B.toi - 0.04, bg: 'marble', tr: 'glitch', pic: {name: 'catcher_plein', w: 1080, full: true, zoom: 0.1}},
     {t0: W('fabriques', B.toi), bg: 'velvet', tr: 'slam', pic: {name: 'bouquiniste', w: 560}, slam: {text: 'TU FABRIQUES|QUOI ?', at: 0.04, color: 'gold', y: 290}},
     {t0: B.loop - 0.04, bg: 'white', tr: 'swipe', pic: {name: 'ratskel', w: 640}},
-    {t0: W('ou', B.loop), bg: 'marble', tr: 'blur', still: true, pic: {name: 'rat', w: 860}},
+    {t0: W('ou', B.loop), bg: 'marble', tr: 'blur', still: true, pic: {name: 'rat', w: 860, zoom: 0}},
   ];
 };
