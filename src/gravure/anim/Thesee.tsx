@@ -76,8 +76,8 @@ export const Navire: React.FC<AnimProps> = ({lt, t, p}) => {
     return (
       <>
         <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
-          <Ship x={290} y={800} s={0.5} t={t} repl={() => 1} clip="hA" />
-          <Ship x={790} y={800} s={0.5} t={t + 1} repl={() => 0} fly={fk} clip="hB" />
+          <Ship x={280} y={820} s={0.57} t={t} repl={() => 1} clip="hA" />
+          <Ship x={800} y={820} s={0.57} t={t + 1} repl={() => 0} fly={fk} clip="hB" />
           <Waves y={930} t={t} />
         </svg>
         {['A', 'B'].map((L, i) => <div key={L} style={{position: 'absolute', left: i ? 690 : 190, width: 200, top: 990, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 140, color: G.gold, opacity: lab, textShadow: G.shadow}}>{L}</div>)}
@@ -88,8 +88,8 @@ export const Navire: React.FC<AnimProps> = ({lt, t, p}) => {
   return (
     <>
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
-        <Ship x={540} y={860} s={1.05} t={t} repl={replNow} clip="h1" />
-        <Waves y={1010} t={t} />
+        <Ship x={540} y={880} s={1.14} t={t} repl={replNow} clip="h1" />
+        <Waves y={1040} t={t} />
       </svg>
       {p.nolabel ? null : <div style={{position: 'absolute', left: 0, right: 0, top: 420, textAlign: 'center', fontFamily: GF.serif, fontWeight: 700, fontSize: 40, letterSpacing: '0.18em', color: G.textSoft, opacity: prog(lt, 0, 0.3)}}>PLANCHES D’ORIGINE</div>}
       <div style={{display: p.nolabel ? 'none' : 'block', position: 'absolute', left: 0, right: 0, top: 470, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 130, color: left === 0 ? G.gold : G.text, textShadow: G.shadow}}>{left} / {N}</div>

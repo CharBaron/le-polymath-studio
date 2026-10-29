@@ -91,7 +91,7 @@ const trStyle = (tr: Tr, p: number, incoming: boolean): React.CSSProperties => {
 
 /** cadrage du plan : poussée lente (sens alterné), saut de cadre à chaque jump-cut, petit coup de zoom à l'arrivée */
 const camera = (s: Shot, i: number, t: number, t1: number, jumps: number[], punch: number): string => {
-  if (s.still || textCard(s)) return `scale(${1 + 0.03 * punch})`;
+  if (s.still || s.num || textCard(s)) return `scale(${1 + 0.03 * punch})`;
   const dur = Math.max(0.4, t1 - s.t0), u = clamp01((t - s.t0) / dur);
   const push = i % 2 ? 1 + 0.07 * u : 1.07 - 0.07 * u;
   let j = 0, tj = s.t0;

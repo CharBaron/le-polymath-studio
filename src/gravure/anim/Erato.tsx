@@ -36,7 +36,7 @@ export const Terre: React.FC<AnimProps> = ({lt, p}) => {
     <>
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
         <g transform={`translate(${A.x} ${A.y}) scale(${Z}) translate(${-A.x} ${-A.y})`}>
-          <circle cx={C.x} cy={C.y} r={R} fill="#0E1A3A" stroke={ink} strokeWidth={4 / Z} />
+          <circle cx={C.x} cy={C.y} r={R} fill="#13224A" stroke={gold} strokeWidth={6 / Z} />
           {/* méridiens et parallèles de globe */}
           {[-60, -30, 0, 30, 60].map((l) => <ellipse key={l} cx={C.x} cy={C.y + R * Math.sin(l * deg)} rx={R * Math.cos(l * deg)} ry={R * Math.cos(l * deg) * 0.12} fill="none" stroke={ink} strokeWidth={1.5 / Z} opacity={0.25} />)}
           {/* les 50 secteurs */}

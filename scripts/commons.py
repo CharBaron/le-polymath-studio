@@ -1,7 +1,7 @@
 """Télécharge des images de Wikimedia Commons en ne gardant que le domaine public / CC0.
 python3 -I scripts/commons.py videos/<id> nom='File:Titre.jpg' nom2='File:…'
 → videos/<id>/img_src/<nom>.jpg + meta.json (titre, licence, auteur, url) pour sources.md"""
-import json, os, sys, time, urllib.parse, urllib.request
+import json, os, re, sys, time, urllib.parse, urllib.request
 
 UA = {'User-Agent': 'PolymathStudio/1.0 (giacocharles@orange.fr)'}
 OK = ('public domain', 'pd', 'cc0', 'no restrictions')
@@ -31,7 +31,7 @@ for arg in sys.argv[2:]:
         print(f'✗ {name} : licence {lic} refusée'); continue
     open(os.path.join(src, name + '.jpg'), 'wb').write(get(ii.get('thumburl') or ii['url']))
     artist = m.get('Artist', {}).get('value', '')
-    meta[name] = {'title': title, 'license': lic, 'artist': artist[:160], 'url': ii['descriptionurl']}
+    meta[name] = {'title': title, 'license': lic, 'artist': re.sub(r'<[^>]+>', '', artist).strip()[:160], 'url': ii['descriptionurl']}
     print(f'✓ {name} : {lic}')
     time.sleep(1.5)
 json.dump(meta, open(mp, 'w'), indent=1, ensure_ascii=False)

@@ -47,7 +47,7 @@ export const textCard = (s: Shot) => !!(s.card || s.concept || s.quote);
 
 /** jump-cuts d'un plan : débuts de mots espacés d'au moins 0,85 s, à plus de 0,7 s du début et 0,35 s de la fin */
 export const jumpsOf = (s: Shot, t1: number, words: Word[]) => {
-  if (s.still || textCard(s) || t1 - s.t0 < 1.3) return [];
+  if (s.still || s.num || textCard(s) || t1 - s.t0 < 1.3) return [];
   const out: number[] = [];
   let last = s.t0 + strobeLen(s);
   for (const w of words) {

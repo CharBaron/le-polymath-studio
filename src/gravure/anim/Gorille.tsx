@@ -21,7 +21,7 @@ const pos = (i: number, tt: number): P => {
 };
 const Player: React.FC<{p: P; white: boolean; tt: number; i: number}> = ({p, white, tt, i}) => {
   const sw = Math.sin(tt * 7 + i) * 12;
-  const jersey = white ? '#F2F7FB' : '#0B1626', line = white ? INK : '#9FC4DE';
+  const jersey = white ? '#F2F7FB' : '#26303D', line = white ? INK : '#C9DCEB';
   return (
     <g transform={`translate(${p.x} ${p.y})`}>
       <path d={`M -14 50 L ${-20 + sw} 120 M 14 50 L ${20 - sw} 120`} stroke={line} strokeWidth={9} strokeLinecap="round" />
@@ -72,19 +72,21 @@ export const TestPasses: React.FC<AnimProps> = ({id, t, lt, p}) => {
   return (
     <>
       {show ? (
-        <div style={{position: 'absolute', left: gx + thump, top: gy, width: 300, transform: `translate(-50%, -50%) rotate(${thump * 0.6}deg)`}}>
+        <div style={{position: 'absolute', left: 540 + (gx + thump - 540) * 1.2, top: 820 + (gy - 820) * 1.2, width: 340, transform: `translate(-50%, -50%) rotate(${thump * 0.6}deg)`}}>
           <Img src={staticFile(`v/${id}/img/gorille_test.webp`)} style={{width: '100%', display: 'block'}} />
         </div>
       ) : null}
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
+        <g transform="translate(540 820) scale(1.2) translate(-540 -820)">
         {[0, 1, 2, 3, 4, 5].map((i) => <Player key={i} p={pos(i, tt)} white={W.includes(i)} tt={tt} i={i} />)}
         <Ball p={ballAt(tt, go + 0.05, stop - 0.15, passes, W)} />
         <Ball p={ballAt(tt + 0.37, go + 0.3, stop - 0.05, passes - 2, B)} />
+        </g>
         {reveal && rk > 0 ? <ellipse cx={560} cy={800} rx={200 + 40 * (1 - rk)} ry={230 + 40 * (1 - rk)} fill="none" stroke="#FF3B30" strokeWidth={10} strokeDasharray="1600" strokeDashoffset={1600 * (1 - rk)} /> : null}
       </svg>
       {testOn ? (
-        <div style={{position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 40, letterSpacing: '0.16em', color: G.gold}}>
-          COMPTE LES PASSES · MAILLOTS BLANCS
+        <div style={{position: 'absolute', left: 0, right: 0, top: 360, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 36, lineHeight: 1.35, letterSpacing: '0.12em', color: G.gold}}>
+          COMPTE LES PASSES<br />DES MAILLOTS BLANCS
         </div>
       ) : null}
       {reveal ? <div style={{position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 52, letterSpacing: '0.12em', color: '#FF3B30', opacity: rk}}>IL ÉTAIT LÀ.</div> : null}
@@ -101,7 +103,7 @@ export const Scanner: React.FC<AnimProps> = ({id, lt, p}) => {
       <div style={{position: 'absolute', left: 540, top: 780, width: 700, transform: 'translate(-50%, -50%)'}}>
         <Img src={staticFile(`v/${id}/img/xray_zoom.webp`)} style={{width: '100%', display: 'block'}} />
       </div>
-      <div style={{position: 'absolute', left: 470, top: 720, width: 150, transform: 'translate(-50%, -50%)', opacity: 0.38 * gk, mixBlendMode: 'screen', filter: 'invert(1) grayscale(1) contrast(1.4)'}}>
+      <div style={{position: 'absolute', left: 470, top: 720, width: 150, transform: 'translate(-50%, -50%)', opacity: 0.75 * gk, mixBlendMode: 'multiply', filter: 'grayscale(1) contrast(1.3)'}}>
         <Img src={staticFile(`v/${id}/img/gorille_test.webp`)} style={{width: '100%', display: 'block'}} />
       </div>
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
