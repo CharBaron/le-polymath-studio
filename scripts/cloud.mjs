@@ -6,8 +6,9 @@ import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const GH = process.env.GH || path.join(os.homedir(), 'bin', 'gh');
 const vdir = path.resolve(process.argv[2]);
 const draft = process.argv.includes('--draft');

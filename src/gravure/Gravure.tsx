@@ -23,7 +23,21 @@ export const G = {
   goldDeep: '#A8792A',
   red: '#C8262C',
   redDeep: '#5A0E10',
+  goldRgb: '226,177,74',
+  goldHiRgb: '255,200,110',
+  leakRgb: '255,140,40',
 };
+/** couleur d'accent par thème (l'or n'est plus obligatoire) : psycho bleu, histoire vert, philo pourpre, corps rouge sang */
+export type Accent = 'or' | 'bleu' | 'vert' | 'pourpre' | 'sang';
+const ACCENTS: Record<Accent, Partial<typeof G>> = {
+  or: {gold: '#E2B14A', goldHi: '#F7D98A', goldDeep: '#A8792A', goldRgb: '226,177,74', goldHiRgb: '255,200,110', leakRgb: '255,140,40'},
+  bleu: {gold: '#5AAEF0', goldHi: '#B4DEFF', goldDeep: '#1F5F9E', goldRgb: '90,174,240', goldHiRgb: '170,220,255', leakRgb: '70,150,255'},
+  vert: {gold: '#4CC38A', goldHi: '#B2F2CF', goldDeep: '#1E7A4E', goldRgb: '76,195,138', goldHiRgb: '170,245,200', leakRgb: '80,220,150'},
+  pourpre: {gold: '#B98AF0', goldHi: '#E2CCFF', goldDeep: '#6B3FA8', goldRgb: '185,138,240', goldHiRgb: '225,200,255', leakRgb: '170,100,255'},
+  sang: {gold: '#E8504F', goldHi: '#FFAFA6', goldDeep: '#9A1E22', goldRgb: '232,80,79', goldHiRgb: '255,170,160', leakRgb: '255,70,50'},
+};
+/** appelé par la scène avant ses enfants : toute la vidéo prend l'accent du thème */
+export const applyAccent = (a: Accent) => Object.assign(G, ACCENTS[a]);
 export const GF = {
   sans: `${mont.fontFamily}, "Arial Black", sans-serif`,
   serif: `${play.fontFamily}, Georgia, serif`,
@@ -40,7 +54,7 @@ export const Backdrop: React.FC<{id: string; kind: Bg; o?: number}> = ({id, kind
   if (kind === 'marble') return <AbsoluteFill style={st}><Img src={img(id, 'marble.webp')} style={{width: '100%', height: '100%'}} /></AbsoluteFill>;
   if (kind === 'velvet') return <AbsoluteFill style={st}><Img src={img(id, 'velvet.webp')} style={{width: '100%', height: '100%'}} /></AbsoluteFill>;
   if (kind === 'white') return <AbsoluteFill style={st}><Img src={img(id, 'marble_white.webp')} style={{width: '100%', height: '100%'}} /><AbsoluteFill style={{background: 'radial-gradient(ellipse 80% 60% at 50% 42%, rgba(0,0,0,0) 50%, rgba(40,32,20,0.45) 100%)'}} /></AbsoluteFill>;
-  if (kind === 'gold') return <AbsoluteFill style={{...st, background: 'radial-gradient(ellipse 75% 55% at 50% 42%, #E9D3A0 0%, #C9A45E 38%, #6E5224 78%, #2B2010 100%)'}} />;
+  if (kind === 'gold') return <AbsoluteFill style={{...st, background: `radial-gradient(ellipse 75% 55% at 50% 42%, ${G.goldHi} 0%, ${G.gold} 38%, ${G.goldDeep} 78%, #14110C 100%)`}} />;
   return <AbsoluteFill style={{...st, background: 'radial-gradient(ellipse 80% 60% at 50% 42%, #8A857C 0%, #5E5A53 50%, #24221F 100%)'}} />;
 };
 
@@ -51,7 +65,7 @@ export const Finish: React.FC<{frame: number; id: string; leak?: number; leakCor
   const [lx, ly] = leakCorner === 'tr' ? [980, 300] : [60, 1500];
   return (
     <>
-      {leak > 0 ? <AbsoluteFill style={{background: `radial-gradient(circle at ${lx}px ${ly}px, rgba(255,140,40,${0.55 * leak}) 0px, rgba(255,140,40,${0.22 * leak}) 260px, rgba(255,140,40,0) 640px)`, mixBlendMode: 'screen'}} /> : null}
+      {leak > 0 ? <AbsoluteFill style={{background: `radial-gradient(circle at ${lx}px ${ly}px, rgba(${G.leakRgb},${0.55 * leak}) 0px, rgba(${G.leakRgb},${0.22 * leak}) 260px, rgba(${G.leakRgb},0) 640px)`, mixBlendMode: 'screen'}} /> : null}
       <svg style={{position: 'absolute', left: 0, top: 0, opacity: 0.55}} width={1080} height={1920}>{dust.map((d, i) => <circle key={i} cx={d.x} cy={d.y} r={d.r} fill="#E9DFC8" opacity={d.o} />)}</svg>
       <AbsoluteFill style={{background: 'radial-gradient(ellipse 72% 58% at 50% 44%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.62) 100%)'}} />
       <AbsoluteFill style={{backgroundImage: `url(${img(id, 'grain.png')})`, backgroundPosition: `${Math.round(rand(s) * 512)}px ${Math.round(rand(s + 7.3) * 512)}px`, mixBlendMode: 'overlay', opacity: 0.11}} />
@@ -60,7 +74,7 @@ export const Finish: React.FC<{frame: number; id: string; leak?: number; leakCor
 };
 
 /** rayons qui tournent lentement derrière le sujet (rot en degrés) */
-export const Rays: React.FC<{k: number; rot: number; cy?: number; color?: string; dark?: boolean}> = ({k, rot, cy = 760, color = 'rgba(226,177,74,0.30)', dark}) =>
+export const Rays: React.FC<{k: number; rot: number; cy?: number; color?: string; dark?: boolean}> = ({k, rot, cy = 760, color = `rgba(${G.goldRgb},0.30)`, dark}) =>
   k <= 0 ? null : (
     <AbsoluteFill
       style={{
@@ -97,7 +111,7 @@ export const Brackets: React.FC<{x: number; y: number; w: number; h: number; k: 
   };
   return (
     <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
-      <path d={[c(-1, -1), c(1, -1), c(1, 1), c(-1, 1)].join(' ')} stroke={G.gold} strokeWidth={7} fill="none" strokeLinecap="square" opacity={clamp01(k * 1.6)} style={{filter: 'drop-shadow(0 0 6px rgba(226,177,74,0.6))'}} />
+      <path d={[c(-1, -1), c(1, -1), c(1, 1), c(-1, 1)].join(' ')} stroke={G.gold} strokeWidth={7} fill="none" strokeLinecap="square" opacity={clamp01(k * 1.6)} style={{filter: `drop-shadow(0 0 6px rgba(${G.goldRgb},0.6))`}} />
     </svg>
   );
 };
@@ -119,7 +133,7 @@ export const GreekKey: React.FC<{y: number; w?: number; k: number}> = ({y, w = 7
           <rect x={W / 2 - reveal / 2} y={-4} width={reveal} height={H + 12} />
         </clipPath>
       </defs>
-      <path d={d} stroke={G.gold} strokeWidth={4.5} fill="none" clipPath={`url(#gk${Math.round(y)})`} style={{filter: 'drop-shadow(0 0 4px rgba(226,177,74,0.45))'}} />
+      <path d={d} stroke={G.gold} strokeWidth={4.5} fill="none" clipPath={`url(#gk${Math.round(y)})`} style={{filter: `drop-shadow(0 0 4px rgba(${G.goldRgb},0.45))`}} />
     </svg>
   );
 };
@@ -153,7 +167,7 @@ export const Laurel: React.FC<{cx: number; cy: number; r: number; k: number; dar
           <stop offset="1" stopColor={G.goldDeep} />
         </linearGradient>
       </defs>
-      <g style={{filter: dark ? 'none' : 'drop-shadow(0 0 8px rgba(226,177,74,0.55))'}}>{leaves}</g>
+      <g style={{filter: dark ? 'none' : `drop-shadow(0 0 8px rgba(${G.goldRgb},0.55))`}}>{leaves}</g>
     </svg>
   );
 };
@@ -167,7 +181,7 @@ export const Crown: React.FC<{x: number; y: number; w: number; k: number}> = ({x
   const len = 3.6 * w;
   return (
     <svg style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}} width={1080} height={1920}>
-      <path d={d} stroke={G.gold} strokeWidth={9} fill="none" strokeLinejoin="round" strokeDasharray={len} strokeDashoffset={len * (1 - easeInOut(clamp01(k * 1.15)))} style={{filter: 'drop-shadow(0 0 8px rgba(226,177,74,0.7))'}} />
+      <path d={d} stroke={G.gold} strokeWidth={9} fill="none" strokeLinejoin="round" strokeDasharray={len} strokeDashoffset={len * (1 - easeInOut(clamp01(k * 1.15)))} style={{filter: `drop-shadow(0 0 8px rgba(${G.goldRgb},0.7))`}} />
       {[[0, h * 0.18], [w * 0.5, 0], [w, h * 0.18]].map(([px, py], i) => (
         <circle key={i} cx={x - w / 2 + px} cy={y - h + py - 12} r={11 * clamp01(k * 3 - 2)} fill={G.gold} />
       ))}
@@ -209,7 +223,7 @@ export const Filters: React.FC = () => (
 /** gravure / photo préparée, centrée en (x, y) ; z : poussée lente (ken burns) */
 export const Pic: React.FC<{id: string; name: string; w: number; x?: number; y?: number; z?: number; rot?: number}> = ({id, name, w, x = 540, y = 760, z = 0, rot = 0}) => (
   <div style={{position: 'absolute', left: x, top: y, width: w, transform: `translate(-50%, -50%) scale(${1 + z}) rotate(${rot}deg)`}}>
-    <Img src={img(id, `${name}.webp`)} style={{width: '100%', display: 'block', filter: 'drop-shadow(0 22px 34px rgba(0,0,0,0.75)) drop-shadow(0 0 14px rgba(226,177,74,0.22))'}} />
+    <Img src={img(id, `${name}.webp`)} style={{width: '100%', display: 'block', filter: `drop-shadow(0 22px 34px rgba(0,0,0,0.75)) drop-shadow(0 0 14px rgba(${G.goldRgb},0.22))`}} />
   </div>
 );
 
@@ -221,7 +235,7 @@ export const Coin: React.FC<{id: string; halfTurns: number; size?: number; y?: n
   const sx = Math.max(0.04, Math.abs(c));
   return (
     <div style={{position: 'absolute', left: 540, top: y - lift, width: size, height: size, transform: `translate(-50%, -50%) scaleX(${sx})`}}>
-      <Img src={img(id, `${side}.webp`)} style={{width: '100%', height: '100%', filter: `brightness(${0.75 + 0.25 * sx}) drop-shadow(0 26px 40px rgba(0,0,0,0.8)) drop-shadow(0 0 18px rgba(226,177,74,0.3))`}} />
+      <Img src={img(id, `${side}.webp`)} style={{width: '100%', height: '100%', filter: `brightness(${0.75 + 0.25 * sx}) drop-shadow(0 26px 40px rgba(0,0,0,0.8)) drop-shadow(0 0 18px rgba(${G.goldRgb},0.3))`}} />
     </div>
   );
 };
@@ -318,13 +332,13 @@ export const Balance: React.FC<{k: number; tilt: number; left: string; right: st
   const pan = (px: number, py: number, label: string, col: string) => (
     <g>
       <path d={`M ${px} ${py} L ${px - 105} ${py + 260} M ${px} ${py} L ${px + 105} ${py + 260}`} stroke={G.gold} strokeWidth={3} opacity={0.8} />
-      <path d={`M ${px - 128} ${py + 260} Q ${px} ${py + 350} ${px + 128} ${py + 260} Z`} fill="rgba(226,177,74,0.12)" stroke={G.gold} strokeWidth={7} />
+      <path d={`M ${px - 128} ${py + 260} Q ${px} ${py + 350} ${px + 128} ${py + 260} Z`} fill="rgba(${G.goldRgb},0.12)" stroke={G.gold} strokeWidth={7} />
       <text x={px} y={py + 238} textAnchor="middle" fontFamily={GF.serif} fontWeight={900} fontSize={74} fill={col} style={{filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.7))'}}>{label}</text>
     </g>
   );
   return (
     <svg style={{position: 'absolute', left: 0, top: 0, opacity: draw}} width={1080} height={1920}>
-      <g style={{filter: 'drop-shadow(0 0 8px rgba(226,177,74,0.5))'}}>
+      <g style={{filter: `drop-shadow(0 0 8px rgba(${G.goldRgb},0.5))`}}>
         <path d={`M 540 ${y - 250} L 540 ${y + 330} M 430 ${y + 330} L 650 ${y + 330}`} stroke={G.gold} strokeWidth={10} strokeLinecap="round" />
         <circle cx={540} cy={y - 262} r={20} fill={G.gold} />
         <line x1={lx} y1={ly} x2={rx} y2={ry} stroke={G.gold} strokeWidth={10} strokeLinecap="round" />
@@ -366,7 +380,7 @@ export const GCaptions: React.FC<{words: Word[]; t: number; hidden?: boolean; y?
         return (
           <span key={i} style={{position: 'relative', display: 'inline-block', marginRight: '0.26em', color: k < 1 ? `color-mix(in srgb, ${col} ${Math.round(k * 100)}%, #6B6862)` : col, textShadow: '0 4px 16px rgba(0,0,0,0.85), 3px 4px 0 rgba(0,0,0,0.55)', WebkitTextStroke: '2px rgba(8,6,4,0.9)', paintOrder: 'stroke fill', transform: `scale(${lerp(1.35, 1, k)})`, transformOrigin: '50% 70%'}}>
             {fr(w.text)}
-            {u > 0 ? <span style={{position: 'absolute', left: 0, bottom: -4, height: 7, width: `${u * 100}%`, background: G.gold, borderRadius: 2, boxShadow: '0 0 8px rgba(226,177,74,0.6)'}} /> : null}
+            {u > 0 ? <span style={{position: 'absolute', left: 0, bottom: -4, height: 7, width: `${u * 100}%`, background: G.gold, borderRadius: 2, boxShadow: `0 0 8px rgba(${G.goldRgb},0.6)`}} /> : null}
           </span>
         );
       })}
@@ -381,7 +395,7 @@ export {easeIn, easeOut, overshoot};
 /** titre d'accroche doré écrit en haut dès l'image 0 (miniature) ; « | » = retour à la ligne ; k = opacité */
 export const HookTitle: React.FC<{text: string; k: number}> = ({text, k}) =>
   k <= 0 ? null : (
-    <div style={{position: 'absolute', left: 70, right: 70, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(82, 1500 / Math.max(...text.split('|').map((l) => l.length))), whiteSpace: 'nowrap', lineHeight: 1.08, color: G.gold, textTransform: 'uppercase', opacity: k, textShadow: '0 0 28px rgba(226,177,74,0.4), 0 6px 18px rgba(0,0,0,0.9)'}}>
+    <div style={{position: 'absolute', left: 70, right: 70, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(82, 1500 / Math.max(...text.split('|').map((l) => l.length))), whiteSpace: 'nowrap', lineHeight: 1.08, color: G.gold, textTransform: 'uppercase', opacity: k, textShadow: `0 0 28px rgba(${G.goldRgb},0.4), 0 6px 18px rgba(0,0,0,0.9)`}}>
       {text.split('|').map((ln, i) => <div key={i}>{ln}</div>)}
     </div>
   );
@@ -395,7 +409,7 @@ export const ConceptWord: React.FC<{word: string; sub: string; t: number; t0: nu
   return (
     <>
       <GreekKey y={690} k={prog(lt, 0, 0.4)} />
-      <div style={{position: 'absolute', left: 40, right: 40, top: 840, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: fs, lineHeight: 1.02, color: G.gold, textShadow: '0 0 30px rgba(226,177,74,0.45), 0 8px 20px rgba(0,0,0,0.85)'}}>
+      <div style={{position: 'absolute', left: 40, right: 40, top: 840, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: fs, lineHeight: 1.02, color: G.gold, textShadow: `0 0 30px rgba(${G.goldRgb},0.45), 0 8px 20px rgba(0,0,0,0.85)`}}>
         {word.slice(0, n)}<span style={{opacity: 0}}>{word.slice(n)}</span>
       </div>
       <div style={{position: 'absolute', left: 60, right: 60, top: 990, textAlign: 'center', fontFamily: GF.serif, fontWeight: 700, fontStyle: 'italic', fontSize: 58, color: G.cream, opacity: prog(lt, done + 0.1, done + 0.45), textShadow: '0 4px 14px rgba(0,0,0,0.85)'}}>{sub}</div>
@@ -473,7 +487,7 @@ export const LinesCard: React.FC<{draw: number; pick?: 1 | 2 | 3; wrong?: boolea
       <line x1={270} y1={base} x2={270} y2={base - L.ref} stroke="#1B1712" strokeWidth={16} strokeLinecap="round" style={d(L.ref, draw * 1.4 - 0.2)} />
       {([1, 2, 3] as const).map((n, i) => (
         <g key={n}>
-          {pick === n && pickK > 0 ? <rect x={xs[n] - 40} y={base - L[n] - 30} width={80} height={L[n] + 110} rx={40} fill={wrong ? 'rgba(179,32,31,0.16)' : 'rgba(226,177,74,0.28)'} stroke={wrong ? '#B3201F' : G.gold} strokeWidth={6} opacity={pickK} /> : null}
+          {pick === n && pickK > 0 ? <rect x={xs[n] - 40} y={base - L[n] - 30} width={80} height={L[n] + 110} rx={40} fill={wrong ? 'rgba(179,32,31,0.16)' : `rgba(${G.goldRgb},0.28)`} stroke={wrong ? '#B3201F' : G.gold} strokeWidth={6} opacity={pickK} /> : null}
           <line x1={xs[n]} y1={base} x2={xs[n]} y2={base - L[n]} stroke={col(n)} strokeWidth={16} strokeLinecap="round" style={d(L[n], draw * 1.4 - 0.35 - i * 0.12)} />
           <text x={xs[n]} y={base + 62} textAnchor="middle" fontFamily={GF.serif} fontWeight={900} fontSize={54} fill={col(n)} opacity={clamp01(draw * 2 - 0.6)}>{n}</text>
         </g>
@@ -527,7 +541,7 @@ export const Smear: React.FC<{lt: number; dur?: number; streak?: boolean; y?: nu
     <>
       {s > 0.01 ? [-3, -2, -1, 1, 2, 3].map((g) => <AbsoluteFill key={g} style={{transform: `translateX(${g * 38 * s}px)`, opacity: 0.22 * s, filter: 'blur(3px)'}}>{children}</AbsoluteFill>) : null}
       <AbsoluteFill style={{transform: `translateX(${-60 * s}px)`, filter: s > 0.05 ? `blur(${s * 6}px)` : undefined}}>{children}</AbsoluteFill>
-      {streak && s > 0.01 ? <div style={{position: 'absolute', left: -200, right: -200, top: y - 6, height: 12, background: 'linear-gradient(90deg, rgba(255,190,90,0) 0%, rgba(255,200,110,0.95) 50%, rgba(255,190,90,0) 100%)', filter: 'blur(5px)', opacity: s, transform: `scaleY(${1 + 3 * s})`, mixBlendMode: 'screen'}} /> : null}
+      {streak && s > 0.01 ? <div style={{position: 'absolute', left: -200, right: -200, top: y - 6, height: 12, background: `linear-gradient(90deg, rgba(${G.goldRgb},0) 0%, rgba(${G.goldHiRgb},0.95) 50%, rgba(${G.goldRgb},0) 100%)`, filter: 'blur(5px)', opacity: s, transform: `scaleY(${1 + 3 * s})`, mixBlendMode: 'screen'}} /> : null}
     </>
   );
 };

@@ -14,7 +14,7 @@ import {clamp01, FPS, lerp, prog, rand} from '../theme';
 import type {SceneProps} from '../Video';
 import type {Word} from '../components/Captions';
 import {jumpsOf, Shot, STROBE_EVERY, strobeDigits, strobeLen, textCard, Tr} from './shots';
-import {Backdrop, Balance, Beam, Brackets, Coin, ConceptWord, Crown, DigitStrobe, easeIn, easeOut, Filters, Finish, G, GCaptions, GF, GlitchBands, GlitchFilter, HookTitle, Laurel, LinesCard, Num, overshoot, Pic, QuoteCard, Rays, SlamWord, Smear, SpeedLines, Stamp, TitleCard} from './Gravure';
+import {Accent, applyAccent, Backdrop, Balance, Beam, Brackets, Coin, ConceptWord, Crown, DigitStrobe, easeIn, easeOut, Filters, Finish, G, GCaptions, GF, GlitchBands, GlitchFilter, HookTitle, Laurel, LinesCard, Num, overshoot, Pic, QuoteCard, Rays, SlamWord, Smear, SpeedLines, Stamp, TitleCard} from './Gravure';
 
 export type {Shot, Spin, Tr} from './shots';
 export {wordAt} from './shots';
@@ -61,7 +61,7 @@ const ShotView: React.FC<{id: string; faces: [string, string]; s: Shot; t: numbe
       {s.laurel ? <Laurel cx={540} cy={s.laurel.cy} r={s.laurel.r} dark={s.laurel.dark} k={prog(lt, s.laurel.at ?? 0.2, (s.laurel.at ?? 0.2) + 0.9)} /> : null}
       {s.crown ? <Crown x={540} y={s.crown.y} w={s.crown.w ?? 280} k={prog(lt, s.crown.at, s.crown.at + 0.7)} /> : null}
       {s.brackets ? <Brackets {...s.brackets} k={prog(lt, s.brackets.at ?? 0.3, (s.brackets.at ?? 0.3) + 0.35)} t={t} /> : null}
-      {s.title ? <div style={{position: 'absolute', left: 0, right: 0, top: 300, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 120, color: G.gold, letterSpacing: '0.04em', opacity: prog(lt, 0.15, 0.5), transform: `translateY(${(1 - prog(lt, 0.15, 0.6, easeOut)) * 24}px)`, textShadow: '0 0 24px rgba(226,177,74,0.45), 0 6px 18px rgba(0,0,0,0.8)'}}>{s.title}</div> : null}
+      {s.title ? <div style={{position: 'absolute', left: 0, right: 0, top: 300, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 120, color: G.gold, letterSpacing: '0.04em', opacity: prog(lt, 0.15, 0.5), transform: `translateY(${(1 - prog(lt, 0.15, 0.6, easeOut)) * 24}px)`, textShadow: `0 0 24px rgba(${G.goldRgb},0.45), 0 6px 18px rgba(0,0,0,0.8)`}}>{s.title}</div> : null}
       {s.topLabel ? <div style={{position: 'absolute', left: 0, right: 0, top: 360, textAlign: 'center', fontFamily: GF.sans, fontWeight: 900, fontSize: 50, letterSpacing: '0.22em', color: '#2A1E0C', opacity: prog(lt, 0.3, 0.6)}}>{s.topLabel}</div> : null}
       {s.stamp ? <Stamp text={s.stamp.text} t={t} t0={s.stamp.at} size={s.stamp.size} y={s.stamp.y} rot={s.stamp.rot} color={s.stamp.color} /> : null}
       {s.slam ? <SlamWord text={s.slam.text} lt={lt - (s.slam.at ?? 0.04)} y={s.slam.y} size={s.slam.size} color={s.slam.color} /> : null}
@@ -97,8 +97,9 @@ const camera = (s: Shot, i: number, t: number, t1: number, jumps: number[], punc
 };
 
 /** fabrique la scène d'une vidéo Gravure à partir de sa liste de plans (balises de timeline.json → plans) */
-export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words: Word[], dur: number) => Shot[], coinFaces: [string, string] = ['coin_pile', 'coin_face']) => {
+export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words: Word[], dur: number) => Shot[], coinFaces: [string, string] = ['coin_pile', 'coin_face'], accent: Accent = 'or') => {
   const Reel: React.FC<SceneProps> = ({tl, words}) => {
+  applyAccent(accent);
   const frame = useCurrentFrame();
   const t = frame / FPS;
   const shots = React.useMemo(() => shotsOf(tl.beats, words, tl.duration), [tl, words]);
