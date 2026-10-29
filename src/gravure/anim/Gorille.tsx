@@ -68,16 +68,16 @@ export const TestPasses: React.FC<AnimProps> = ({id, t, lt, p}) => {
   const gy = 800 + Math.abs(Math.sin(tt * 6)) * -14;
   const show = tt > g0 && tt < g1;
   const rk = reveal ? prog(lt, 0.1, 0.6, easeOut) : 0;
-  const testOn = !reveal && p.freezeAt === undefined && t >= go - 0.2 && t < stop + 0.3;
+  const testOn = !reveal && p.freezeAt === undefined && t >= Math.max(go - 0.2, 3.05) && t < stop + 0.3; // après le titre d'accroche
   return (
     <>
       {show ? (
-        <div style={{position: 'absolute', left: 540 + (gx + thump - 540) * 1.2, top: 820 + (gy - 820) * 1.2, width: 340, transform: `translate(-50%, -50%) rotate(${thump * 0.6}deg)`}}>
+        <div style={{position: 'absolute', left: 540 + (gx + thump - 540) * 1.12, top: 820 + (gy - 820) * 1.12, width: 330, transform: `translate(-50%, -50%) rotate(${thump * 0.6}deg)`}}>
           <Img src={staticFile(`v/${id}/img/gorille_test.webp`)} style={{width: '100%', display: 'block'}} />
         </div>
       ) : null}
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
-        <g transform="translate(540 820) scale(1.2) translate(-540 -820)">
+        <g transform="translate(540 820) scale(1.12) translate(-540 -820)">
         {[0, 1, 2, 3, 4, 5].map((i) => <Player key={i} p={pos(i, tt)} white={W.includes(i)} tt={tt} i={i} />)}
         <Ball p={ballAt(tt, go + 0.05, stop - 0.15, passes, W)} />
         <Ball p={ballAt(tt + 0.37, go + 0.3, stop - 0.05, passes - 2, B)} />
@@ -85,7 +85,7 @@ export const TestPasses: React.FC<AnimProps> = ({id, t, lt, p}) => {
         {reveal && rk > 0 ? <ellipse cx={560} cy={800} rx={200 + 40 * (1 - rk)} ry={230 + 40 * (1 - rk)} fill="none" stroke="#FF3B30" strokeWidth={10} strokeDasharray="1600" strokeDashoffset={1600 * (1 - rk)} /> : null}
       </svg>
       {testOn ? (
-        <div style={{position: 'absolute', left: 0, right: 0, top: 360, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 36, lineHeight: 1.35, letterSpacing: '0.12em', color: G.gold}}>
+        <div style={{position: 'absolute', left: 0, right: 0, top: 305, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 36, lineHeight: 1.35, letterSpacing: '0.12em', color: G.gold}}>
           COMPTE LES PASSES<br />DES MAILLOTS BLANCS
         </div>
       ) : null}
