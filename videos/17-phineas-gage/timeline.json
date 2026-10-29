@@ -1,0 +1,141 @@
+{
+ "fps": 30,
+ "duration": 62.453,
+ "frames": 1874,
+ "beats": {
+  "hook": 0.22,
+  "h": 0.22,
+  "h2": 2.55,
+  "accident": 4.75,
+  "an": 4.75,
+  "barre": 8.68,
+  "explose": 10.78,
+  "traverse": 12.28,
+  "metres": 15.5,
+  "vivant": 17.36,
+  "charrette": 18.32,
+  "vomit": 22.42,
+  "demi": 24.05,
+  "douze": 26.42,
+  "garde": 28.04,
+  "change": 31.55,
+  "sauf": 31.55,
+  "grossier": 33.38,
+  "amis": 37.96,
+  "nom": 40.11,
+  "frein": 42.87,
+  "twist": 46.01,
+  "mais": 46.01,
+  "chili": 47.33,
+  "cerveau": 51.82,
+  "musee": 54.35,
+  "crane": 54.35,
+  "fin": 56.65,
+  "toi": 56.65,
+  "loop": 59.63
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.22,
+   "t1": 4.75,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "accident",
+   "t0": 4.75,
+   "t1": 17.36,
+   "scene": null,
+   "beats": [
+    "an",
+    "barre",
+    "explose",
+    "traverse",
+    "metres"
+   ]
+  },
+  {
+   "id": "vivant",
+   "t0": 17.36,
+   "t1": 22.42,
+   "scene": null,
+   "beats": [
+    "charrette"
+   ]
+  },
+  {
+   "id": "vomit",
+   "t0": 22.42,
+   "t1": 31.55,
+   "scene": null,
+   "beats": [
+    "demi",
+    "douze",
+    "garde"
+   ]
+  },
+  {
+   "id": "change",
+   "t0": 31.55,
+   "t1": 40.11,
+   "scene": null,
+   "beats": [
+    "sauf",
+    "grossier",
+    "amis"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 40.11,
+   "t1": 46.01,
+   "scene": null,
+   "beats": [
+    "frein"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 46.01,
+   "t1": 54.35,
+   "scene": null,
+   "beats": [
+    "mais",
+    "chili",
+    "cerveau"
+   ]
+  },
+  {
+   "id": "musee",
+   "t0": 54.35,
+   "t1": 56.65,
+   "scene": null,
+   "beats": [
+    "crane"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 56.65,
+   "t1": 62.453,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Phineas Gage",
+ "hook": "une barre dans le crâne|et il a survécu",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu savais que ta personnalité tenait là ?"
+ }
+}

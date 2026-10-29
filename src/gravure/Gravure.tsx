@@ -546,15 +546,16 @@ export const Smear: React.FC<{lt: number; dur?: number; streak?: boolean; y?: nu
   );
 };
 
-/** mot qui claque au centre (Montserrat 900) : arrive de ×2,4 en 0,12 s, puis respire */
+/** mot qui claque au centre (Montserrat 900) : arrive de ×2,4 en 0,12 s, puis respire ; « | » = retour à la ligne */
 export const SlamWord: React.FC<{text: string; lt: number; y?: number; size?: number; color?: 'gold' | 'white' | 'red'}> = ({text, lt, y = 330, size, color = 'white'}) => {
   if (lt < 0) return null;
   const k = prog(lt, 0, 0.12, easeIn);
-  const fs = size ?? Math.min(180, 860 / Math.max(3, text.length)); // Montserrat 900 ≈ 0,8 em par lettre : ≤ 880 px de large
+  const lines = text.split('|'); // « | » = retour à la ligne
+  const fs = size ?? Math.min(180, 860 / Math.max(3, ...lines.map((l) => l.length))); // Montserrat 900 ≈ 0,8 em par lettre : ≤ 880 px de large
   const col = color === 'gold' ? G.gold : color === 'red' ? '#FF3B30' : G.white;
   return (
     <div style={{position: 'absolute', left: 40, right: 40, top: y, transform: `translateY(-50%) scale(${lerp(2.4, 1, k) * (1 + 0.02 * Math.sin(lt * 5))})`, textAlign: 'center', fontFamily: GF.sans, fontWeight: 900, fontSize: fs, lineHeight: 1, textTransform: 'uppercase', whiteSpace: 'nowrap', color: col, opacity: k, WebkitTextStroke: '4px rgba(8,6,4,0.95)', paintOrder: 'stroke fill', textShadow: '0 10px 30px rgba(0,0,0,0.9), 6px 8px 0 rgba(0,0,0,0.6)'}}>
-      {text}
+      {lines.map((l, i) => <div key={i}>{l}</div>)}
     </div>
   );
 };

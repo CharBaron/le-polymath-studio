@@ -1,0 +1,135 @@
+{
+ "fps": 30,
+ "duration": 65.453,
+ "frames": 1964,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "h2": 4.88,
+  "contagion": 7.07,
+  "sem": 7.07,
+  "aout": 9.69,
+  "remede": 13.56,
+  "musique": 14.94,
+  "plus": 17.56,
+  "pire": 20.81,
+  "morts": 22.03,
+  "ergot": 25.77,
+  "sang": 30.57,
+  "nom": 34.57,
+  "stress": 37.8,
+  "saint": 41.95,
+  "saverne": 43.98,
+  "fin1": 47.21,
+  "sauf": 48.29,
+  "rhin": 49.86,
+  "rire": 54.13,
+  "fin": 59.21,
+  "toi": 59.21,
+  "loop": 62.22
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 7.07,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "contagion",
+   "t0": 7.07,
+   "t1": 13.56,
+   "scene": null,
+   "beats": [
+    "sem",
+    "aout"
+   ]
+  },
+  {
+   "id": "remede",
+   "t0": 13.56,
+   "t1": 20.81,
+   "scene": null,
+   "beats": [
+    "musique",
+    "plus"
+   ]
+  },
+  {
+   "id": "pire",
+   "t0": 20.81,
+   "t1": 25.77,
+   "scene": null,
+   "beats": [
+    "morts"
+   ]
+  },
+  {
+   "id": "ergot",
+   "t0": 25.77,
+   "t1": 34.57,
+   "scene": null,
+   "beats": [
+    "sang"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 34.57,
+   "t1": 41.95,
+   "scene": null,
+   "beats": [
+    "stress"
+   ]
+  },
+  {
+   "id": "saint",
+   "t0": 41.95,
+   "t1": 48.29,
+   "scene": null,
+   "beats": [
+    "saverne",
+    "fin1"
+   ]
+  },
+  {
+   "id": "sauf",
+   "t0": 48.29,
+   "t1": 54.13,
+   "scene": null,
+   "beats": [
+    "rhin"
+   ]
+  },
+  {
+   "id": "rire",
+   "t0": 54.13,
+   "t1": 59.21,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "fin",
+   "t0": 59.21,
+   "t1": 65.453,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "L'épidémie de danse de 1518",
+ "hook": "400 personnes ont dansé|sans pouvoir s'arrêter",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu crois que ça pourrait arriver aujourd'hui ?"
+ }
+}

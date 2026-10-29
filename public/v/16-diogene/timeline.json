@@ -1,0 +1,138 @@
+{
+ "fps": 30,
+ "duration": 62.085,
+ "frames": 1863,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "h2": 4.43,
+  "platon": 7.23,
+  "def": 7.23,
+  "poulet": 10.54,
+  "ongles": 12.33,
+  "jarre": 15.11,
+  "bol": 17.86,
+  "enfant": 19.46,
+  "jette": 21.8,
+  "lanterne": 22.84,
+  "lampe": 22.84,
+  "cherche": 25.62,
+  "monde": 29.12,
+  "pays": 27.08,
+  "cosmo": 31.087,
+  "nom": 34.62,
+  "cynique": 36.44,
+  "sens": 39.77,
+  "alexandre": 43.3,
+  "ans": 43.3,
+  "alex": 45.089,
+  "demande": 49.12,
+  "soleil": 50.157,
+  "quote": 53.26,
+  "fin": 57.33,
+  "toi": 57.33,
+  "loop": 59.21
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 7.23,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "platon",
+   "t0": 7.23,
+   "t1": 15.11,
+   "scene": null,
+   "beats": [
+    "def",
+    "poulet",
+    "ongles"
+   ]
+  },
+  {
+   "id": "jarre",
+   "t0": 15.11,
+   "t1": 22.84,
+   "scene": null,
+   "beats": [
+    "bol",
+    "enfant",
+    "jette"
+   ]
+  },
+  {
+   "id": "lanterne",
+   "t0": 22.84,
+   "t1": 29.12,
+   "scene": null,
+   "beats": [
+    "lampe",
+    "cherche"
+   ]
+  },
+  {
+   "id": "monde",
+   "t0": 29.12,
+   "t1": 34.62,
+   "scene": null,
+   "beats": [
+    "pays",
+    "cosmo"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 34.62,
+   "t1": 43.3,
+   "scene": null,
+   "beats": [
+    "cynique",
+    "sens"
+   ]
+  },
+  {
+   "id": "alexandre",
+   "t0": 43.3,
+   "t1": 53.26,
+   "scene": null,
+   "beats": [
+    "ans",
+    "alex",
+    "demande",
+    "soleil"
+   ]
+  },
+  {
+   "id": "quote",
+   "t0": 53.26,
+   "t1": 57.33,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "fin",
+   "t0": 57.33,
+   "t1": 62.085,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Diogène et le poulet plumé",
+ "hook": "un poulet plumé|au cours de Platon",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu pourrais vivre comme Diogène ?"
+ }
+}
