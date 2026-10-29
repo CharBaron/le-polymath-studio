@@ -25,7 +25,7 @@ const rows = shots.map((s, k) => {
     stampAt: s.stamp ? s.stamp.at : null, slamAt: s.slam ? s.t0 + (s.slam.at ?? 0.04) : null,
     strobe: sl ? lib.strobeDigits(s.num.text).map((_, i) => s.t0 + i * lib.STROBE_EVERY) : [],
     num: s.num ? {land: s.t0 + sl + 0.04, digits: lib.strobeDigits(s.num.text).length} : null,
-    pops: (s.pics ?? []).map((q) => s.t0 + q.at), lines: s.lines ?? null, card: lib.textCard(s), rays: s.rays ?? null,
+    pops: (s.pics ?? []).map((q) => s.t0 + q.at), lines: s.lines ?? null, card: lib.textCard(s), rays: s.rays ?? null, anim: s.anim ?? null,
   };
 });
 fs.writeFileSync(path.join(vdir, 'build', 'shots.json'), JSON.stringify(rows, null, 1));

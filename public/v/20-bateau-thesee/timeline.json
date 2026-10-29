@@ -1,0 +1,123 @@
+{
+ "fps": 30,
+ "duration": 63.181,
+ "frames": 1895,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "h2": 4.38,
+  "plutarque": 6.43,
+  "planches": 11.19,
+  "toutes": 14.78,
+  "vote": 18.17,
+  "hobbes": 21.09,
+  "gardien": 25.12,
+  "reconstruit": 27.956,
+  "deux": 30.13,
+  "lequel": 31.52,
+  "nom": 33.24,
+  "identite": 35.48,
+  "relance": 38.02,
+  "corps": 40.13,
+  "cellules": 40.13,
+  "neurones": 43.49,
+  "parfit": 46.46,
+  "machine": 49.01,
+  "reveil": 53.11,
+  "copie": 56.1,
+  "fin": 57.59,
+  "commente": 57.59,
+  "loop": 60.37
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 6.43,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "plutarque",
+   "t0": 6.43,
+   "t1": 21.09,
+   "scene": null,
+   "beats": [
+    "planches",
+    "toutes",
+    "vote"
+   ]
+  },
+  {
+   "id": "hobbes",
+   "t0": 21.09,
+   "t1": 33.24,
+   "scene": null,
+   "beats": [
+    "gardien",
+    "reconstruit",
+    "deux",
+    "lequel"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 33.24,
+   "t1": 38.02,
+   "scene": null,
+   "beats": [
+    "identite"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 38.02,
+   "t1": 40.13,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "corps",
+   "t0": 40.13,
+   "t1": 46.46,
+   "scene": null,
+   "beats": [
+    "cellules",
+    "neurones"
+   ]
+  },
+  {
+   "id": "parfit",
+   "t0": 46.46,
+   "t1": 57.59,
+   "scene": null,
+   "beats": [
+    "machine",
+    "reveil",
+    "copie"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 57.59,
+   "t1": 63.181,
+   "scene": null,
+   "beats": [
+    "commente",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le bateau de Thésée",
+ "hook": "est-ce encore|le même bateau ?",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A (c'est toi) ou B (une copie) ? Réponds en commentaire 👇"
+ }
+}

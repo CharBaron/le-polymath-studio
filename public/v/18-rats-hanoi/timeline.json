@@ -1,0 +1,143 @@
+{
+ "fps": 30,
+ "duration": 61.259,
+ "frames": 1838,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "h2": 5.24,
+  "egouts": 7.37,
+  "paradis": 10.6,
+  "peste": 11.81,
+  "chasse": 13.99,
+  "jour": 16.04,
+  "toujours": 19.64,
+  "prime": 20.94,
+  "centime": 22.78,
+  "queue": 24.18,
+  "relance": 26.96,
+  "triche": 28.5,
+  "coupe": 28.5,
+  "relache": 31.2,
+  "bebes": 32.61,
+  "queues": 34.16,
+  "fermes": 36.53,
+  "fin_prime": 39.54,
+  "peste2": 40.57,
+  "nom": 43.42,
+  "def": 46.12,
+  "inde": 49.29,
+  "elevage": 53.39,
+  "fin": 55.01,
+  "toi": 55.01,
+  "loop": 58.68
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 7.37,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "egouts",
+   "t0": 7.37,
+   "t1": 13.99,
+   "scene": null,
+   "beats": [
+    "paradis",
+    "peste"
+   ]
+  },
+  {
+   "id": "chasse",
+   "t0": 13.99,
+   "t1": 20.94,
+   "scene": null,
+   "beats": [
+    "jour",
+    "toujours"
+   ]
+  },
+  {
+   "id": "prime",
+   "t0": 20.94,
+   "t1": 26.96,
+   "scene": null,
+   "beats": [
+    "centime",
+    "queue"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 26.96,
+   "t1": 28.5,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "triche",
+   "t0": 28.5,
+   "t1": 36.53,
+   "scene": null,
+   "beats": [
+    "coupe",
+    "relache",
+    "bebes",
+    "queues"
+   ]
+  },
+  {
+   "id": "fermes",
+   "t0": 36.53,
+   "t1": 43.42,
+   "scene": null,
+   "beats": [
+    "fin_prime",
+    "peste2"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 43.42,
+   "t1": 49.29,
+   "scene": null,
+   "beats": [
+    "def"
+   ]
+  },
+  {
+   "id": "inde",
+   "t0": 49.29,
+   "t1": 55.01,
+   "scene": null,
+   "beats": [
+    "elevage"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 55.01,
+   "t1": 61.259,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Les rats sans queue de Hanoï",
+ "hook": "des rats vivants|sans queue",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu connais d'autres effets cobra ?"
+ }
+}

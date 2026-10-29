@@ -6,12 +6,25 @@ import React from 'react';
 import {AbsoluteFill, Img, staticFile} from 'remotion';
 import {loadFont as loadMontserrat} from '@remotion/google-fonts/Montserrat';
 import {loadFont as loadPlayfair} from '@remotion/google-fonts/PlayfairDisplay';
+import {loadFont as loadCinzel} from '@remotion/google-fonts/Cinzel';
+import {loadFont as loadCormorant} from '@remotion/google-fonts/CormorantGaramond';
+import {loadFont as loadFell} from '@remotion/google-fonts/IMFellEnglish';
+import {loadFont as loadElite} from '@remotion/google-fonts/SpecialElite';
+import {loadFont as loadPlex} from '@remotion/google-fonts/IBMPlexMono';
 import {clamp01, easeIn, easeInOut, easeOut, lerp, overshoot, prog, rand} from '../theme';
 import type {Word} from '../components/Captions';
 import {strobeDigits} from './shots';
 
 const mont = loadMontserrat('normal', {weights: ['700', '800', '900'], subsets: ['latin', 'latin-ext']});
 const play = loadPlayfair('normal', {weights: ['700', '800', '900'], subsets: ['latin', 'latin-ext']});
+// polices des thèmes v3.1 (une identité par vidéo)
+const cinzel = loadCinzel('normal', {weights: ['700', '900'], subsets: ['latin', 'latin-ext']});
+const corm = loadCormorant('normal', {weights: ['700'], subsets: ['latin', 'latin-ext']});
+const fell = loadFell('normal', {weights: ['400'], subsets: ['latin']});
+const fellI = loadFell('italic', {weights: ['400'], subsets: ['latin']});
+const elite = loadElite('normal', {weights: ['400'], subsets: ['latin']});
+const plex = loadPlex('normal', {weights: ['500', '700'], subsets: ['latin', 'latin-ext']});
+void fellI;
 
 export const G = {
   bg: '#0E0D0C',
@@ -26,21 +39,61 @@ export const G = {
   goldRgb: '226,177,74',
   goldHiRgb: '255,200,110',
   leakRgb: '255,140,40',
+  /** textes hors sous-titres (citations, cartes, étiquettes) : clairs sur fond sombre, encre sur fond clair */
+  text: '#F6F1E6',
+  textSoft: '#EFE6D2',
+  shadow: '0 6px 18px rgba(0,0,0,0.85)',
 };
 /** couleur d'accent par thème (l'or n'est plus obligatoire) : psycho bleu, histoire vert, philo pourpre, corps rouge sang */
-export type Accent = 'or' | 'bleu' | 'vert' | 'pourpre' | 'sang';
+export type Accent = 'or' | 'bleu' | 'vert' | 'pourpre' | 'sang' | 'ocre' | 'electrique' | 'terracotta' | 'encre';
 const ACCENTS: Record<Accent, Partial<typeof G>> = {
   or: {gold: '#E2B14A', goldHi: '#F7D98A', goldDeep: '#A8792A', goldRgb: '226,177,74', goldHiRgb: '255,200,110', leakRgb: '255,140,40'},
   bleu: {gold: '#5AAEF0', goldHi: '#B4DEFF', goldDeep: '#1F5F9E', goldRgb: '90,174,240', goldHiRgb: '170,220,255', leakRgb: '70,150,255'},
   vert: {gold: '#4CC38A', goldHi: '#B2F2CF', goldDeep: '#1E7A4E', goldRgb: '76,195,138', goldHiRgb: '170,245,200', leakRgb: '80,220,150'},
   pourpre: {gold: '#B98AF0', goldHi: '#E2CCFF', goldDeep: '#6B3FA8', goldRgb: '185,138,240', goldHiRgb: '225,200,255', leakRgb: '170,100,255'},
   sang: {gold: '#E8504F', goldHi: '#FFAFA6', goldDeep: '#9A1E22', goldRgb: '232,80,79', goldHiRgb: '255,170,160', leakRgb: '255,70,50'},
+  ocre: {gold: '#D9922E', goldHi: '#F5C77A', goldDeep: '#8A5414', goldRgb: '217,146,46', goldHiRgb: '245,199,122', leakRgb: '255,150,50'},
+  electrique: {gold: '#3FD0FF', goldHi: '#B8F0FF', goldDeep: '#0B6E9E', goldRgb: '63,208,255', goldHiRgb: '184,240,255', leakRgb: '40,170,255'},
+  terracotta: {gold: '#E07A3F', goldHi: '#F7B78A', goldDeep: '#8E3A14', goldRgb: '224,122,63', goldHiRgb: '247,183,138', leakRgb: '255,120,50'},
+  encre: {gold: '#B3201F', goldHi: '#E06A5A', goldDeep: '#6E0F10', goldRgb: '179,32,31', goldHiRgb: '224,106,90', leakRgb: '200,60,40'},
 };
 /** appelé par la scène avant ses enfants : toute la vidéo prend l'accent du thème */
 export const applyAccent = (a: Accent) => Object.assign(G, ACCENTS[a]);
 export const GF = {
   sans: `${mont.fontFamily}, "Arial Black", sans-serif`,
   serif: `${play.fontFamily}, Georgia, serif`,
+  /** petites étiquettes (sous les chiffres, signature des citations, topLabel) */
+  label: `${mont.fontFamily}, "Arial Black", sans-serif`,
+};
+const DISPLAY = {playfair: play.fontFamily, cinzel: cinzel.fontFamily, cormorant: corm.fontFamily, fell: fell.fontFamily};
+const LABEL = {montserrat: mont.fontFamily, elite: elite.fontFamily, plex: plex.fontFamily, cinzel: cinzel.fontFamily, fell: fell.fontFamily};
+
+/** identité visuelle d'une vidéo : couleur, polices, fond clair ou sombre, ornements, étalonnage, habillage */
+export type Theme = {
+  accent: Accent;
+  display?: keyof typeof DISPLAY;
+  label?: keyof typeof LABEL;
+  /** light : le fond « marble » de la vidéo est clair (parchemin) → textes en encre, bande sombre sous les sous-titres */
+  base?: 'dark' | 'light';
+  /** frises des cartes : méandre grec, double filet (planche ancienne), pointillés d'étoiles (atlas) */
+  ornament?: 'greek' | 'rule' | 'stars';
+  /** habillage : hud = écran de test (coins, REC, minuteur) */
+  overlay?: 'hud';
+  /** texte affiché en petit dans l'habillage (hud) */
+  overlayLabel?: string;
+};
+export const THEME: Required<Omit<Theme, 'overlay' | 'overlayLabel'>> & Pick<Theme, 'overlay' | 'overlayLabel'> = {accent: 'or', display: 'playfair', label: 'montserrat', base: 'dark', ornament: 'greek'};
+/** appelé par la scène avant ses enfants : toute la vidéo prend le thème (accent, polices, couleurs de texte) */
+export const applyTheme = (t: Accent | Theme) => {
+  const th: Theme = typeof t === 'string' ? {accent: t} : t;
+  Object.assign(THEME, {display: 'playfair', label: 'montserrat', base: 'dark', ornament: 'greek', overlay: undefined, overlayLabel: undefined}, th);
+  applyAccent(THEME.accent);
+  GF.serif = `${DISPLAY[THEME.display]}, Georgia, serif`;
+  GF.label = `${LABEL[THEME.label]}, "Arial Black", sans-serif`;
+  const light = THEME.base === 'light';
+  Object.assign(G, light
+    ? {text: '#2A1E10', textSoft: '#4A3824', shadow: '0 2px 8px rgba(90,60,25,0.22)'}
+    : {text: '#F6F1E6', textSoft: '#EFE6D2', shadow: '0 6px 18px rgba(0,0,0,0.85)'});
 };
 const img = (id: string, f: string) => staticFile(`v/${id}/img/${f}`);
 /** typo française : espace insécable avant : ; ? ! */
@@ -121,7 +174,11 @@ export const GreekKey: React.FC<{y: number; w?: number; k: number}> = ({y, w = 7
   if (k <= 0) return null;
   const U = 40, H = 34, n = Math.floor(w / U), W = n * U;
   let d = `M 0 2 H ${W} M 0 ${H} H ${W}`;
-  for (let i = 0; i < n; i++) {
+  if (THEME.ornament === 'rule') d = `M 0 10 H ${W} M 0 18 H ${W}`; // double filet de planche ancienne
+  else if (THEME.ornament === 'stars') { // pointillés et petites étoiles d'atlas céleste
+    d = `M 0 17 H ${W}`;
+    for (let i = 0; i <= n; i += 3) { const x = i * U; d += ` M ${x} 9 L ${x + 3} 15 L ${x + 9} 17 L ${x + 3} 19 L ${x} 25 L ${x - 3} 19 L ${x - 9} 17 L ${x - 3} 15 Z`; }
+  } else for (let i = 0; i < n; i++) {
     const x = i * U;
     d += ` M ${x + 4} ${H} V 8 H ${x + 32} V 26 H ${x + 14} V 16 H ${x + 24}`;
   }
@@ -220,12 +277,19 @@ export const Filters: React.FC = () => (
 );
 
 // ---------- images ----------
-/** gravure / photo préparée, centrée en (x, y) ; z : poussée lente (ken burns) */
-export const Pic: React.FC<{id: string; name: string; w: number; x?: number; y?: number; z?: number; rot?: number}> = ({id, name, w, x = 540, y = 760, z = 0, rot = 0}) => (
-  <div style={{position: 'absolute', left: x, top: y, width: w, transform: `translate(-50%, -50%) scale(${1 + z}) rotate(${rot}deg)`}}>
-    <Img src={img(id, `${name}.webp`)} style={{width: '100%', display: 'block', filter: `drop-shadow(0 22px 34px rgba(0,0,0,0.75)) drop-shadow(0 0 14px rgba(${G.goldRgb},0.22))`}} />
-  </div>
-);
+/** gravure / photo préparée, centrée en (x, y) ; z : poussée lente (ken burns) ; focus : point visé par le zoom (fractions de l'image) ;
+ *  full : image plein écran (préparée en `plein` dans prep_img), recouvre tout le cadre, assombrie en haut et en bas pour les textes */
+export const Pic: React.FC<{id: string; name: string; w: number; x?: number; y?: number; z?: number; rot?: number; focus?: [number, number]; full?: boolean}> = ({id, name, w, x = 540, y = 760, z = 0, rot = 0, focus, full}) =>
+  full ? (
+    <AbsoluteFill style={{transform: `scale(${1 + z})`, transformOrigin: focus ? `${focus[0] * 100}% ${focus[1] * 100}%` : '50% 45%'}}>
+      <Img src={img(id, `${name}.webp`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(8,6,4,0.55) 0%, rgba(8,6,4,0) 22%, rgba(8,6,4,0) 58%, rgba(8,6,4,0.7) 100%)'}} />
+    </AbsoluteFill>
+  ) : (
+    <div style={{position: 'absolute', left: x, top: y, width: w, transform: `translate(-50%, -50%) scale(${1 + z}) rotate(${rot}deg)`, transformOrigin: focus ? `${focus[0] * 100}% ${focus[1] * 100}%` : '50% 50%'}}>
+      <Img src={img(id, `${name}.webp`)} style={{width: '100%', display: 'block', filter: THEME.base === 'light' ? 'drop-shadow(0 14px 22px rgba(60,40,15,0.45))' : `drop-shadow(0 22px 34px rgba(0,0,0,0.75)) drop-shadow(0 0 14px rgba(${G.goldRgb},0.22))`}} />
+    </div>
+  );
 
 /** pièce qui tourne sur elle-même : angle en demi-tours (pair = pile visible, impair = face) */
 export const Coin: React.FC<{id: string; halfTurns: number; size?: number; y?: number; lift?: number; faces?: [string, string]}> = ({id, halfTurns, size = 660, y = 760, lift = 0, faces = ['coin_pile', 'coin_face']}) => {
@@ -281,7 +345,7 @@ export const Num: React.FC<{text: string; t: number; t0: number; y?: number; siz
         </>
       ) : null}
       {label ? (
-        <div style={{position: 'absolute', left: 0, right: 0, top: y + fs * 0.6 + (frieze ? 46 : 10), textAlign: 'center', fontFamily: GF.sans, fontWeight: 800, fontSize: 40, letterSpacing: '0.26em', color: color === 'ink' ? '#2A1E0C' : G.cream, opacity: prog(lt, land, land + 0.3) * 0.85}}>
+        <div style={{position: 'absolute', left: 0, right: 0, top: y + fs * 0.6 + (frieze ? 46 : 10), textAlign: 'center', fontFamily: GF.label, fontWeight: 800, fontSize: 40, letterSpacing: '0.26em', color: color === 'ink' ? '#2A1E0C' : G.textSoft, opacity: prog(lt, land, land + 0.3) * 0.85}}>
           {label}
         </div>
       ) : null}
@@ -303,13 +367,13 @@ export const TitleCard: React.FC<{words: Word[]; t: number; t0: number; t1: numb
     <>
       <GreekKey y={700} k={prog(lt, 0, 0.45)} />
       <GreekKey y={1110} k={prog(lt, 0.05, 0.5)} />
-      <div style={{position: 'absolute', left: 70, right: 70, top: 905, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 800, color: G.white, lineHeight: 1.12, textTransform: 'uppercase'}}>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 905, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 800, color: G.text, lineHeight: 1.12, textTransform: 'uppercase'}}>
         {lines.map((ln, li) => (
           <div key={li} style={{fontSize: li === 0 ? 68 : 92, marginTop: li ? 18 : 0, position: 'relative', display: ln.length ? 'block' : 'none'}}>
             {ln.map((w, i) => {
               const k = prog(t, w.startMs / 1000 - 0.04, w.startMs / 1000 + 0.14, easeOut);
               return (
-                <span key={i} style={{opacity: k, color: w.key ? G.gold : G.white, display: 'inline-block', transform: `translateY(${(1 - k) * 14}px)`, textShadow: '0 6px 22px rgba(0,0,0,0.7)'}}>
+                <span key={i} style={{opacity: k, color: w.key ? G.gold : G.text, display: 'inline-block', transform: `translateY(${(1 - k) * 14}px)`, textShadow: G.shadow}}>
                   {fr(w.text)}{i < ln.length - 1 ? '\u00a0' : ''}
                 </span>
               );
@@ -395,25 +459,34 @@ export {easeIn, easeOut, overshoot};
 /** titre d'accroche doré écrit en haut dès l'image 0 (miniature) ; « | » = retour à la ligne ; k = opacité */
 export const HookTitle: React.FC<{text: string; k: number}> = ({text, k}) =>
   k <= 0 ? null : (
-    <div style={{position: 'absolute', left: 70, right: 70, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(82, 1500 / Math.max(...text.split('|').map((l) => l.length))), whiteSpace: 'nowrap', lineHeight: 1.08, color: G.gold, textTransform: 'uppercase', opacity: k, textShadow: `0 0 28px rgba(${G.goldRgb},0.4), 0 6px 18px rgba(0,0,0,0.9)`}}>
+    <div style={{position: 'absolute', left: 70, right: 70, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(82, 1500 / Math.max(...text.split('|').map((l) => l.length))), whiteSpace: 'nowrap', lineHeight: 1.08, color: G.gold, textTransform: 'uppercase', opacity: k, textShadow: THEME.base === 'light' ? G.shadow : `0 0 28px rgba(${G.goldRgb},0.4), 0 6px 18px rgba(0,0,0,0.9)`}}>
       {text.split('|').map((ln, i) => <div key={i}>{ln}</div>)}
     </div>
   );
 
 /** mot-concept tapé lettre par lettre (0,045 s) entre deux frises, traduction à +0,55 s après la dernière lettre */
 export const ConceptWord: React.FC<{word: string; sub: string; t: number; t0: number}> = ({word, sub, t, t0}) => {
+  // v3.1 : le nom du concept en français (« | » = retour à la ligne), taille auto ; la traduction / la source en petit dessous
   const lt = t - t0;
-  const n = Math.max(0, Math.min(word.length, Math.floor(lt / 0.045)));
-  const done = word.length * 0.045;
-  const fs = word.length > 12 ? 104 : 128;
+  const flat = word.replace(/\|/g, '');
+  const n = Math.max(0, Math.min(flat.length, Math.floor(lt / 0.045)));
+  const done = flat.length * 0.045;
+  const lines = word.split('|');
+  const fs = Math.min(128, 1000 / (0.66 * Math.max(...lines.map((l) => l.length))));
+  const h = lines.length * fs * 1.02;
+  const light = THEME.base === 'light';
+  let shown = 0;
   return (
     <>
-      <GreekKey y={690} k={prog(lt, 0, 0.4)} />
-      <div style={{position: 'absolute', left: 40, right: 40, top: 840, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: fs, lineHeight: 1.02, color: G.gold, textShadow: `0 0 30px rgba(${G.goldRgb},0.45), 0 8px 20px rgba(0,0,0,0.85)`}}>
-        {word.slice(0, n)}<span style={{opacity: 0}}>{word.slice(n)}</span>
+      <GreekKey y={840 - h / 2 - 70} k={prog(lt, 0, 0.4)} />
+      <div style={{position: 'absolute', left: 30, right: 30, top: 840, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: fs, lineHeight: 1.02, color: G.gold, whiteSpace: 'nowrap', textShadow: light ? G.shadow : `0 0 30px rgba(${G.goldRgb},0.45), 0 8px 20px rgba(0,0,0,0.85)`}}>
+        {lines.map((l, i) => {
+          const k = Math.max(0, Math.min(l.length, n - shown)); shown += l.length;
+          return <div key={i}>{l.slice(0, k)}<span style={{opacity: 0}}>{l.slice(k)}</span></div>;
+        })}
       </div>
-      <div style={{position: 'absolute', left: 60, right: 60, top: 990, textAlign: 'center', fontFamily: GF.serif, fontWeight: 700, fontStyle: 'italic', fontSize: 58, color: G.cream, opacity: prog(lt, done + 0.1, done + 0.45), textShadow: '0 4px 14px rgba(0,0,0,0.85)'}}>{sub}</div>
-      <GreekKey y={1110} k={prog(lt, 0.05, 0.45)} />
+      <div style={{position: 'absolute', left: 60, right: 60, top: 840 + h / 2 + 28, textAlign: 'center', fontFamily: GF.serif, fontWeight: 700, fontStyle: 'italic', fontSize: 50, color: G.textSoft, opacity: prog(lt, done + 0.1, done + 0.45), textShadow: G.shadow}}>{sub}</div>
+      <GreekKey y={840 + h / 2 + 140} k={prog(lt, 0.05, 0.45)} />
     </>
   );
 };
@@ -424,14 +497,14 @@ export const QuoteCard: React.FC<{lines: string[]; sign: string; t: number; t0: 
   return (
     <>
       <GreekKey y={620} k={prog(lt, 0, 0.4)} />
-      <div style={{position: 'absolute', left: 110, right: 110, top: 860, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 700, fontSize: 70, lineHeight: 1.22, color: G.white}}>
+      <div style={{position: 'absolute', left: 110, right: 110, top: 860, transform: 'translateY(-50%)', textAlign: 'center', fontFamily: GF.serif, fontWeight: 700, fontSize: 70, lineHeight: 1.22, color: G.text}}>
         {lines.map((ln, i) => {
           const k = prog(lt, 0.15 + i * every, 0.4 + i * every, easeOut);
-          return <div key={i} style={{opacity: k, transform: `translateY(${(1 - k) * 12}px)`, textShadow: '0 6px 18px rgba(0,0,0,0.85)'}}>{ln}</div>;
+          return <div key={i} style={{opacity: k, transform: `translateY(${(1 - k) * 12}px)`, textShadow: G.shadow}}>{ln}</div>;
         })}
       </div>
       <GreekKey y={1110} k={prog(lt, 0.05, 0.45)} />
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1150, textAlign: 'center', fontFamily: GF.sans, fontWeight: 700, fontSize: 38, letterSpacing: '0.14em', color: G.gold, opacity: prog(lt, 0.15 + lines.length * every + 0.65, 0.15 + lines.length * every + 0.95)}}>{sign}</div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1150, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 38, letterSpacing: '0.14em', color: G.gold, opacity: prog(lt, 0.15 + lines.length * every + 0.65, 0.15 + lines.length * every + 0.95)}}>{sign}</div>
     </>
   );
 };
@@ -571,3 +644,24 @@ export const SpeedLines: React.FC<{s: number; cy?: number}> = ({s, cy = 760}) =>
       })}
     </svg>
   );
+
+// ---------- v3.1 : habillage « écran de test » (labo) ----------
+/** coins de cadrage, REC qui clignote, minuteur, lignes de balayage ; tout reste hors des zones de l'interface TikTok */
+export const Hud: React.FC<{frame: number; label: string; hide?: number}> = ({frame, label, hide = 0}) => {
+  const sec = frame / 30;
+  const tc = `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(Math.floor(sec % 60)).padStart(2, '0')}:${String(frame % 30).padStart(2, '0')}`;
+  const L = 54, c = `rgba(${G.goldRgb},0.75)`;
+  const corner = (x: number, y: number, sx: number, sy: number) => `M ${x} ${y + sy * L} L ${x} ${y} L ${x + sx * L} ${y}`;
+  return (
+    <>
+      <AbsoluteFill style={{backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, rgba(0,0,0,0) 2px, rgba(0,0,0,0) 4px)', mixBlendMode: 'overlay'}} />
+      <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
+        <path d={[corner(60, 200, 1, 1), corner(1020, 200, -1, 1), corner(60, 1600, 1, -1), corner(1020, 1600, -1, -1)].join(' ')} stroke={c} strokeWidth={4} fill="none" />
+        <circle cx={92} cy={244} r={11} fill="#FF3B30" opacity={(Math.floor(sec * 2) % 2 ? 0.25 : 1) * (1 - hide)} />
+      </svg>
+      <div style={{position: 'absolute', left: 114, top: 226, fontFamily: GF.label, fontWeight: 700, fontSize: 30, letterSpacing: '0.18em', color: c, opacity: 1 - hide}}>REC</div>
+      <div style={{position: 'absolute', right: 92, top: 226, fontFamily: GF.label, fontWeight: 500, fontSize: 30, letterSpacing: '0.08em', color: c, opacity: 1 - hide}}>{tc}</div>
+      {label ? <div style={{opacity: 1 - hide, position: 'absolute', left: 82, top: 274, fontFamily: GF.label, fontWeight: 500, fontSize: 24, letterSpacing: '0.2em', color: `rgba(${G.goldRgb},0.55)`}}>{label}</div> : null}
+    </>
+  );
+};

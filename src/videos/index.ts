@@ -16,6 +16,11 @@ import {Danse} from './Danse';
 import {Rosenhan} from './Rosenhan';
 import {Diogene} from './Diogene';
 import {Gage} from './Gage';
-export const VIDEOS = {'00-proto': Proto, '01-imprimer-argent': ImprimerArgent, '02-qui-prete-a-la-france': QuiPrete, '03-prix-baguette': PrixBaguette, '04-vrai-cout-smic': CoutSmic, '06-logement': Logement, '07-acheter-ou-louer': Achat, '08-livret-a': LivretA, '09-interets-composes': Interets, '10-la-bourse': Bourse, '11-aversion-perte': Aversion, '12-loi-de-gresham': Gresham, '13-experience-asch': Asch, '14-epidemie-danse': Danse, '15-rosenhan': Rosenhan, '16-diogene': Diogene, '17-phineas-gage': Gage} as const;
+import {Rats} from './Rats';
+import {Gorille} from './Gorille';
+import {Thesee} from './Thesee';
+import {Estomac} from './Estomac';
+import {Erato} from './Erato';
+export const VIDEOS = {'00-proto': Proto, '01-imprimer-argent': ImprimerArgent, '02-qui-prete-a-la-france': QuiPrete, '03-prix-baguette': PrixBaguette, '04-vrai-cout-smic': CoutSmic, '06-logement': Logement, '07-acheter-ou-louer': Achat, '08-livret-a': LivretA, '09-interets-composes': Interets, '10-la-bourse': Bourse, '11-aversion-perte': Aversion, '12-loi-de-gresham': Gresham, '13-experience-asch': Asch, '14-epidemie-danse': Danse, '15-rosenhan': Rosenhan, '16-diogene': Diogene, '17-phineas-gage': Gage, '18-rats-hanoi': Rats, '19-gorille-invisible': Gorille, '20-bateau-thesee': Thesee, '21-estomac-ficelle': Estomac, '22-eratosthene': Erato} as const;
 // DA « Gravure » : la scène dessine elle-même fond, sous-titres et finition (pas de papier, de spirale ni d'habillage Carnet)
-export const BARE = new Set<string>(['11-aversion-perte', '12-loi-de-gresham', '13-experience-asch', '14-epidemie-danse', '15-rosenhan', '16-diogene', '17-phineas-gage']);
+export const BARE = new Set<string>(['11-aversion-perte', '12-loi-de-gresham', '13-experience-asch', '14-epidemie-danse', '15-rosenhan', '16-diogene', '17-phineas-gage', '18-rats-hanoi', '19-gorille-invisible', '20-bateau-thesee', '21-estomac-ficelle', '22-eratosthene']);

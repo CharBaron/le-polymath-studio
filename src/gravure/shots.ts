@@ -9,7 +9,8 @@ export type Shot = {
   t0: number; bg?: Bg; tr?: Tr; rays?: 'gold' | 'dark';
   coin?: {spin?: Spin; half?: number};
   num?: {text: string; color?: 'gold' | 'white' | 'red' | 'ink'; label?: string; frieze?: boolean; size?: number; strobe?: boolean};
-  pic?: {name: string; w: number; y?: number; zoom?: number};
+  /** focus : point de l'image visé par le zoom (fractions) ; full : plein écran (image préparée en `plein`) */
+  pic?: {name: string; w: number; y?: number; zoom?: number; focus?: [number, number]; full?: boolean};
   /** plusieurs images qui popent l'une après l'autre (at : s après le début du plan) */
   pics?: {name: string; w: number; x?: number; y?: number; rot?: number; at: number}[];
   card?: {strike?: boolean};
@@ -28,6 +29,8 @@ export type Shot = {
   lines?: {full?: boolean; pick?: 1 | 2 | 3; wrong?: boolean; pickAt?: number; votes?: number};
   /** mot qui claque au-dessus du sujet (at : s après le début du plan) */
   slam?: {text: string; at?: number; color?: 'gold' | 'white' | 'red'; y?: number; size?: number};
+  /** animation sur mesure de la vidéo (registre passé à makeReel) : name + paramètres (temps en s absolus si `at…`) */
+  anim?: {name: string; [k: string]: number | string | boolean | number[]};
   /** pas de caméra ni de jump-cut (plan qui doit rester lisible ; 1er et dernier plan pour la boucle) */
   still?: boolean;
 };

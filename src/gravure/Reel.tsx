@@ -14,7 +14,7 @@ import {clamp01, FPS, lerp, prog, rand} from '../theme';
 import type {SceneProps} from '../Video';
 import type {Word} from '../components/Captions';
 import {jumpsOf, Shot, STROBE_EVERY, strobeDigits, strobeLen, textCard, Tr} from './shots';
-import {Accent, applyAccent, Backdrop, Balance, Beam, Brackets, Coin, ConceptWord, Crown, DigitStrobe, easeIn, easeOut, Filters, Finish, G, GCaptions, GF, GlitchBands, GlitchFilter, HookTitle, Laurel, LinesCard, Num, overshoot, Pic, QuoteCard, Rays, SlamWord, Smear, SpeedLines, Stamp, TitleCard} from './Gravure';
+import {Accent, applyTheme, Backdrop, Hud, THEME, Theme, Balance, Beam, Brackets, Coin, ConceptWord, Crown, DigitStrobe, easeIn, easeOut, Filters, Finish, G, GCaptions, GF, GlitchBands, GlitchFilter, HookTitle, Laurel, LinesCard, Num, overshoot, Pic, QuoteCard, Rays, SlamWord, Smear, SpeedLines, Stamp, TitleCard} from './Gravure';
 
 export type {Shot, Spin, Tr} from './shots';
 export {wordAt} from './shots';
@@ -24,10 +24,15 @@ const TR_OF: Partial<Record<Tr, number>> = {swipe: 0.26, spin: 0.24, shutter: 0.
 const IMPACT: Partial<Record<Tr, number>> = {slam: 1, flashRed: 0.8, glitch: 0.6, invert: 0.9, shutter: 0.4, swipe: 0.25};
 const FRAMES: [number, number, number][] = [[1, 0, 0], [1.14, -26, -30], [1.06, 22, 18], [1.2, 0, -50]];
 
-const ShotView: React.FC<{id: string; faces: [string, string]; s: Shot; t: number; t1: number; words: Word[]; spin: number}> = ({id: ID, faces, s, t, t1, words, spin}) => {
+/** animation sur mesure : lt = temps depuis le début du plan, p = paramètres du plan (shot.anim) */
+export type AnimProps = {id: string; lt: number; t: number; t0: number; t1: number; p: NonNullable<Shot['anim']>; words: Word[]};
+export type Anims = Record<string, React.FC<AnimProps>>;
+
+const ShotView: React.FC<{id: string; faces: [string, string]; s: Shot; t: number; t1: number; words: Word[]; spin: number; anims: Anims}> = ({id: ID, faces, s, t, t1, words, spin, anims}) => {
   const lt = t - s.t0;
   const dur = Math.max(0.4, t1 - s.t0);
-  const z = (s.pic?.zoom ?? 0.04) * clamp01(lt / dur);
+  const z = (s.pic?.zoom ?? (s.pic?.focus ? 0.22 : 0.04)) * easeOut(clamp01(lt / dur));
+  const A = s.anim ? anims[s.anim.name] : undefined;
   const sl = strobeLen(s);
   if (sl && lt < sl) return <DigitStrobe id={ID} text={s.num!.text} lt={lt} every={STROBE_EVERY} />;
   let coinEl: React.ReactNode = null;
@@ -48,11 +53,12 @@ const ShotView: React.FC<{id: string; faces: [string, string]; s: Shot; t: numbe
       {s.rays ? <Rays k={rayK} rot={t * spin} cy={s.num ? 790 : 760} dark={s.rays === 'dark'} /> : null}
       {coinEl}
       {s.balance ? <Balance k={prog(lt, 0, 0.45)} tilt={lerp(s.balance.tilt[0], s.balance.tilt[1], prog(lt, 0.25, 1.4, easeOut))} left={s.balance.left} right={s.balance.right} /> : null}
-      {s.pic ? <Pic id={ID} name={s.pic.name} w={s.pic.w} y={s.pic.y} z={z} /> : null}
+      {s.pic ? <Pic id={ID} name={s.pic.name} w={s.pic.w} y={s.pic.y} z={z} focus={s.pic.focus} full={s.pic.full} /> : null}
       {s.pics?.map((q, i) => {
         const k = prog(lt, q.at, q.at + 0.22, overshoot);
         return lt < q.at ? null : <Pic key={i} id={ID} name={q.name} w={q.w} x={q.x} y={q.y} rot={(q.rot ?? 0) + (1 - k) * 12} z={lerp(-0.6, 0, k) + 0.03 * clamp01((lt - q.at) / dur)} />;
       })}
+      {A ? <A id={ID} lt={lt} t={t} t0={s.t0} t1={t1} p={s.anim!} words={words} /> : null}
       {numEl ? (sl ? <Smear lt={lt - sl} streak y={780}>{numEl}</Smear> : numEl) : null}
       {s.card ? <TitleCard words={words} t={t} t0={s.t0} t1={t1} strike={s.card.strike} /> : null}
       {s.concept ? <ConceptWord word={s.concept.word} sub={s.concept.sub} t={t} t0={s.t0 + 0.05} /> : null}
@@ -61,8 +67,8 @@ const ShotView: React.FC<{id: string; faces: [string, string]; s: Shot; t: numbe
       {s.laurel ? <Laurel cx={540} cy={s.laurel.cy} r={s.laurel.r} dark={s.laurel.dark} k={prog(lt, s.laurel.at ?? 0.2, (s.laurel.at ?? 0.2) + 0.9)} /> : null}
       {s.crown ? <Crown x={540} y={s.crown.y} w={s.crown.w ?? 280} k={prog(lt, s.crown.at, s.crown.at + 0.7)} /> : null}
       {s.brackets ? <Brackets {...s.brackets} k={prog(lt, s.brackets.at ?? 0.3, (s.brackets.at ?? 0.3) + 0.35)} t={t} /> : null}
-      {s.title ? <div style={{position: 'absolute', left: 0, right: 0, top: 300, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(120, 1100 / s.title.length), color: G.gold, letterSpacing: '0.04em', opacity: prog(lt, 0.15, 0.5), transform: `translateY(${(1 - prog(lt, 0.15, 0.6, easeOut)) * 24}px)`, textShadow: `0 0 24px rgba(${G.goldRgb},0.45), 0 6px 18px rgba(0,0,0,0.8)`}}>{s.title}</div> : null}
-      {s.topLabel ? <div style={{position: 'absolute', left: 0, right: 0, top: 360, textAlign: 'center', fontFamily: GF.sans, fontWeight: 900, fontSize: 50, letterSpacing: '0.22em', color: '#2A1E0C', opacity: prog(lt, 0.3, 0.6)}}>{s.topLabel}</div> : null}
+      {s.title ? <div style={{position: 'absolute', left: 0, right: 0, top: 300, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(120, 1100 / s.title.length), color: G.gold, letterSpacing: '0.04em', opacity: prog(lt, 0.15, 0.5), transform: `translateY(${(1 - prog(lt, 0.15, 0.6, easeOut)) * 24}px)`, textShadow: THEME.base === 'light' ? G.shadow : `0 0 24px rgba(${G.goldRgb},0.45), 0 6px 18px rgba(0,0,0,0.8)`}}>{s.title}</div> : null}
+      {s.topLabel ? <div style={{position: 'absolute', left: 0, right: 0, top: 360, textAlign: 'center', fontFamily: GF.label, fontWeight: 900, fontSize: 50, letterSpacing: '0.22em', color: s.bg === 'white' || (THEME.base === 'light' && (s.bg ?? 'marble') === 'marble') ? '#2A1E0C' : G.text, opacity: prog(lt, 0.3, 0.6)}}>{s.topLabel}</div> : null}
       {s.stamp ? <Stamp text={s.stamp.text} t={t} t0={s.stamp.at} size={s.stamp.size} y={s.stamp.y} rot={s.stamp.rot} color={s.stamp.color} /> : null}
       {s.slam ? <SlamWord text={s.slam.text} lt={lt - (s.slam.at ?? 0.04)} y={s.slam.y} size={s.slam.size} color={s.slam.color} /> : null}
       {s.beam ? <Beam p={prog(lt, 0.05, 1.0, (x) => x)} /> : null}
@@ -97,9 +103,9 @@ const camera = (s: Shot, i: number, t: number, t1: number, jumps: number[], punc
 };
 
 /** fabrique la scène d'une vidéo Gravure à partir de sa liste de plans (balises de timeline.json → plans) */
-export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words: Word[], dur: number) => Shot[], coinFaces: [string, string] = ['coin_pile', 'coin_face'], accent: Accent = 'or') => {
+export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words: Word[], dur: number) => Shot[], coinFaces: [string, string] = ['coin_pile', 'coin_face'], theme: Accent | Theme = 'or', anims: Anims = {}) => {
   const Reel: React.FC<SceneProps> = ({tl, words}) => {
-  applyAccent(accent);
+  applyTheme(theme);
   const frame = useCurrentFrame();
   const t = frame / FPS;
   const shots = React.useMemo(() => shotsOf(tl.beats, words, tl.duration), [tl, words]);
@@ -127,7 +133,7 @@ export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words:
   const leak = (cur.leak ? 0.55 * Math.sin(Math.PI * Math.min(1, lt0 / 1.2)) : 0) + (prev ? 0.35 * (1 - clamp01(lt0 / 0.25)) : 0);
   const hookK = tl.hook ? Math.max(1 - prog(t, 2.9, 3.2), prog(t, tl.duration - 0.6, tl.duration - 0.3)) : 0;
   const strobing = strobeLen(cur) > lt0;
-  const light = !strobing && (cur.bg === 'white' || cur.bg === 'gold');
+  const light = !strobing && (cur.bg === 'white' || cur.bg === 'gold' || (THEME.base === 'light' && (cur.bg ?? 'marble') === 'marble') || !!cur.pic?.full);
   const capFade = 1 - prog(t, tl.duration - 0.4, tl.duration - 0.08);
   // rayons : période 11,25° → un nombre entier de périodes sur la vidéo, la dernière image retombe sur la première
   const spin = (Math.round((7 * tl.duration) / 11.25) * 11.25) / tl.duration;
@@ -143,7 +149,7 @@ export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words:
           <AbsoluteFill style={trStyle(tr, p, false)}>
             {tr === 'swipe' ? <Backdrop id={ID} kind={prev.bg ?? 'marble'} /> : null}
             <AbsoluteFill style={{transform: camera(prev, i - 1, t, cur.t0, jumps[i - 1], 0)}}>
-              <ShotView id={ID} faces={coinFaces} s={prev} t={t} t1={cur.t0} words={words} spin={spin} />
+              <ShotView id={ID} faces={coinFaces} s={prev} t={t} t1={cur.t0} words={words} spin={spin} anims={anims} />
             </AbsoluteFill>
           </AbsoluteFill>
         ) : null}
@@ -151,7 +157,7 @@ export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words:
           {tr === 'swipe' && p < 1 ? <Backdrop id={ID} kind={cur.bg ?? 'marble'} /> : null}
           <AbsoluteFill style={{transform: camera(cur, i, t, t1, jumps[i], punch), filter: ca > 2 && gs <= 0.01 ? 'url(#glitch)' : undefined}}>
             <GlitchBands s={gs} seed={i}>
-              <ShotView id={ID} faces={coinFaces} s={cur} t={t} t1={t1} words={words} spin={spin} />
+              <ShotView id={ID} faces={coinFaces} s={cur} t={t} t1={t1} words={words} spin={spin} anims={anims} />
             </GlitchBands>
           </AbsoluteFill>
         </AbsoluteFill>
@@ -162,6 +168,7 @@ export const makeReel = (ID: string, shotsOf: (B: Record<string, number>, words:
       </AbsoluteFill>
       <Finish frame={frame} id={ID} leak={leak} leakCorner={i % 2 ? 'bl' : 'tr'} />
       {light ? <div style={{position: 'absolute', left: 0, right: 0, top: 1240, height: 320, background: 'linear-gradient(180deg, rgba(10,8,5,0) 0%, rgba(10,8,5,0.6) 50%, rgba(10,8,5,0) 100%)', opacity: p}} /> : null}
+      {THEME.overlay === 'hud' ? <Hud frame={frame} label={THEME.overlayLabel ?? ''} hide={hookK} /> : null}
       <HookTitle text={tl.hook ?? ''} k={hookK} />
       <GCaptions words={words} t={t} hidden={textCard(cur) && p > 0.5} fade={capFade} />
     </AbsoluteFill>

@@ -17,6 +17,84 @@ def burst(mix, t, n=6, g=0.06):
     for k in range(n): mix.put(t + k * 0.028, click(180 + (k * 977) % 3300, 0.03), g, pan=-0.5 + 0.2 * k)
 
 
+def anim_sfx(mix, s, N):
+    """bruitages des animations sur mesure (v3.1) : un son par événement de l'animation, calé sur ses paramètres"""
+    a = s.get('anim')
+    if not a: return
+    t0, t1, name = s['t0'], s['t1'], a['name']
+    num = lambda k, d=0.0: float(a.get(k, d))
+    if name == 'QueueCoupee':
+        c = t0 + num('cut', 0.6)
+        mix.put(c - 0.02, click(4200, 0.03), 0.16); mix.put(c, scratch(0.18), 0.12); mix.put(c, pop(1800, 600, 0.1), 0.08)
+        r = t0 + num('run', 1.4)
+        for k in range(14): mix.put(r + k * 0.045, click(2600 + (k * 431) % 1400, 0.012), 0.05, pan=-0.4 + k * 0.06)
+    elif name == 'Registre':
+        f = num('fill', 1.8)
+        mix.put(t0 + 0.1, scratch(f), 0.09)
+        for k in range(int(f / 0.06)): mix.put(t0 + 0.15 + k * 0.06, click(1700 + (k * 97) % 600, 0.012), 0.035, pan=-0.3 + 0.6 * ((k * 7) % 10) / 10)
+        mix.put(t0 + 0.15 + f, boom(1.2, 52), 0.12)
+    elif name == 'Grouillement':
+        st, mx = num('step', 0.32), num('max', 64)
+        g, tt = 0, t0
+        while 2 ** g <= mx and tt < t1:
+            for k in range(min(4, 2 ** g)): mix.put(tt + k * 0.03, pop(2400 + 300 * k, 3400, 0.06), 0.05, pan=-0.5 + k * 0.33)
+            g += 1; tt = t0 + g * st
+    elif name == 'TestPasses':
+        if a.get('reveal'):
+            mix.put(t0, impact(1.2), 0.16); mix.put(t0 + 0.1, scratch(0.5), 0.1)
+        elif a.get('freezeAt') is None:
+            go, stop, P = num('go'), num('stop'), int(num('passes', 11))
+            a0, b0 = go + 0.05, stop - 0.15
+            for k in range(P): mix.put(a0 + (k + 0.6) * (b0 - a0) / P, thud(0.18), 0.09, pan=-0.3 + 0.3 * (k % 3))
+    elif name == 'Scanner':
+        mix.put(t0 + num('nodAt', 0.3), blip(N['A5'] * 2, 0.3, 0.1), 0.05)
+        mix.put(t0 + num('gorAt', 1.2), blip(N['D5'] * 2, 0.5, 0.15), 0.06); mix.put(t0 + num('gorAt', 1.2), whoosh(0.6, 300, 1800, peak=0.6), 0.06)
+    elif name == 'Navire':
+        fr, to = num('from', 0.3), num('to', 2.5)
+        if fr < 50:
+            n = 32
+            for k in range(n):
+                tt = t0 + fr + (to - fr) * (k + 0.5) / n
+                if t0 <= tt < t1: mix.put(tt, thud(0.12), 0.06, pan=-0.5 + (k % 8) / 8); mix.put(tt, click(900 + (k * 53) % 300, 0.02), 0.04)
+    elif name == 'Cellules':
+        fr, to = num('from', 0.2), num('to', 2.2)
+        if fr >= 0:
+            for k in range(16): mix.put(t0 + fr + (to - fr) * k / 16, pop(1500 + 80 * k, 2200 + 80 * k, 0.07), 0.035, pan=-0.5 + (k % 5) / 5)
+        if 'neur' in a: mix.put(t0 + num('neur'), chime([N['D5'], N['F5'], N['A5']], 1.6, 0.6), 0.06)
+    elif name == 'Teleporteur':
+        mix.put(t0 + 0.2, riser(0.9, 300, 2600), 0.06); mix.put(t0 + 0.9, whoosh(0.9, 400, 3800, peak=0.5), 0.08); mix.put(t0 + 2.0, chime([N['D5'], N['A5']], 1.4, 0.5), 0.05)
+    elif name == 'Estomac':
+        if a.get('mode') == 'trou': mix.put(t0 + 0.5, thud(0.3), 0.12); mix.put(t0 + 0.5, boom(0.7, 70), 0.08)
+        elif not a.get('instant'): mix.put(t0 + 0.2, scratch(num('down', 0.9)), 0.07)
+        if 'from' in a:
+            fr, to = num('from'), num('to', 3.0)
+            for k in range(int((to - fr) / 0.18)): mix.put(t0 + fr + k * 0.18, blip(320 + (k * 37) % 200, 0.12, 0.05), 0.02, pan=-0.2 + 0.4 * (k % 3) / 3)
+            if not a.get('instant'):
+                for h in range(3): mix.put(t0 + fr + (to - fr) * (h + 0.6) / 3.2, click(1800, 0.03), 0.08)
+    elif name == 'Bocal':
+        fr, to = num('from', 0.4), num('to', 2.2)
+        mix.put(t0, chime([N['D5'], N['A5']], 0.8, 0.3), 0.03)
+        for k in range(int((to - fr) / 0.14)): mix.put(t0 + fr + k * 0.14, blip(380 + (k * 53) % 260, 0.1, 0.04), 0.02)
+    elif name == 'Terre':
+        ev = lambda k: a.get(k) is not None and float(a[k]) >= 0
+        if ev('rays'): mix.put(t0 + num('rays'), chime([N['A4'], N['D5'], N['F5'], N['A5']], 1.6, 0.6), 0.05)
+        if ev('well'): mix.put(t0 + num('well'), blip(N['D5'], 0.5, 0.2), 0.05)
+        if ev('stick'): mix.put(t0 + num('stick'), thud(0.25), 0.12)
+        if ev('shadow'): mix.put(t0 + num('shadow'), whoosh(0.5, 200, 1400, peak=0.5), 0.08); mix.put(t0 + num('shadow') + 0.4, boom(1.0, 55), 0.1)
+        if ev('angle'): mix.put(t0 + num('angle'), chime([N['D5'], N['F5'], N['A5']], 1.4, 0.5), 0.06)
+        if ev('zIn'): mix.put(t0 + num('zIn'), whoosh(0.7, 300, 2600, peak=0.7), 0.08)
+        if ev('zOut'): mix.put(t0 + num('zOut'), whoosh(0.7, 2600, 300, peak=0.3), 0.07)
+        if ev('wedges'):
+            w0, w1 = num('wedges'), num('wedgesEnd', num('wedges') + 2)
+            for k in range(50): mix.put(t0 + w0 + (w1 - w0) * k / 50, click(900 + k * 40, 0.015), 0.045, pan=-0.6 + 1.2 * k / 50)
+            mix.put(t0 + w1, boom(1.2, 50), 0.12)
+        if ev('circ'): mix.put(t0 + num('circ'), riser(1.2, 300, 3000), 0.06); mix.put(t0 + num('circ') + 1.2, chime([N['D5'], N['F5'], N['A5'], N['D5'] * 2], 2.0, 0.8), 0.06)
+    elif name == 'Plate':
+        mix.put(t0 + 0.6, thud(0.2), 0.1); mix.put(t0 + 0.7, thud(0.2), 0.1)
+    elif name == 'Colomb':
+        mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
+
+
 def make(cue_file, shots_module, semis=0):
     here = os.path.dirname(os.path.abspath(cue_file))
     tr_ = 2 ** (semis / 12)
@@ -74,6 +152,7 @@ def make(cue_file, shots_module, semis=0):
                 if ln.get('pick') == 2 and pa >= 0: mix.put(t + pa + 0.1, chime([N['D5'], N['F5'], N['A5']], 1.2, 0.5), 0.05)
             if s['rays'] == 'gold' and tr is not None: mix.put(t + 0.15, chime([N['D5'], N['F5'], N['A5']], 1.4, 0.6), 0.035)
             if s['card']: mix.put(t - 0.03, boom(1.6, 46), 0.1)
+            anim_sfx(mix, s, N)
         # le nom : seul riser + impact ; mot-concept tapé
         mix.put(nom - 1.25, riser(1.2, 240, 3800), 0.09)
         mix.put(nom - 0.03, impact(1.4), 0.2)

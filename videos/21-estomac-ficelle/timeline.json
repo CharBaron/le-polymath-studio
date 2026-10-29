@@ -1,0 +1,125 @@
+{
+ "fps": 30,
+ "duration": 75.446,
+ "frames": 2263,
+ "beats": {
+  "hook": 0.2,
+  "h": 0.2,
+  "h2": 5.3,
+  "ch1": 8.22,
+  "an": 10.16,
+  "trou": 17.69,
+  "ch2": 22.56,
+  "beaumont": 24.63,
+  "ficelle": 29.0,
+  "descend": 32.72,
+  "ressort": 34.09,
+  "nom": 36.98,
+  "acide": 39.5,
+  "bocal": 42.56,
+  "relance": 44.72,
+  "ch3": 47.08,
+  "fuit": 48.99,
+  "revient": 52.13,
+  "exp": 53.39,
+  "ch4": 56.72,
+  "survit": 58.53,
+  "famille": 60.94,
+  "voler": 65.07,
+  "fin": 67.43,
+  "toi": 67.43,
+  "loop": 71.84
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.2,
+   "t1": 8.22,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "ch1",
+   "t0": 8.22,
+   "t1": 22.56,
+   "scene": null,
+   "beats": [
+    "an",
+    "trou"
+   ]
+  },
+  {
+   "id": "ch2",
+   "t0": 22.56,
+   "t1": 36.98,
+   "scene": null,
+   "beats": [
+    "beaumont",
+    "ficelle",
+    "descend",
+    "ressort"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 36.98,
+   "t1": 44.72,
+   "scene": null,
+   "beats": [
+    "acide",
+    "bocal"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 44.72,
+   "t1": 47.08,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "ch3",
+   "t0": 47.08,
+   "t1": 56.72,
+   "scene": null,
+   "beats": [
+    "fuit",
+    "revient",
+    "exp"
+   ]
+  },
+  {
+   "id": "ch4",
+   "t0": 56.72,
+   "t1": 67.43,
+   "scene": null,
+   "beats": [
+    "survit",
+    "famille",
+    "voler"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 67.43,
+   "t1": 75.446,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "L'homme au trou dans l'estomac",
+ "hook": "une ficelle|dans un estomac vivant",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu aurais accepté, toi ?"
+ }
+}

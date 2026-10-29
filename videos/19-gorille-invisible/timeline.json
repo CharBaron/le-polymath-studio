@@ -1,0 +1,116 @@
+{
+ "fps": 30,
+ "duration": 63.01,
+ "frames": 1890,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "h2": 2.53,
+  "go": 4.96,
+  "ignore": 8.03,
+  "encore": 9.16,
+  "stop": 10.79,
+  "reveal": 11.71,
+  "combien": 11.71,
+  "gorille": 12.94,
+  "milieu": 15.45,
+  "exp": 17.98,
+  "an": 17.98,
+  "moitie": 27.04,
+  "nom": 29.04,
+  "filtre": 31.73,
+  "relance": 35.57,
+  "radio": 37.95,
+  "taille": 42.22,
+  "experts": 44.89,
+  "p83": 49.79,
+  "yeux": 53.47,
+  "fin": 58.05,
+  "toi": 58.05,
+  "loop": 60.75
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 11.71,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2",
+    "go",
+    "ignore",
+    "encore",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 11.71,
+   "t1": 17.98,
+   "scene": null,
+   "beats": [
+    "combien",
+    "gorille",
+    "milieu"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 17.98,
+   "t1": 29.04,
+   "scene": null,
+   "beats": [
+    "an",
+    "moitie"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 29.04,
+   "t1": 35.57,
+   "scene": null,
+   "beats": [
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 35.57,
+   "t1": 37.95,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "radio",
+   "t0": 37.95,
+   "t1": 58.05,
+   "scene": null,
+   "beats": [
+    "taille",
+    "experts",
+    "p83",
+    "yeux"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 58.05,
+   "t1": 63.01,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le gorille invisible",
+ "hook": "la moitié des gens|ratent ce test",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tu l'as vu du premier coup ? Sois honnête 👀"
+ }
+}

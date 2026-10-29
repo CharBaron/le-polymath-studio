@@ -1,0 +1,54 @@
+{
+ "strozzi": [
+  878,
+  706
+ ],
+ "strozzi_plein": [
+  1080,
+  1920
+ ],
+ "pharos": [
+  878,
+  634
+ ],
+ "pharos2": [
+  878,
+  582
+ ],
+ "columbus": [
+  598,
+  698
+ ],
+ "ships": [
+  504,
+  343
+ ],
+ "landing": [
+  878,
+  521
+ ],
+ "flammarion": [
+  778,
+  623
+ ],
+ "flammarion_plein": [
+  1080,
+  1920
+ ],
+ "cellarius": [
+  778,
+  658
+ ],
+ "ptolemaic": [
+  778,
+  654
+ ],
+ "armillaire": [
+  518,
+  651
+ ],
+ "scholars": [
+  618,
+  775
+ ]
+}
