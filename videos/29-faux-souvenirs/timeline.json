@@ -1,0 +1,118 @@
+{
+ "fps": 30,
+ "duration": 68.069,
+ "frames": 2042,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "liste": 2.85,
+  "stop": 13.82,
+  "quiz": 14.69,
+  "q1": 14.69,
+  "q2": 16.73,
+  "q3": 17.51,
+  "oui": 18.43,
+  "jamais": 19.3,
+  "exp": 21.94,
+  "an": 21.94,
+  "pareil": 28.44,
+  "jure": 31.87,
+  "nom": 36.36,
+  "filtre": 38.64,
+  "relance": 41.58,
+  "ballon": 44.4,
+  "famille": 48.84,
+  "trois": 51.59,
+  "moitie": 53.34,
+  "tribunal": 55.68,
+  "tort": 61.89,
+  "fin": 62.83,
+  "toi": 62.83,
+  "loop": 65.43
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 14.69,
+   "scene": null,
+   "beats": [
+    "h",
+    "liste",
+    "stop"
+   ]
+  },
+  {
+   "id": "quiz",
+   "t0": 14.69,
+   "t1": 21.94,
+   "scene": null,
+   "beats": [
+    "q1",
+    "q2",
+    "q3",
+    "oui",
+    "jamais"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 21.94,
+   "t1": 36.36,
+   "scene": null,
+   "beats": [
+    "an",
+    "pareil",
+    "jure"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 36.36,
+   "t1": 41.58,
+   "scene": null,
+   "beats": [
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 41.58,
+   "t1": 44.4,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "ballon",
+   "t0": 44.4,
+   "t1": 62.83,
+   "scene": null,
+   "beats": [
+    "famille",
+    "trois",
+    "moitie",
+    "tribunal",
+    "tort"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 62.83,
+   "t1": 68.069,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le mot qui n'était pas là",
+ "hook": "retiens ces mots|un seul essai",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Il n'a jamais été dans la liste. Mais toi, évidemment, t'avais répondu non."
+ }
+}

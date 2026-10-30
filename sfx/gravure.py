@@ -93,6 +93,31 @@ def anim_sfx(mix, s, N):
         if ev('circ'): mix.put(t0 + num('circ'), riser(1.2, 300, 3000), 0.06); mix.put(t0 + num('circ') + 1.2, chime([N['D5'], N['F5'], N['A5'], N['D5'] * 2], 2.0, 0.8), 0.06)
     elif name == 'Plate':
         mix.put(t0 + 0.6, thud(0.2), 0.1); mix.put(t0 + 0.7, thud(0.2), 0.1)
+    elif name == 'ListeMots':
+        if a.get('freezeAt') is not None: return
+        for k, tt in enumerate(a.get('at', [])):
+            mix.put(tt - 0.02, thud(0.16), 0.09, pan=-0.2 + 0.4 * (k % 2)); mix.put(tt, click(1300 + (k * 211) % 700, 0.03), 0.06)
+        st = num('stop')
+        mix.put(st - 0.1, whoosh(0.4, 600, 3400, peak=0.4), 0.09); mix.put(st, impact(1.2), 0.16)
+    elif name == 'Quiz':
+        for k, tt in enumerate(a.get('q', [])): mix.put(tt - 0.04, pop(600 + 160 * k, 900 + 160 * k, 0.12), 0.08)
+        o = num('oui'); mix.put(o, boom(0.9, 70), 0.1); mix.put(o + 0.05, scratch(0.35), 0.08)
+    elif name == 'Rembobine':
+        mix.put(t0, scratch(1.0), 0.1); mix.put(t0, whoosh(1.0, 3200, 400, peak=0.3), 0.07)
+        for k in range(11): mix.put(t0 + 0.05 + k * 0.08, click(2600 - k * 120, 0.02), 0.05, pan=-0.4 + 0.08 * k)
+    elif name == 'Fiche':
+        n = sum(len(x) for x in str(a.get('lines', '')).split('|'))
+        for k in range(n):
+            if t0 + k * 0.028 < t1: mix.put(t0 + k * 0.028, click(1900 + (k * 331) % 900, 0.015), 0.04, pan=-0.2 + 0.4 * ((k * 7) % 10) / 10)
+    elif name == 'Reconstruit':
+        for k in range(19): mix.put(t0 + 0.1 + k * 0.055, click(900 + (k * 173) % 1200, 0.02), 0.045, pan=-0.5 + (k % 6) / 6)
+        f = num('fill', 1.6); mix.put(t0 + f, thud(0.25), 0.12); mix.put(t0 + f + 0.05, chime([N['D5'], N['F5'], N['A5']], 1.2, 0.5), 0.05)
+    elif name == 'PhotoTruquee':
+        if a.get('done'): mix.put(t0 + 0.1, chime([N['D5'], N['A5'], N['D5'] * 2], 1.6, 0.6), 0.05); return
+        ps = num('paste', 1.0)
+        for k in range(int(max(0.3, ps - 0.3) / 0.12)): mix.put(t0 + 0.15 + k * 0.12, scratch(0.08), 0.06)
+        mix.put(t0 + ps, whoosh(0.35, 500, 2600, peak=0.6), 0.08); mix.put(t0 + ps + 0.35, thud(0.2), 0.12)
+        mix.put(t0 + ps + 0.42, scratch(0.12), 0.07); mix.put(t0 + ps + 0.5, scratch(0.12), 0.07)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 

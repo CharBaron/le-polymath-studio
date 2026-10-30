@@ -12,7 +12,7 @@ hashtags: #psychologie #memoire #test #cerveau #lepolymath
 description: Un seul essai. Retiens la liste, puis réponds honnêtement. Les faux souvenirs (Roediger & McDermott, 1995).
 commente: Il n'a jamais été dans la liste. Mais toi, évidemment, t'avais répondu non.
 ---
-> BROUILLON à valider par Charles avant la voix. Recette du gorille (voir mémoire recette-polymath-gorille) : test dès l'image 0 sans annoncer le piège, révélation qui accuse, expérience datée, concept nommé, relance, escalade, boucle. DA Gravure v3.2, style « nuit / rêve » (accent violet lunaire), Goya et Füssli pour le sommeil, montgolfières gravées. Boucle : « …qu'il était dans la liste ? » enchaîne sur « Retiens ces mots. »
+> Validé par Charles le 30/10/2026. Recette du gorille (voir mémoire recette-polymath-gorille) : test dès l'image 0 sans annoncer le piège, révélation qui accuse, expérience datée, concept nommé, relance, escalade, boucle. DA Gravure v3.2, style « nuit / rêve » (accent violet lunaire), Goya et Füssli pour le sommeil, montgolfières gravées. Boucle : « …qu'il était dans la liste ? » enchaîne sur « Retiens ces mots. »
 # hook
 {@h} Retiens ces mots. Un seul essai. {@liste} Lit… drap… nuit… oreiller… couette… rêve… fatigue… sieste… ronfler… bâiller… réveil… {@stop} *Stop.*
 # quiz

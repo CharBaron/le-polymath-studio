@@ -19,6 +19,7 @@ STYLES = {
     'grec':     {'ink': (18, 12, 9), 'paper': (222, 128, 74), 'card': (214, 120, 68), 'rim': (24, 16, 12)},
     'anatomie': {'ink': (44, 24, 14), 'paper': (240, 228, 202), 'card': (243, 234, 212), 'rim': (150, 32, 28)},
     'atlas':    {'ink': (14, 22, 52), 'paper': (236, 224, 192), 'card': (238, 228, 200), 'rim': (226, 177, 74)},
+    'reve':     {'ink': (24, 14, 44), 'paper': (234, 226, 242), 'card': (238, 231, 245), 'rim': (185, 138, 240)},
 }
 S = dict(STYLES['or'])
 
@@ -204,6 +205,14 @@ def textures(out, style):
         base = np.array([228, 212, 178], np.float32)[None, None] * (0.9 + 0.14 * n1[..., None]) - stains[..., None] * np.array([18, 26, 40]) - fox[..., None] * np.array([20, 34, 46])
         light = np.array([240, 230, 206], np.float32)[None, None] * (0.95 + 0.07 * n2[..., None])
         vel = cloth((72, 12, 14), 21)
+    elif style == 'reve':      # nuit violette, halo de lune en haut, brume, rares étoiles ; papier lilas ; velours prune
+        moon = np.exp(-(((xx - 760) / 520) ** 2 + ((yy - 380) / 480) ** 2))
+        mist = fbm(H, W, 23, 5, 340)
+        base = np.array([14, 9, 30], np.float32)[None, None] * (0.75 + 0.5 * n1[..., None]) + moon[..., None] * np.array([46, 30, 78]) + (mist[..., None] - 0.5) * np.array([10, 6, 22])
+        stars = rng.random((H, W)) > 0.9993
+        base[stars] = np.array([214, 200, 240]) * rng.uniform(0.3, 0.8, (stars.sum(), 1))
+        light = np.array([232, 224, 238], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
+        vel = cloth((58, 20, 86), 21)
     else:                      # atlas : nuit étoilée, parchemin, indigo
         base = np.array([9, 15, 38], np.float32)[None, None] * (0.8 + 0.45 * n1[..., None])
         stars = rng.random((H, W)) > 0.9985

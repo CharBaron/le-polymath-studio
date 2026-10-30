@@ -1,0 +1,78 @@
+{
+ "goya_plein": [
+  1080,
+  1920
+ ],
+ "nightmare_plein": [
+  1080,
+  1920
+ ],
+ "prefet_plein": [
+  1080,
+  1920
+ ],
+ "sieste_plein": [
+  1080,
+  1920
+ ],
+ "gahner_plein": [
+  1080,
+  1920
+ ],
+ "endymion_plein": [
+  1080,
+  1920
+ ],
+ "goya": [
+  778,
+  961
+ ],
+ "nightmare": [
+  898,
+  702
+ ],
+ "prefet": [
+  812,
+  622
+ ],
+ "gahner": [
+  638,
+  853
+ ],
+ "sieste": [
+  898,
+  364
+ ],
+ "endymion": [
+  658,
+  469
+ ],
+ "temoin": [
+  850,
+  617
+ ],
+ "temoin_zoom": [
+  402,
+  438
+ ],
+ "wundt": [
+  708,
+  531
+ ],
+ "versailles": [
+  898,
+  670
+ ],
+ "montgolfier": [
+  658,
+  839
+ ],
+ "enfant": [
+  363,
+  576
+ ],
+ "enfant_cut": [
+  250,
+  310
+ ]
+}
