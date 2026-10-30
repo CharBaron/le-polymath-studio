@@ -19,6 +19,7 @@ PROMPT-reproduire-le-studio.md
 tools/*
 !tools/pipeline/
 tools/pipeline/__pycache__/
+*.mp3
 
 # vidéos : seulement les sources (script, cue sheet, préparation des images), pas les rendus ni les images brutes
 videos/**/*.mp4

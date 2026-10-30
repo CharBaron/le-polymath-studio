@@ -1,0 +1,198 @@
+{
+ "fps": 30,
+ "duration": 79.356,
+ "frames": 2381,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "h2": 4.33,
+  "tel": 7.04,
+  "alerte": 9.16,
+  "conf": 10.55,
+  "lum": 12.35,
+  "dehors": 14.61,
+  "bas": 16.04,
+  "chasse": 19.14,
+  "r1": 21.39,
+  "r1t": 22.95,
+  "r1x": 24.56,
+  "r1y": 25.7,
+  "r2": 27.77,
+  "r2t": 28.85,
+  "r2x": 30.84,
+  "r3": 33.21,
+  "r3t": 34.502,
+  "r3x": 35.97,
+  "r3y": 38.06,
+  "nuit": 40.31,
+  "soir": 40.31,
+  "fenetres": 42.78,
+  "minuit": 44.45,
+  "allume": 45.91,
+  "face": 47.44,
+  "jumelles": 49.23,
+  "jum": 49.23,
+  "fille": 50.57,
+  "signal": 52.06,
+  "m1": 54.72,
+  "m2": 55.56,
+  "m3": 56.43,
+  "sos": 57.7,
+  "rappel": 59.05,
+  "r4": 59.05,
+  "r4x": 60.21,
+  "twist": 61.51,
+  "braque": 61.51,
+  "tafen": 63.583,
+  "tetes": 64.97,
+  "une": 68.1,
+  "dix": 68.78,
+  "cent": 69.86,
+  "choix": 70.93,
+  "a": 72.85,
+  "b": 74.87,
+  "fin": 75.61
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 7.04,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "tel",
+   "t0": 7.04,
+   "t1": 14.61,
+   "scene": null,
+   "beats": [
+    "alerte",
+    "conf",
+    "lum"
+   ]
+  },
+  {
+   "id": "dehors",
+   "t0": 14.61,
+   "t1": 21.39,
+   "scene": null,
+   "beats": [
+    "bas",
+    "chasse"
+   ]
+  },
+  {
+   "id": "r1",
+   "t0": 21.39,
+   "t1": 27.77,
+   "scene": null,
+   "beats": [
+    "r1t",
+    "r1x",
+    "r1y"
+   ]
+  },
+  {
+   "id": "r2",
+   "t0": 27.77,
+   "t1": 33.21,
+   "scene": null,
+   "beats": [
+    "r2t",
+    "r2x"
+   ]
+  },
+  {
+   "id": "r3",
+   "t0": 33.21,
+   "t1": 40.31,
+   "scene": null,
+   "beats": [
+    "r3t",
+    "r3x",
+    "r3y"
+   ]
+  },
+  {
+   "id": "nuit",
+   "t0": 40.31,
+   "t1": 49.23,
+   "scene": null,
+   "beats": [
+    "soir",
+    "fenetres",
+    "minuit",
+    "allume",
+    "face"
+   ]
+  },
+  {
+   "id": "jumelles",
+   "t0": 49.23,
+   "t1": 59.05,
+   "scene": null,
+   "beats": [
+    "jum",
+    "fille",
+    "signal",
+    "m1",
+    "m2",
+    "m3",
+    "sos"
+   ]
+  },
+  {
+   "id": "rappel",
+   "t0": 59.05,
+   "t1": 61.51,
+   "scene": null,
+   "beats": [
+    "r4",
+    "r4x"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 61.51,
+   "t1": 70.93,
+   "scene": null,
+   "beats": [
+    "braque",
+    "tafen",
+    "tetes",
+    "une",
+    "dix",
+    "cent"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 70.93,
+   "t1": 75.61,
+   "scene": null,
+   "beats": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 75.61,
+   "t1": 79.356,
+   "scene": null,
+   "beats": []
+  }
+ ],
+ "title": "Dernier étage — Jour 1",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ? Réfléchis bien avant de répondre."
+ }
+}
