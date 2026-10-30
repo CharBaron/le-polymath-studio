@@ -12,7 +12,7 @@ export type Seg = {t0: number; tr?: 'cut' | 'fade' | 'black' | 'white' | 'glitch
 export type EpisodeSpec = {
   scenes: Seg[];
   hud: {day: string; floor: string; clock: ClockKey[]; t0: number; t1: number; off?: [number, number][]};
-  series: {name: string; day: string; t0: number; t1: number};
+  series: {name: string; day: string; t0: number; t1: number; y?: number};
   pin?: {text: string; x: number; y: number; t0: number; t1: number};
   rules: RuleSpec[];
   choice: {q: string; a: string; b: string; tq: number; ta: number; tb: number; tc: number; t1: number};

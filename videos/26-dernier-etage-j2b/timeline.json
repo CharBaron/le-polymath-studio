@@ -1,0 +1,168 @@
+{
+ "fps": 30,
+ "duration": 100.257,
+ "frames": 3008,
+ "beats": {
+  "hook": 0.22,
+  "h": 0.22,
+  "insiste": 3.48,
+  "s1": 5.88,
+  "tombe": 9.49,
+  "eteint": 11.06,
+  "bon": 12.69,
+  "vitre": 15.05,
+  "douze": 18.36,
+  "toc": 20.36,
+  "matin": 23.24,
+  "brisee": 26.76,
+  "mur": 28.96,
+  "ilgrimpe": 32.85,
+  "aide": 34.41,
+  "prevenir": 36.11,
+  "comprends": 37.71,
+  "lum": 40.24,
+  "certains": 41.648,
+  "r5": 44.67,
+  "r5t": 45.8,
+  "cartons": 47.19,
+  "rayon": 50.03,
+  "r6": 50.9,
+  "r6t": 52.12,
+  "avion": 53.35,
+  "minute": 55.95,
+  "vocal": 59.88,
+  "maman": 61.37,
+  "immeuble": 65.46,
+  "aime": 66.71,
+  "alerte": 67.104,
+  "evac": 67.66,
+  "dix": 70.56,
+  "sous": 71.4,
+  "nuit": 74.84,
+  "frappe": 77.37,
+  "k1": 80.12,
+  "k2": 81.34,
+  "k3": 82.21,
+  "sos": 83.41,
+  "signal": 84.07,
+  "sauf": 86.71,
+  "choix": 92.08,
+  "barri": 88.47,
+  "a": 93.71,
+  "b": 94.79,
+  "fin": 96.49
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.22,
+   "t1": 15.05,
+   "scene": null,
+   "beats": [
+    "h",
+    "insiste",
+    "s1",
+    "tombe",
+    "eteint",
+    "bon"
+   ]
+  },
+  {
+   "id": "vitre",
+   "t0": 15.05,
+   "t1": 23.24,
+   "scene": null,
+   "beats": [
+    "douze",
+    "toc"
+   ]
+  },
+  {
+   "id": "matin",
+   "t0": 23.24,
+   "t1": 44.67,
+   "scene": null,
+   "beats": [
+    "brisee",
+    "mur",
+    "ilgrimpe",
+    "aide",
+    "prevenir",
+    "comprends",
+    "lum",
+    "certains"
+   ]
+  },
+  {
+   "id": "r5",
+   "t0": 44.67,
+   "t1": 50.9,
+   "scene": null,
+   "beats": [
+    "r5t",
+    "cartons",
+    "rayon"
+   ]
+  },
+  {
+   "id": "r6",
+   "t0": 50.9,
+   "t1": 74.84,
+   "scene": null,
+   "beats": [
+    "r6t",
+    "avion",
+    "minute",
+    "vocal",
+    "maman",
+    "immeuble",
+    "aime",
+    "alerte",
+    "evac",
+    "dix",
+    "sous"
+   ]
+  },
+  {
+   "id": "nuit",
+   "t0": 74.84,
+   "t1": 92.08,
+   "scene": null,
+   "beats": [
+    "frappe",
+    "k1",
+    "k2",
+    "k3",
+    "sos",
+    "signal",
+    "sauf"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 92.08,
+   "t1": 96.49,
+   "scene": null,
+   "beats": [
+    "barri",
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 96.49,
+   "t1": 100.257,
+   "scene": null,
+   "beats": []
+  }
+ ],
+ "title": "Dernier étage — Jour 2 (B)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ? Réfléchis bien avant de répondre."
+ }
+}

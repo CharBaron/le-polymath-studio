@@ -128,7 +128,7 @@ export const Hud: React.FC<{day: string; clock: ClockKey[]; floor: string; t0: n
 };
 
 // ---------------- règle : étiquette + titre (grand → en-tête) ----------------
-export type RuleSpec = {n: number; title: string; sub?: string; tag: number; at: number; shrink?: number; end: number; redacted?: boolean};
+export type RuleSpec = {n: number; title: string; sub?: string; subAt?: number; tag: number; at: number; shrink?: number; end: number; redacted?: boolean};
 
 export const Rule: React.FC<{r: RuleSpec}> = ({r}) => {
   const frame = useCurrentFrame();
@@ -143,7 +143,8 @@ export const Rule: React.FC<{r: RuleSpec}> = ({r}) => {
   const titleY = lerp(560, 486, sh), titleS = lerp(1, 0.52, sh);
   const tin = prog(t, r.at - 0.02, r.at + 0.16, easeOut);
   const ul = prog(t, r.at + 0.05, r.at + 0.42, easeOut);
-  const subIn = r.sub ? prog(t, r.at + 0.45, r.at + 0.62, easeOut) : 0;
+  const subT = r.subAt ?? r.at + 0.45;
+  const subIn = r.sub ? prog(t, subT, subT + 0.17, easeOut) : 0;
   // règle censurée : 3 barres grises qui clignotent jusqu'à la révélation
   const bars = r.redacted && t < r.at;
   return (
@@ -358,6 +359,69 @@ export const Morse: React.FC<{groups: {at: number; on: number; off: number; long
           <div style={{fontFamily: SF.title, fontSize: 120, lineHeight: 1, color: SV.white, opacity: lit * prog(t, sos + gi * 0.12, sos + gi * 0.12 + 0.2, easeOut), textShadow: '0 0 22px rgba(255,255,255,0.6), 0 6px 18px rgba(0,0,0,0.7)'}}>{g.letter}</div>
         </div>
       ))}
+    </div>
+  );
+};
+
+// ---------------- morse lettre par lettre (unité u : point = u, trait = 3u, entre deux signes = u) ----------------
+export const MORSE: Record<string, string> = {
+  A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..', J: '.---', K: '-.-', L: '.-..', M: '--',
+  N: '-.', O: '---', P: '.--.', Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-', Y: '-.--', Z: '--..',
+};
+export type MorseLetter = {ch: string; t0: number; t1: number; on: [number, number][]; sym: string};
+/** créneaux allumés d'un mot ; `starts` impose le début de chaque lettre (caler sur la voix), sinon lettres enchaînées */
+export const morseSpans = (start: number, word: string, u = 0.12, starts?: number[]): MorseLetter[] => {
+  let t = start;
+  return word.split('').map((ch, i) => {
+    if (starts?.[i] !== undefined) t = starts[i];
+    const t0 = t, sym = MORSE[ch] ?? '';
+    const on: [number, number][] = [];
+    for (const s of sym) {
+      const d = s === '-' ? 3 * u : u;
+      on.push([t, t + d]);
+      t += d + u;
+    }
+    t += 2 * u;
+    return {ch, t0, t1: t - 3 * u, on, sym};
+  });
+};
+export const morseLit = (t: number, letters: MorseLetter[]) => letters.some((l) => l.on.some(([a, b]) => t >= a && t < b));
+
+export const MorseCode: React.FC<{letters: MorseLetter[]; t1: number; y?: number; showFrom?: number}> = ({letters, t1, y = 420, showFrom}) => {
+  const frame = useCurrentFrame();
+  const t = frame / FPS;
+  const t0 = showFrom ?? letters[0].t0;
+  if (t < t0 - 0.05 || t > t1 + 0.3) return null;
+  const out = 1 - prog(t, t1, t1 + 0.3);
+  return (
+    <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', gap: 56, opacity: out, pointerEvents: 'none'}}>
+      {letters.map((l, li) => (
+        <div key={li} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, minWidth: 90}}>
+          <div style={{display: 'flex', gap: 12, height: 40, alignItems: 'center'}}>
+            {l.sym.split('').map((s, i) => {
+              const [a, b] = l.on[i];
+              const k = sp(frame, a, {damping: 11, stiffness: 260, mass: 0.5});
+              const glow = t >= a && t < b ? 1 : 0;
+              return <div key={i} style={{width: s === '-' ? 70 : 26, height: 26, borderRadius: 13, background: SV.lime, transform: `scale(${k})`, boxShadow: `0 0 ${12 + 26 * glow}px rgba(210,248,74,${0.5 + 0.5 * glow})`}} />;
+            })}
+          </div>
+          <div style={{fontFamily: SF.title, fontSize: 120, lineHeight: 1, color: SV.white, opacity: prog(t, l.t1, l.t1 + 0.2, easeOut), transform: `scale(${lerp(1.3, 1, prog(t, l.t1, l.t1 + 0.25, easeOut))})`, textShadow: '0 0 22px rgba(255,255,255,0.6), 0 6px 18px rgba(0,0,0,0.7)'}}>{l.ch}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+/** compte à rebours de la saison, sous le HUD (ex. « HÉLICO J-10 ») */
+export const Countdown: React.FC<{label: string; t0: number; t1: number}> = ({label, t0, t1}) => {
+  const frame = useCurrentFrame();
+  const t = frame / FPS;
+  if (t < t0 - 0.02 || t > t1 + 0.4) return null;
+  const k = sp(frame, t0, {damping: 10, stiffness: 220, mass: 0.6}) * (1 - prog(t, t1, t1 + 0.35));
+  return (
+    <div style={{position: 'absolute', left: 68, top: 452, transform: `scale(${k})`, transformOrigin: '0 50%', display: 'flex', alignItems: 'center', gap: 10, border: `3px solid ${SV.amber}`, borderRadius: 30, padding: '6px 18px', background: 'rgba(14,10,4,0.75)', boxShadow: `0 0 16px rgba(242,162,60,${0.3 + 0.2 * Math.sin(t * 3)})`}}>
+      <svg width={30} height={22} viewBox="0 0 30 22"><ellipse cx={13} cy={14} rx={9} ry={5} fill={SV.amber} /><rect x={20} y={12} width={10} height={3} fill={SV.amber} /><rect x={2} y={6} width={24} height={2.5} fill={SV.amber} /><rect x={12} y={6} width={2.5} height={4} fill={SV.amber} /></svg>
+      <div style={{fontFamily: SF.mono, fontWeight: 700, fontSize: 28, letterSpacing: '0.12em', color: SV.amber}}>{label}</div>
     </div>
   );
 };

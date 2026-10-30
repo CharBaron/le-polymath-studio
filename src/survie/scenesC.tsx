@@ -221,8 +221,9 @@ const [LX, LY] = winAt(OPP.x, OPP.y, OPP.w, OPP.floors, OPP.fh, OPP.cols, 7, 3);
 export const LIT_WIN = {x: LX, y: LY};
 
 /** l'immeuble d'en face, vu depuis ta fenêtre (une seule fenêtre allumée à partir de `lit`) */
-const Opposite: React.FC<{T: number; lit: number; beam?: number}> = ({T, lit, beam = 0}) => {
-  const on = T < lit ? 0 : T < lit + 0.35 ? (rand(Math.floor(T * 20)) > 0.45 ? 1 : 0.2) : 1;
+export const Opposite: React.FC<{T: number; lit: number; beam?: number; level?: number}> = ({T, lit, beam = 0, level}) => {
+  // `level` (0..1) impose la lumière de la fenêtre de Lina (morse, lampe qui tombe) ; sinon elle s'allume à `lit`
+  const on = level ?? (T < lit ? 0 : T < lit + 0.35 ? (rand(Math.floor(T * 20)) > 0.45 ? 1 : 0.2) : 1);
   return (
     <g>
       <defs>
@@ -233,6 +234,7 @@ const Opposite: React.FC<{T: number; lit: number; beam?: number}> = ({T, lit, be
       <circle cx={880} cy={300} r={40} fill="#EEF0F8" />
       <Glow x={880} y={300} r={130} color="#C8D2FF" o={0.4} blur={24} />
       <Tower {...OPP} body="url(#oBody)" edge="#4A5A9A" dark="#0D0F1A" roof={false} win={(f, c) => (f === 7 && c === 3 && on > 0.5 ? '#F6C46A' : null)} />
+      {on > 0.02 && on <= 0.5 ? <rect x={LX} y={LY} width={44} height={58.67} fill="#F6C46A" opacity={on * 1.6} /> : null}
       {on > 0 ? <Glow x={LX + 22} y={LY + 29} r={110} color="#F6B858" o={0.55 * on} blur={24} /> : null}
       {beam > 0 ? <Glow x={LX + 22} y={LY + 29} r={60 + 400 * beam} color="#FFF6DC" o={Math.min(1, beam * 1.4)} blur={40} /> : null}
     </g>
@@ -298,7 +300,7 @@ export const SalonNuit: React.FC<SceneP & {t0: number; lit: number; push: number
 };
 
 // ---------------- jumelles : toi à la fenêtre, puis la vue ronde sur la fenêtre d'en face ----------------
-const Girl: React.FC<{T: number; up: number; on: number; x: number; y: number; h: number}> = ({T, up, on, x, y, h}) => {
+export const Girl: React.FC<{T: number; up: number; on: number; x: number; y: number; h: number; item?: 'lamp' | 'radio' | 'none'}> = ({T, up, on, x, y, h, item = 'lamp'}) => {
   const pose: Pose = {...mix(P.standArmsDown, {...P.stand, aR: 140, aRb: -40}, up), head: Math.sin(T * 1.4) * 3};
   const b = bones(pose, h);
   const hipY = -0.437 * h;
@@ -312,6 +314,15 @@ const Girl: React.FC<{T: number; up: number; on: number; x: number; y: number; h
       <path d={`M${hc[0] - b.R * 1.02} ${hc[1] + b.R * 0.1} A${b.R * 1.04} ${b.R * 1.04} 0 0 1 ${hc[0] + b.R * 1.02} ${hc[1] + b.R * 0.1} Q${hc[0]} ${hc[1] - b.R * 0.35} ${hc[0] - b.R * 1.02} ${hc[1] + b.R * 0.1} Z`} fill="#6A4A3A" stroke="#22201E" strokeWidth={3} />
       {[-1, 1].map((s) => <ellipse key={s} cx={hc[0] + s * b.R * 1.2} cy={hc[1] + b.R * 0.75} rx={b.R * 0.32} ry={b.R * 0.62} fill="#6A4A3A" stroke="#22201E" strokeWidth={3} />)}
       <path d={`M${x + b.sh[0] - h * 0.07} ${y + hipY + b.sh[1] + h * 0.05} L${x - h * 0.16} ${y + hipY + h * 0.08} L${x + h * 0.16} ${y + hipY + h * 0.08} L${x + b.sh[0] + h * 0.07} ${y + hipY + b.sh[1] + h * 0.05} Z`} fill="#C9506A" stroke="#22201E" strokeWidth={4} strokeLinejoin="round" />
+      {item === 'radio' ? (
+        <g transform={`translate(${hand[0]},${hand[1]})`}>
+          <rect x={-h * 0.07} y={-h * 0.11} width={h * 0.14} height={h * 0.1} rx={6} fill="#3A3F48" stroke="#15171C" strokeWidth={4} />
+          <circle cx={-h * 0.03} cy={-h * 0.06} r={h * 0.025} fill="#15171C" />
+          <rect x={h * 0.01} y={-h * 0.09} width={h * 0.04} height={h * 0.012} fill="#7AE07A" />
+          <line x1={h * 0.05} y1={-h * 0.11} x2={h * 0.09} y2={-h * 0.24} stroke="#15171C" strokeWidth={4} />
+        </g>
+      ) : null}
+      {item !== 'lamp' ? null : <>
       {/* lampe tournée vers toi */}
       <rect x={hand[0] - h * 0.03} y={hand[1] - h * 0.06} width={h * 0.06} height={h * 0.1} rx={6} fill="#2A2A30" />
       <circle cx={hand[0]} cy={hand[1] - h * 0.06} r={h * 0.035} fill={on > 0.5 ? '#FFFBEA' : '#8A8A70'} />
@@ -322,6 +333,7 @@ const Girl: React.FC<{T: number; up: number; on: number; x: number; y: number; h
           <rect x={hand[0] - h * 0.9} y={hand[1] - h * 0.065} width={h * 1.8} height={5} fill="#FFF6D8" opacity={0.6} filter="url(#b4)" />
         </g>
       ) : null}
+      </>}
     </g>
   );
 };
@@ -337,7 +349,7 @@ export const morseOn = (T: number, m1: number, m2: number, m3: number) => {
 };
 
 /** jumelles tenues à deux mains : au visage (k = 1) ou baissées à la taille (k = 0) */
-const Binoculars: React.FC<{pose: Pose; x: number; y: number; h: number; k: number}> = ({pose, x, y, h, k}) => {
+export const Binoculars: React.FC<{pose: Pose; x: number; y: number; h: number; k: number}> = ({pose, x, y, h, k}) => {
   const b = bones(pose, h);
   const hy = y - 0.437 * h;
   const cx = x + (b.hL[0] + b.hR[0]) / 2, cy = hy + (b.hL[1] + b.hR[1]) / 2 - lerp(0, 0.02 * h, k);

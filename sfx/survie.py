@@ -251,3 +251,62 @@ def can_open():
     n = int(0.45 * SR)
     hiss = bandnoise(n, lambda k: 3200, q=0.5)
     return [(random.uniform(-1, 1) * math.exp(-k / (0.004 * SR)) * (1 if k < 0.01 * SR else 0) + hiss[k] * 1.6 * math.exp(-k / (0.12 * SR))) for k in range(n)]
+
+
+def claw(dur=0.25):
+    """Ongles sur le béton de la façade : grattement aigu bref."""
+    n = int(dur * SR)
+    w = bandnoise(n, lambda k: 3800 - 1600 * k / n, q=0.4)
+    return [v * math.exp(-k / (0.08 * SR)) * 2.2 for k, v in enumerate(w)]
+
+
+def glass_tap():
+    """Doigt contre une vitre : toc sec + tintement du verre."""
+    n = int(0.6 * SR)
+    out = []
+    for k in range(n):
+        t = k / SR
+        body = math.sin(2 * math.pi * 210 * t) * math.exp(-t / 0.03)
+        ring = 0.35 * math.sin(2 * math.pi * 2900 * t) * math.exp(-t / 0.12) + 0.2 * math.sin(2 * math.pi * 4700 * t) * math.exp(-t / 0.07)
+        out.append(math.tanh(1.6 * (body + ring + random.uniform(-1, 1) * math.exp(-t / 0.002))))
+    return out
+
+
+def knock():
+    """Coup de poing sourd dans une porte en bois."""
+    n = int(0.35 * SR)
+    wood = bandnoise(n, lambda k: 700, q=0.6)
+    out, ph = [], 0.0
+    for k in range(n):
+        t = k / SR
+        ph += 2 * math.pi * (95 + 60 * math.exp(-t / 0.015)) / SR
+        out.append(math.tanh(2.0 * (math.sin(ph) * math.exp(-t / 0.06) + wood[k] * 2.0 * math.exp(-t / 0.02))))
+    return out
+
+
+def tape(dur=0.45):
+    """Scotch qu'on déroule et qu'on arrache : crépitement qui monte."""
+    n = int(dur * SR)
+    w = bandnoise(n, lambda k: 1500 + 2500 * k / n, q=0.3)
+    return [v * (0.5 + 0.5 * (random.random() < 0.3)) * min(1, k / (0.02 * SR), (n - k) / (0.05 * SR)) * 2 for k, v in enumerate(w)]
+
+
+def paper():
+    """Feuille plaquée contre une vitre : souffle bref et claque légère."""
+    n = int(0.3 * SR)
+    w = bandnoise(n, lambda k: 2200, q=0.5)
+    return [v * math.exp(-k / (0.05 * SR)) * 1.8 for k, v in enumerate(w)]
+
+
+def shards(dur=1.4):
+    """Éclats de verre qui tintent (vitre brisée)."""
+    n = int(dur * SR)
+    out = [0.0] * n
+    for _ in range(26):
+        i0 = int(random.uniform(0, dur * 0.7) * SR)
+        f = random.uniform(2400, 6200)
+        for k in range(int(0.15 * SR)):
+            if i0 + k >= n:
+                break
+            out[i0 + k] += 0.25 * math.sin(2 * math.pi * f * k / SR) * math.exp(-k / (0.03 * SR))
+    return out

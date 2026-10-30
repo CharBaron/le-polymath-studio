@@ -1,0 +1,201 @@
+{
+ "fps": 30,
+ "duration": 108.885,
+ "frames": 3267,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "s1": 1.95,
+  "stop": 5.35,
+  "mot": 7.57,
+  "m": 10.302,
+  "u": 10.49,
+  "r": 10.55,
+  "mur": 11.56,
+  "facade": 13.62,
+  "penche": 13.62,
+  "grimpe": 16.04,
+  "vers": 20.08,
+  "eteins": 21.69,
+  "tard": 22.8,
+  "vitre": 23.97,
+  "voit": 26.74,
+  "ecoute": 28.13,
+  "toc": 29.47,
+  "matin": 32.25,
+  "traces": 33.31,
+  "douze": 37.34,
+  "comprends": 39.07,
+  "lum": 41.65,
+  "certains": 43.92,
+  "r5": 45.07,
+  "r5t": 46.38,
+  "cartons": 47.84,
+  "rayon": 51.62,
+  "r6": 52.96,
+  "r6t": 54.45,
+  "avion": 56.07,
+  "minute": 58.87,
+  "vocal": 60.97,
+  "maman": 63.35,
+  "immeuble": 67.13,
+  "aime": 68.66,
+  "lina": 93.84,
+  "aprem": 69.68,
+  "nom": 73.35,
+  "radio": 74.76,
+  "helico": 76.09,
+  "dix": 79.08,
+  "sous": 80.59,
+  "nuit": 82.7,
+  "frappe": 86.19,
+  "k1": 87.72,
+  "k2": 88.97,
+  "k3": 90.12,
+  "sos": 91.23,
+  "face": 92.55,
+  "qui": 96.48,
+  "choix": 101.3,
+  "barri": 98.7,
+  "a": 103.2,
+  "b": 105.0,
+  "fin": 106.7
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 13.62,
+   "scene": null,
+   "beats": [
+    "h",
+    "s1",
+    "stop",
+    "mot",
+    "m",
+    "u",
+    "r",
+    "mur"
+   ]
+  },
+  {
+   "id": "facade",
+   "t0": 13.62,
+   "t1": 23.97,
+   "scene": null,
+   "beats": [
+    "penche",
+    "grimpe",
+    "vers",
+    "eteins",
+    "tard"
+   ]
+  },
+  {
+   "id": "vitre",
+   "t0": 23.97,
+   "t1": 32.25,
+   "scene": null,
+   "beats": [
+    "voit",
+    "ecoute",
+    "toc"
+   ]
+  },
+  {
+   "id": "matin",
+   "t0": 32.25,
+   "t1": 45.07,
+   "scene": null,
+   "beats": [
+    "traces",
+    "douze",
+    "comprends",
+    "lum",
+    "certains"
+   ]
+  },
+  {
+   "id": "r5",
+   "t0": 45.07,
+   "t1": 52.96,
+   "scene": null,
+   "beats": [
+    "r5t",
+    "cartons",
+    "rayon"
+   ]
+  },
+  {
+   "id": "r6",
+   "t0": 52.96,
+   "t1": 93.84,
+   "scene": null,
+   "beats": [
+    "r6t",
+    "avion",
+    "minute",
+    "vocal",
+    "maman",
+    "immeuble",
+    "aime"
+   ]
+  },
+  {
+   "id": "lina",
+   "t0": 93.84,
+   "t1": 82.7,
+   "scene": null,
+   "beats": [
+    "aprem",
+    "nom",
+    "radio",
+    "helico",
+    "dix",
+    "sous"
+   ]
+  },
+  {
+   "id": "nuit",
+   "t0": 82.7,
+   "t1": 101.3,
+   "scene": null,
+   "beats": [
+    "frappe",
+    "k1",
+    "k2",
+    "k3",
+    "sos",
+    "face",
+    "lina",
+    "qui"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 101.3,
+   "t1": 106.7,
+   "scene": null,
+   "beats": [
+    "barri",
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 106.7,
+   "t1": 108.885,
+   "scene": null,
+   "beats": []
+  }
+ ],
+ "title": "Dernier étage — Jour 2 (A)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ? Réfléchis bien avant de répondre."
+ }
+}
