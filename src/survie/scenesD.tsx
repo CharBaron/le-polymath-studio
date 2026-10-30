@@ -113,7 +113,13 @@ export const Dossier: React.FC<SceneP> = ({T, B}) => {
         ))}
         {winK[2] > 0 ? <g opacity={winK[2]}>{lab(540, 500, '3 FENÊTRES', CYAN, 34)}</g> : null}
         <g opacity={prog(T, plan0 + 0.6, plan0 + 1.0)}>
-          <HeroTop x={730} y={860} s={70} l={[700, 830]} r={[760, 830]} />
+          {/* repère « toi » : épaules du sweat + bonnet rouge vus de dessus, cercle qui pulse */}
+          <g transform="translate(730,860)">
+            <circle r={60 + 30 * ((T * 1.2) % 1)} fill="none" stroke="#FF5A4A" strokeWidth={4} opacity={1 - ((T * 1.2) % 1)} />
+            <ellipse cx={0} cy={14} rx={50} ry={26} fill={HERO.hoodie} stroke="#0A1626" strokeWidth={5} />
+            <circle r={28} fill={HERO.beanie} stroke="#0A1626" strokeWidth={5} />
+            <circle cy={-2} r={10} fill={HERO.pom} />
+          </g>
         </g>
       </g>
       {toCut > 0 ? (

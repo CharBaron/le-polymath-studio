@@ -68,7 +68,7 @@ export const DernierEtage1V2 = makeEpisode((B) => {
       {n: 3, title: 'RATIONNE', tag: B.r3 + 0.05, at: B.r3t, shrink: B.jours - 0.1, end: B.soir - 0.15},
       {n: 4, title: 'AUCUNE LUMIÈRE', sub: 'MÊME POUR ELLE.', tag: B.r4, at: B.r4x, end: B.braque + 0.25, redacted: true},
     ],
-    choice: {q: 'ALORS… TU RÉPONDS ?', a: 'A · JE LUI RÉPONDS', b: 'B · JE RESTE DANS LE NOIR', tq: B.choix, ta: B.a, tb: B.b, tc: B.b + 0.35, t1: endT - 0.1},
+    choice: {q: 'ALORS… TU RÉPONDS ?', a: 'A · JE LUI RÉPONDS', b: 'B · JE RESTE DANS LE NOIR', tq: B.choix, ta: B.a, tb: B.b, tc: B.b + 0.35, t1: endT - 0.45},
     end: {name: 'DERNIER ÉTAGE', day: 1, time0: '23:59', time1: '00:00', cta: 'ABONNE-TOI POUR LE JOUR 2', t0: endT, flip: B.fin + 1.55},
     hideCaps: [[B.alerte + 0.28, B.dehors - 0.02], [endT, 999]],
     extra: (
