@@ -1,39 +1,38 @@
 {
  "fps": 30,
- "duration": 63.181,
- "frames": 1895,
+ "duration": 64.417,
+ "frames": 1933,
  "beats": {
-  "hook": 0.21,
-  "h": 0.21,
-  "h2": 4.38,
-  "plutarque": 6.43,
-  "planches": 11.19,
-  "toutes": 14.78,
-  "vote": 18.17,
-  "hobbes": 21.09,
-  "gardien": 25.12,
-  "reconstruit": 27.956,
-  "deux": 30.13,
-  "lequel": 31.52,
-  "nom": 33.24,
-  "identite": 35.48,
-  "relance": 38.02,
-  "corps": 40.13,
-  "cellules": 40.13,
-  "neurones": 43.49,
-  "parfit": 46.46,
-  "machine": 49.01,
-  "reveil": 53.11,
-  "copie": 56.1,
-  "fin": 57.59,
-  "commente": 57.59,
-  "loop": 60.37
+  "hook": 0.2,
+  "h": 0.2,
+  "h2": 3.57,
+  "bateau": 7.16,
+  "plutarque": 10.91,
+  "planches": 15.71,
+  "toutes": 19.06,
+  "vote": 22.13,
+  "hobbes": 24.53,
+  "gardien": 28.1,
+  "reconstruit": 30.97,
+  "deux": 33.21,
+  "lequel": 34.89,
+  "nom": 37.04,
+  "identite": 39.15,
+  "relance": 41.89,
+  "neurones": 43.38,
+  "parfit": 47.75,
+  "machine": 50.39,
+  "reveil": 54.89,
+  "copie": 57.83,
+  "fin": 59.25,
+  "reponse": 59.25,
+  "loop": 62.12
  },
  "sections": [
   {
    "id": "hook",
-   "t0": 0.21,
-   "t1": 6.43,
+   "t0": 0.2,
+   "t1": 7.16,
    "scene": null,
    "beats": [
     "h",
@@ -41,11 +40,12 @@
    ]
   },
   {
-   "id": "plutarque",
-   "t0": 6.43,
-   "t1": 21.09,
+   "id": "bateau",
+   "t0": 7.16,
+   "t1": 24.53,
    "scene": null,
    "beats": [
+    "plutarque",
     "planches",
     "toutes",
     "vote"
@@ -53,8 +53,8 @@
   },
   {
    "id": "hobbes",
-   "t0": 21.09,
-   "t1": 33.24,
+   "t0": 24.53,
+   "t1": 37.04,
    "scene": null,
    "beats": [
     "gardien",
@@ -65,8 +65,8 @@
   },
   {
    "id": "nom",
-   "t0": 33.24,
-   "t1": 38.02,
+   "t0": 37.04,
+   "t1": 41.89,
    "scene": null,
    "beats": [
     "identite"
@@ -74,25 +74,17 @@
   },
   {
    "id": "relance",
-   "t0": 38.02,
-   "t1": 40.13,
-   "scene": null,
-   "beats": []
-  },
-  {
-   "id": "corps",
-   "t0": 40.13,
-   "t1": 46.46,
+   "t0": 41.89,
+   "t1": 47.75,
    "scene": null,
    "beats": [
-    "cellules",
     "neurones"
    ]
   },
   {
    "id": "parfit",
-   "t0": 46.46,
-   "t1": 57.59,
+   "t0": 47.75,
+   "t1": 59.25,
    "scene": null,
    "beats": [
     "machine",
@@ -102,17 +94,17 @@
   },
   {
    "id": "fin",
-   "t0": 57.59,
-   "t1": 63.181,
+   "t0": 59.25,
+   "t1": 64.417,
    "scene": null,
    "beats": [
-    "commente",
+    "reponse",
     "loop"
    ]
   }
  ],
  "title": "Le bateau de Thésée",
- "hook": "est-ce encore|le même bateau ?",
+ "hook": "ton ex a couché|avec qui ?",
  "retention": {
   "choc": null,
   "sous": null,

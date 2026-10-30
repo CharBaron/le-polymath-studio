@@ -5,6 +5,7 @@ from tools.pipeline.gravure_prep import run
 
 C = {'color': True}
 JOBS = {
+    'soleil': ('rond', 'flammarion', (0.882, 0.462, 0.078), 320),
     'strozzi': ('carte', 'strozzi', (0.0, 0.0, 1.0, 1.0), 860, C),
     'strozzi_plein': ('plein', 'strozzi', (0.08, 0.0, 0.62, 1.0), 0, C),
     'pharos': ('carte', 'pharos', (0.02, 0.02, 0.98, 0.88), 860),

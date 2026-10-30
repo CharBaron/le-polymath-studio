@@ -24,6 +24,7 @@ def anim_sfx(mix, s, N):
     t0, t1, name = s['t0'], s['t1'], a['name']
     num = lambda k, d=0.0: float(a.get(k, d))
     if name == 'QueueCoupee':
+        if num('cut', 0.6) > t1 - t0: return  # rat immobile (1re et dernière image)
         c = t0 + num('cut', 0.6)
         mix.put(c - 0.02, click(4200, 0.03), 0.16); mix.put(c, scratch(0.18), 0.12); mix.put(c, pop(1800, 600, 0.1), 0.08)
         r = t0 + num('run', 1.4)
@@ -31,6 +32,7 @@ def anim_sfx(mix, s, N):
     elif name == 'Registre':
         f = num('fill', 1.8)
         mix.put(t0 + 0.1, scratch(f), 0.09)
+        mix.put(t0 + 0.1, scratch(f), 0.06, pan=0.3)
         for k in range(int(f / 0.06)): mix.put(t0 + 0.15 + k * 0.06, click(1700 + (k * 97) % 600, 0.012), 0.035, pan=-0.3 + 0.6 * ((k * 7) % 10) / 10)
         mix.put(t0 + 0.15 + f, boom(1.2, 52), 0.12)
     elif name == 'Grouillement':
@@ -58,7 +60,7 @@ def anim_sfx(mix, s, N):
                 if t0 <= tt < t1: mix.put(tt, thud(0.12), 0.06, pan=-0.5 + (k % 8) / 8); mix.put(tt, click(900 + (k * 53) % 300, 0.02), 0.04)
     elif name == 'Cellules':
         fr, to = num('from', 0.2), num('to', 2.2)
-        if fr >= 0:
+        if 0 <= fr < t1 - t0:
             for k in range(16): mix.put(t0 + fr + (to - fr) * k / 16, pop(1500 + 80 * k, 2200 + 80 * k, 0.07), 0.035, pan=-0.5 + (k % 5) / 5)
         if 'neur' in a: mix.put(t0 + num('neur'), chime([N['D5'], N['F5'], N['A5']], 1.6, 0.6), 0.06)
     elif name == 'Teleporteur':

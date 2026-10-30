@@ -5,6 +5,8 @@ from tools.pipeline.gravure_prep import run
 
 C = {'color': True}
 JOBS = {
+    'vitruve': ('rond', 'vitruve', (0.5, 0.468, 0.385), 900),
+    'psyche': ('carte', 'psyche', (0.18, 0.03, 0.98, 0.72), 860),
     'amphora': ('carte', 'amphora', (0.1, 0.04, 0.9, 0.98), 540, C),
     'amphora_zoom': ('carte', 'amphora', (0.32, 0.28, 0.72, 0.62), 640, C),
     'trireme': ('carte', 'trireme1', (0.12, 0.22, 0.88, 0.74), 860),

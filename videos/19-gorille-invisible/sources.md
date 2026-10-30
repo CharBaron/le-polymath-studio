@@ -15,7 +15,8 @@
 - `xray3` : Radiography, x-ray therapeutics and radium therapy (1915) (14757218112).jpg (Internet Archive Book Images, No restrictions) : https://commons.wikimedia.org/wiki/File:Radiography,_x-ray_therapeutics_and_radium_therapy_(1915)_(14757218112).jpg
 - `basket1` : Official A.A.U. basketball guide (1894) (14776245765).jpg (Internet Archive Book Images, No restrictions) : https://commons.wikimedia.org/wiki/File:Official_A.A.U._basketball_guide_(1894)_(14776245765).jpg
 - `basket2` : Official A.A.U. basketball guide (1894) (14753243046).jpg (Internet Archive Book Images, No restrictions) : https://commons.wikimedia.org/wiki/File:Official_A.A.U._basketball_guide_(1894)_(14753243046).jpg
+- Les joueurs du test sont découpés dans la photo `basket1` (Université du Minnesota, 1894), le gorille dans `brehm7`.
 - Animations (rats, registre, test des passes, navire, cellules, estomac, bocal, Terre) : dessinées en code (`src/gravure/anim/`).
 
 ## Fabrication
-- Voix : Gemini TTS Puck. Version livrée sans musique.
+- Voix : Gemini TTS Puck (modèle lite). Version livrée sans musique.

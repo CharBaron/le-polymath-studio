@@ -13,6 +13,7 @@ JOBS = {
     'couple_plein': ('plein', 'stmartinwife', (0.5, 0.05, 0.98, 0.95), 0),
     'canoe': ('carte', 'canoe', (0.0, 0.05, 1.0, 0.95), 880, C),
     'canoe_zoom': ('carte', 'canoe', (0.05, 0.35, 0.6, 0.85), 860, C),
+    'estomac_grand': ('carte', 'stomach', (0.0, 0.0, 1.0, 1.0), 900, {'up': True}),
     'estomac': ('carte', 'stomach', (0.0, 0.0, 1.0, 1.0), 760),
     'mousquet': ('carte', 'militia', (0.0, 0.0, 0.34, 0.5), 560),
     'brevet': ('carte', 'life1', (0.02, 0.02, 0.98, 0.9), 820),

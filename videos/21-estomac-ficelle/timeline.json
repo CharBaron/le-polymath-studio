@@ -1,40 +1,40 @@
 {
  "fps": 30,
- "duration": 75.446,
- "frames": 2263,
+ "duration": 74.547,
+ "frames": 2236,
  "beats": {
-  "hook": 0.2,
-  "h": 0.2,
-  "h2": 5.3,
-  "ch1": 8.22,
-  "an": 10.16,
-  "trou": 17.69,
-  "ch2": 22.56,
-  "beaumont": 24.63,
-  "ficelle": 29.0,
-  "descend": 32.72,
-  "ressort": 34.09,
-  "nom": 36.98,
-  "acide": 39.5,
-  "bocal": 42.56,
-  "relance": 44.72,
-  "ch3": 47.08,
-  "fuit": 48.99,
-  "revient": 52.13,
-  "exp": 53.39,
-  "ch4": 56.72,
-  "survit": 58.53,
-  "famille": 60.94,
-  "voler": 65.07,
-  "fin": 67.43,
-  "toi": 67.43,
-  "loop": 71.84
+  "hook": 0.19,
+  "h": 0.19,
+  "h2": 4.78,
+  "ch1": 7.82,
+  "an": 10.1,
+  "trou": 18.56,
+  "ch2": 23.16,
+  "beaumont": 24.88,
+  "ficelle": 29.6,
+  "descend": 33.27,
+  "ressort": 34.72,
+  "nom": 36.9,
+  "acide": 38.99,
+  "bocal": 41.98,
+  "relance": 43.9,
+  "ch3": 46.13,
+  "fuit": 47.74,
+  "revient": 51.08,
+  "exp": 52.29,
+  "ch4": 55.2,
+  "survit": 57.19,
+  "famille": 59.98,
+  "voler": 63.8,
+  "fin": 66.47,
+  "toi": 66.47,
+  "loop": 71.27
  },
  "sections": [
   {
    "id": "hook",
-   "t0": 0.2,
-   "t1": 8.22,
+   "t0": 0.19,
+   "t1": 7.82,
    "scene": null,
    "beats": [
     "h",
@@ -43,8 +43,8 @@
   },
   {
    "id": "ch1",
-   "t0": 8.22,
-   "t1": 22.56,
+   "t0": 7.82,
+   "t1": 23.16,
    "scene": null,
    "beats": [
     "an",
@@ -53,8 +53,8 @@
   },
   {
    "id": "ch2",
-   "t0": 22.56,
-   "t1": 36.98,
+   "t0": 23.16,
+   "t1": 36.9,
    "scene": null,
    "beats": [
     "beaumont",
@@ -65,8 +65,8 @@
   },
   {
    "id": "nom",
-   "t0": 36.98,
-   "t1": 44.72,
+   "t0": 36.9,
+   "t1": 43.9,
    "scene": null,
    "beats": [
     "acide",
@@ -75,15 +75,15 @@
   },
   {
    "id": "relance",
-   "t0": 44.72,
-   "t1": 47.08,
+   "t0": 43.9,
+   "t1": 46.13,
    "scene": null,
    "beats": []
   },
   {
    "id": "ch3",
-   "t0": 47.08,
-   "t1": 56.72,
+   "t0": 46.13,
+   "t1": 55.2,
    "scene": null,
    "beats": [
     "fuit",
@@ -93,8 +93,8 @@
   },
   {
    "id": "ch4",
-   "t0": 56.72,
-   "t1": 67.43,
+   "t0": 55.2,
+   "t1": 66.47,
    "scene": null,
    "beats": [
     "survit",
@@ -104,8 +104,8 @@
   },
   {
    "id": "fin",
-   "t0": 67.43,
-   "t1": 75.446,
+   "t0": 66.47,
+   "t1": 74.547,
    "scene": null,
    "beats": [
     "toi",
@@ -114,7 +114,7 @@
   }
  ],
  "title": "L'homme au trou dans l'estomac",
- "hook": "une ficelle|dans un estomac vivant",
+ "hook": "8 ans dans le trou|d'un homme",
  "retention": {
   "choc": null,
   "sous": null,

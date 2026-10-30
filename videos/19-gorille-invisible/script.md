@@ -1,22 +1,22 @@
 ---
 title: Le gorille invisible
-voice: gemini:Puck
+voice: gemini-lite:Puck
 rate: 1.0
-tempo: 0.97
-pauses: 0.5
+tempo: 1.0
+pauses: 0.45
 tail: 0.8
 fx: 0.42
-hook: la moitié des gens|ratent ce test
-motcle: test
-hashtags: #psychologie #cerveau #test #attention #apprendresurtiktok
-description: psychologie : le test du gorille invisible (Simons & Chabris, 1999) et les radiologues qui ne l'ont pas vu (2013). La cécité d'inattention.
-commente: Tu l'as vu du premier coup ? Sois honnête 👀
+hook: compte les passes|un seul essai
+motcle: passes
+hashtags: #psychologie #test #cerveau #attention #lepolymath
+description: Un seul essai. Combien de passes entre les maillots blancs ? La cécité d'inattention (Simons & Chabris, 1999).
+commente: 83 % des radiologues ne l'ont pas vu. Toi, évidemment, tu l'as vu du premier coup.
 ---
-> DA « Gravure » v3.1, style labo / test (accent bleu électrique). Structure : test interactif dès le hook. Boucle : « …parce que tu comptes les passes ? » enchaîne sur « La moitié des gens… ».
+> DA « Gravure » v3.2, style labo / test (accent bleu électrique). Le test commence à la première seconde, sans prévenir du piège. Boucle : « …parce que tu comptes les passes ? » enchaîne sur « Compte les passes… ».
 # hook
-{@h} La moitié des gens ratent ce *test.* {@h2} Compte les passes entre les maillots *blancs.* {@go} Ne lâche pas le ballon des yeux. Seulement les blancs. {@ignore} Ignore les noirs. {@encore} Encore… encore… {@stop} *Stop.*
+{@h} Compte les passes entre les maillots *blancs.* Un seul essai. {@go} Ne lâche pas le ballon des yeux. Seulement les blancs. {@ignore} Ignore les noirs. {@encore} Encore… encore… {@stop} *Stop.*
 # reveal
-{@combien} Tu en as compté *onze* ? {@gorille} Bravo. Et le *gorille*, tu l'as vu ? {@milieu} Il vient de traverser l'écran, en plein *milieu.*
+{@combien} Onze ? Bravo. {@gorille} Maintenant, sois honnête… {@vu} t'as vu le *gorille* ? {@milieu} Il vient de traverser l'écran. En plein *milieu.*
 # exp
 {@an} En [1999|mille neuf cent quatre-vingt-dix-neuf], à Harvard, les psychologues Daniel Simons et Christopher Chabris font ce test avec un vrai homme déguisé en *gorille.* {@moitie} Environ la moitié des gens ne le voient *pas.*
 # nom

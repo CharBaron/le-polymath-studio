@@ -1,43 +1,42 @@
 {
  "fps": 30,
- "duration": 63.01,
- "frames": 1890,
+ "duration": 63.262,
+ "frames": 1898,
  "beats": {
   "hook": 0.24,
   "h": 0.24,
-  "h2": 2.53,
-  "go": 4.96,
-  "ignore": 8.03,
-  "encore": 9.16,
-  "stop": 10.79,
-  "reveal": 11.71,
-  "combien": 11.71,
-  "gorille": 12.94,
-  "milieu": 15.45,
-  "exp": 17.98,
-  "an": 17.98,
-  "moitie": 27.04,
-  "nom": 29.04,
-  "filtre": 31.73,
-  "relance": 35.57,
-  "radio": 37.95,
-  "taille": 42.22,
-  "experts": 44.89,
-  "p83": 49.79,
-  "yeux": 53.47,
-  "fin": 58.05,
-  "toi": 58.05,
-  "loop": 60.75
+  "go": 3.68,
+  "ignore": 7.48,
+  "encore": 8.79,
+  "stop": 10.4,
+  "reveal": 11.22,
+  "combien": 11.22,
+  "gorille": 12.93,
+  "vu": 14.86,
+  "milieu": 15.75,
+  "exp": 18.35,
+  "an": 18.35,
+  "moitie": 27.37,
+  "nom": 29.55,
+  "filtre": 32.23,
+  "relance": 36.16,
+  "radio": 38.39,
+  "taille": 42.54,
+  "experts": 45.22,
+  "p83": 50.31,
+  "yeux": 54.4,
+  "fin": 58.42,
+  "toi": 58.42,
+  "loop": 61.08
  },
  "sections": [
   {
    "id": "hook",
    "t0": 0.24,
-   "t1": 11.71,
+   "t1": 11.22,
    "scene": null,
    "beats": [
     "h",
-    "h2",
     "go",
     "ignore",
     "encore",
@@ -46,19 +45,20 @@
   },
   {
    "id": "reveal",
-   "t0": 11.71,
-   "t1": 17.98,
+   "t0": 11.22,
+   "t1": 18.35,
    "scene": null,
    "beats": [
     "combien",
     "gorille",
+    "vu",
     "milieu"
    ]
   },
   {
    "id": "exp",
-   "t0": 17.98,
-   "t1": 29.04,
+   "t0": 18.35,
+   "t1": 29.55,
    "scene": null,
    "beats": [
     "an",
@@ -67,8 +67,8 @@
   },
   {
    "id": "nom",
-   "t0": 29.04,
-   "t1": 35.57,
+   "t0": 29.55,
+   "t1": 36.16,
    "scene": null,
    "beats": [
     "filtre"
@@ -76,15 +76,15 @@
   },
   {
    "id": "relance",
-   "t0": 35.57,
-   "t1": 37.95,
+   "t0": 36.16,
+   "t1": 38.39,
    "scene": null,
    "beats": []
   },
   {
    "id": "radio",
-   "t0": 37.95,
-   "t1": 58.05,
+   "t0": 38.39,
+   "t1": 58.42,
    "scene": null,
    "beats": [
     "taille",
@@ -95,8 +95,8 @@
   },
   {
    "id": "fin",
-   "t0": 58.05,
-   "t1": 63.01,
+   "t0": 58.42,
+   "t1": 63.262,
    "scene": null,
    "beats": [
     "toi",
@@ -105,7 +105,7 @@
   }
  ],
  "title": "Le gorille invisible",
- "hook": "la moitié des gens|ratent ce test",
+ "hook": "compte les passes|un seul essai",
  "retention": {
   "choc": null,
   "sous": null,

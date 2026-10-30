@@ -1,40 +1,40 @@
 {
  "fps": 30,
- "duration": 67.88,
- "frames": 2036,
+ "duration": 71.432,
+ "frames": 2143,
  "beats": {
-  "hook": 0.22,
-  "h": 0.22,
-  "h2": 3.94,
-  "puits": 6.64,
-  "biblio": 6.64,
-  "lit": 10.49,
-  "pasombre": 16.29,
-  "etape1": 18.29,
-  "ombre": 23.54,
-  "etape2": 25.25,
-  "courbe": 28.77,
-  "angle": 30.68,
-  "etape3": 33.74,
-  "fois": 37.67,
-  "resultat": 38.72,
-  "km": 40.2,
-  "vrai": 44.03,
-  "nom": 46.41,
-  "science": 48.62,
-  "relance": 50.95,
-  "colomb": 52.45,
-  "asie": 56.37,
-  "amerique": 59.58,
-  "fin": 62.67,
-  "toi": 62.67,
-  "loop": 65.25
+  "hook": 0.21,
+  "h": 0.21,
+  "h2": 3.92,
+  "puits": 6.27,
+  "biblio": 6.27,
+  "lit": 11.84,
+  "pasombre": 18.11,
+  "etape1": 20.19,
+  "ombre": 25.09,
+  "etape2": 26.61,
+  "courbe": 30.86,
+  "angle": 32.93,
+  "etape3": 35.5,
+  "fois": 39.78,
+  "resultat": 40.69,
+  "km": 42.1,
+  "vrai": 46.1,
+  "nom": 48.63,
+  "science": 50.87,
+  "relance": 53.28,
+  "colomb": 55.35,
+  "asie": 59.68,
+  "amerique": 62.66,
+  "fin": 66.45,
+  "toi": 66.45,
+  "loop": 68.94
  },
  "sections": [
   {
    "id": "hook",
-   "t0": 0.22,
-   "t1": 6.64,
+   "t0": 0.21,
+   "t1": 6.27,
    "scene": null,
    "beats": [
     "h",
@@ -43,8 +43,8 @@
   },
   {
    "id": "puits",
-   "t0": 6.64,
-   "t1": 18.29,
+   "t0": 6.27,
+   "t1": 20.19,
    "scene": null,
    "beats": [
     "biblio",
@@ -54,8 +54,8 @@
   },
   {
    "id": "etape1",
-   "t0": 18.29,
-   "t1": 25.25,
+   "t0": 20.19,
+   "t1": 26.61,
    "scene": null,
    "beats": [
     "ombre"
@@ -63,8 +63,8 @@
   },
   {
    "id": "etape2",
-   "t0": 25.25,
-   "t1": 33.74,
+   "t0": 26.61,
+   "t1": 35.5,
    "scene": null,
    "beats": [
     "courbe",
@@ -73,8 +73,8 @@
   },
   {
    "id": "etape3",
-   "t0": 33.74,
-   "t1": 46.41,
+   "t0": 35.5,
+   "t1": 48.63,
    "scene": null,
    "beats": [
     "fois",
@@ -85,8 +85,8 @@
   },
   {
    "id": "nom",
-   "t0": 46.41,
-   "t1": 50.95,
+   "t0": 48.63,
+   "t1": 53.28,
    "scene": null,
    "beats": [
     "science"
@@ -94,15 +94,15 @@
   },
   {
    "id": "relance",
-   "t0": 50.95,
-   "t1": 52.45,
+   "t0": 53.28,
+   "t1": 55.35,
    "scene": null,
    "beats": []
   },
   {
    "id": "colomb",
-   "t0": 52.45,
-   "t1": 62.67,
+   "t0": 55.35,
+   "t1": 66.45,
    "scene": null,
    "beats": [
     "asie",
@@ -111,8 +111,8 @@
   },
   {
    "id": "fin",
-   "t0": 62.67,
-   "t1": 67.88,
+   "t0": 66.45,
+   "t1": 71.432,
    "scene": null,
    "beats": [
     "toi",
@@ -121,7 +121,7 @@
   }
  ],
  "title": "Ératosthène mesure la Terre",
- "hook": "il a mesuré la Terre|avec un bâton",
+ "hook": "un bâton et un trou|pour mesurer la Terre",
  "retention": {
   "choc": null,
   "sous": null,

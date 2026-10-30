@@ -11,7 +11,7 @@
 - `expo` : Exposition de Hanoï (1902-1903) poster.jpg (The government-general of French Indo-China., Public domain) : https://commons.wikimedia.org/wiki/File:Exposition_de_Hano%C3%AF_(1902-1903)_poster.jpg
 - `egouts` : Hanoi sewer map (1939).jpg (The (French) government of the Municipality of Hanoi., Public domain) : https://commons.wikimedia.org/wiki/File:Hanoi_sewer_map_(1939).jpg
 - `doumer` : Paul Doumer portrait.jpg (AnonymousUnknown author, Public domain) : https://commons.wikimedia.org/wiki/File:Paul_Doumer_portrait.jpg
-- `ratcatcher` : The Rat Catcher MET DP818430.jpg (<span title="French antiquarian (1692-176, CC0) : https://commons.wikimedia.org/wiki/File:The_Rat_Catcher_MET_DP818430.jpg
+- `ratcatcher` : The Rat Catcher MET DP818430.jpg (, CC0) : https://commons.wikimedia.org/wiki/File:The_Rat_Catcher_MET_DP818430.jpg
 - `ratcatcher2` : The Rat Catcher MET DP814413.jpg (James Bretherton, CC0) : https://commons.wikimedia.org/wiki/File:The_Rat_Catcher_MET_DP814413.jpg
 - `rathead` : Head of a Rat Catcher MET DP818394.jpg (Rembrandt, CC0) : https://commons.wikimedia.org/wiki/File:Head_of_a_Rat_Catcher_MET_DP818394.jpg
 - `ratsfr` : Spotprent op de verovering van Arras, 1640 La prise et deffaicte et prise Gnalle des Chatz d'Espaigne par les Ratz François devant la Ville et Cité d'Arras (titel op object), RP-P-OB-81.486.jpg (Rijksmuseum, CC0) : https://commons.wikimedia.org/wiki/File:Spotprent_op_de_verovering_van_Arras,_1640_La_prise_et_deffaicte_et_prise_Gnalle_des_Chatz_d%27Espaigne_par_les_Ratz_Fran%C3%A7ois_devant_la_Ville_et_Cit%C3%A9_d%27Arras_(titel_op_object),_RP-P-OB-81.486.jpg
@@ -19,7 +19,9 @@
 - `ratskel` : Le Rat - Rat, with Skeleton - Gallica - ark 12148-btv1b2300254t-f38.png (De Sève (dessin), C. Baquoy (gravure), Public domain) : https://commons.wikimedia.org/wiki/File:Le_Rat_-_Rat,_with_Skeleton_-_Gallica_-_ark_12148-btv1b2300254t-f38.png
 - `cobras` : Indian snakes (Plate XVII) (7163093703).jpg (Nicholson, Edward., Public domain) : https://commons.wikimedia.org/wiki/File:Indian_snakes_(Plate_XVII)_(7163093703).jpg
 - `schnabel` : Paul Fürst, Der Doctor Schnabel von Rom (Holländer version).png (I. Columbina, ad vivum delineavit. Paulus Fürst Excud〈i〉t., Public domain) : https://commons.wikimedia.org/wiki/File:Paul_F%C3%BCrst,_Der_Doctor_Schnabel_von_Rom_(Holl%C3%A4nder_version).png
+- `schreber` : Die Säugthiere in Abbildungen nach der Natur, mit Beschreibungen (Plate CLXXVIII) (8610003034).jpg (Goldfuss, Georg August; Schreber, Johann Christian Daniel; Wagner, Andreas Johan, Public domain) : https://commons.wikimedia.org/wiki/File:Die_S%C3%A4ugthiere_in_Abbildungen_nach_der_Natur,_mit_Beschreibungen_(Plate_CLXXVIII)_(8610003034).jpg
+- Le rat animé (corps et queue séparés) est découpé dans la planche de Schreber (`schreber`).
 - Animations (rats, registre, test des passes, navire, cellules, estomac, bocal, Terre) : dessinées en code (`src/gravure/anim/`).
 
 ## Fabrication
-- Voix : Gemini TTS Puck. Version livrée sans musique.
+- Voix : Gemini TTS Puck (modèle lite). Version livrée sans musique.

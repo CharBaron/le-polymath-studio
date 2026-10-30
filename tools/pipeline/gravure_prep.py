@@ -252,6 +252,32 @@ def run(cue, style, jobs):
         opts = job[4] if len(job) > 4 else {}
         p = next(os.path.join(src, sname + e) for e in ('.jpg', '.png') if os.path.exists(os.path.join(src, sname + e)))
         im = Image.open(p).convert('RGB')
+        if kind == 'poly':
+            # découpe à la main : crop = boîte (px de l'image source) ; options poly = contour (px), tube = ligne
+            # centrale [(x, y, épaisseur)] (queue…), bg = couleur de fond à effacer dans la découpe, tol = sa tolérance
+            x0, y0, x1, y1 = crop
+            mk = Image.new('L', im.size, 0); dr = ImageDraw.Draw(mk)
+            if opts.get('poly'): dr.polygon([tuple(q) for q in opts['poly']], fill=255)
+            tb = opts.get('tube') or []
+            for (xa, ya, wa), (xb, yb, wb) in zip(tb, tb[1:]):
+                for k in range(12):
+                    u = k / 11; x, y, w_ = xa + (xb - xa) * u, ya + (yb - ya) * u, wa + (wb - wa) * u
+                    dr.ellipse((x - w_ / 2, y - w_ / 2, x + w_ / 2, y + w_ / 2), fill=255)
+            a_ = np.asarray(mk, np.float32)
+            px = np.asarray(im, np.float32)
+            if opts.get('bg'):  # le fond n'est effacé que sur une bande le long du contour (le ventre blanc reste)
+                d = np.sqrt(((px - np.array(opts['bg'], np.float32)) ** 2).sum(2))
+                inner = np.asarray(mk.filter(ImageFilter.MinFilter(2 * opts.get('edge', 14) + 1)), np.float32) > 127
+                a_ = np.where(inner, a_, a_ * np.clip((d - opts.get('tol', 28)) / 18, 0, 1))
+            if opts.get('nogreen'):  # herbe sous la queue : on garde ce qui n'est pas vert
+                a_ = a_ * np.clip((px[..., 0] - px[..., 1] - 6) / 18, 0, 1)
+            mk = Image.fromarray(a_.astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.1))
+            im2, mk2 = im.crop((x0, y0, x1, y1)), mk.crop((x0, y0, x1, y1))
+            if wmax and im2.width > wmax: im2, mk2 = fit(im2, wmax), fit(mk2, wmax)
+            rgb = colour(im2) if opts.get('color') else sepia(im2, 0.6, 1.0)
+            res = Image.fromarray(np.dstack([rgb, np.asarray(mk2)]).astype(np.uint8), 'RGBA')
+            res.save(os.path.join(out, name + '.webp'), 'WEBP', quality=90, method=6)
+            sizes[name] = list(res.size); print(f'{name:13} poly   {res.size[0]}×{res.size[1]}'); continue
         if kind == 'plein':
             res = plein(im, crop, opts)
             res.save(os.path.join(out, name + '.webp'), 'WEBP', quality=86, method=6)
@@ -269,6 +295,8 @@ def run(cue, style, jobs):
         else:
             x0, y0, x1, y1 = crop
             im = fit(im.crop((round(x0 * im.width), round(y0 * im.height), round(x1 * im.width), round(y1 * im.height))), wmax)
+            if opts.get('up') and im.width < wmax:  # petite planche au trait : agrandie puis renforcée
+                im = im.resize((wmax, round(im.height * wmax / im.width)), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 120, 2))
             w, h = im.size
             seed = sum(map(ord, name))
             paper = torn(w, h, seed, 7, 0)

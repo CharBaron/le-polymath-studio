@@ -1,42 +1,43 @@
 {
  "fps": 30,
- "duration": 61.259,
- "frames": 1838,
+ "duration": 72.017,
+ "frames": 2161,
  "beats": {
-  "hook": 0.21,
-  "h": 0.21,
-  "h2": 5.24,
-  "egouts": 7.37,
-  "paradis": 10.6,
-  "peste": 11.81,
-  "chasse": 13.99,
-  "jour": 16.04,
-  "toujours": 19.64,
-  "prime": 20.94,
-  "centime": 22.78,
-  "queue": 24.18,
-  "relance": 26.96,
-  "triche": 28.5,
-  "coupe": 28.5,
-  "relache": 31.2,
-  "bebes": 32.61,
-  "queues": 34.16,
-  "fermes": 36.53,
-  "fin_prime": 39.54,
-  "peste2": 40.57,
-  "nom": 43.42,
-  "def": 46.12,
-  "inde": 49.29,
-  "elevage": 53.39,
-  "fin": 55.01,
-  "toi": 55.01,
-  "loop": 58.68
+  "hook": 0.2,
+  "h": 0.2,
+  "h2": 5.86,
+  "rats": 7.99,
+  "egouts": 9.51,
+  "paradis": 14.61,
+  "peste": 16.42,
+  "chasse": 19.47,
+  "jour": 21.35,
+  "toujours": 25.78,
+  "prime": 27.25,
+  "centime": 28.9,
+  "queue": 30.23,
+  "relance": 33.86,
+  "triche": 35.653,
+  "coupe": 35.653,
+  "relache": 38.65,
+  "bebes": 39.67,
+  "queues": 41.284,
+  "fermes": 43.11,
+  "fin_prime": 47.17,
+  "peste2": 48.64,
+  "nom": 51.36,
+  "def": 55.1,
+  "inde": 58.95,
+  "elevage": 63.56,
+  "fin": 65.92,
+  "toi": 65.92,
+  "loop": 69.43
  },
  "sections": [
   {
    "id": "hook",
-   "t0": 0.21,
-   "t1": 7.37,
+   "t0": 0.2,
+   "t1": 7.99,
    "scene": null,
    "beats": [
     "h",
@@ -44,19 +45,20 @@
    ]
   },
   {
-   "id": "egouts",
-   "t0": 7.37,
-   "t1": 13.99,
+   "id": "rats",
+   "t0": 7.99,
+   "t1": 19.47,
    "scene": null,
    "beats": [
+    "egouts",
     "paradis",
     "peste"
    ]
   },
   {
    "id": "chasse",
-   "t0": 13.99,
-   "t1": 20.94,
+   "t0": 19.47,
+   "t1": 27.25,
    "scene": null,
    "beats": [
     "jour",
@@ -65,8 +67,8 @@
   },
   {
    "id": "prime",
-   "t0": 20.94,
-   "t1": 26.96,
+   "t0": 27.25,
+   "t1": 33.86,
    "scene": null,
    "beats": [
     "centime",
@@ -75,15 +77,15 @@
   },
   {
    "id": "relance",
-   "t0": 26.96,
-   "t1": 28.5,
+   "t0": 33.86,
+   "t1": 35.653,
    "scene": null,
    "beats": []
   },
   {
    "id": "triche",
-   "t0": 28.5,
-   "t1": 36.53,
+   "t0": 35.653,
+   "t1": 43.11,
    "scene": null,
    "beats": [
     "coupe",
@@ -94,8 +96,8 @@
   },
   {
    "id": "fermes",
-   "t0": 36.53,
-   "t1": 43.42,
+   "t0": 43.11,
+   "t1": 51.36,
    "scene": null,
    "beats": [
     "fin_prime",
@@ -104,8 +106,8 @@
   },
   {
    "id": "nom",
-   "t0": 43.42,
-   "t1": 49.29,
+   "t0": 51.36,
+   "t1": 58.95,
    "scene": null,
    "beats": [
     "def"
@@ -113,8 +115,8 @@
   },
   {
    "id": "inde",
-   "t0": 49.29,
-   "t1": 55.01,
+   "t0": 58.95,
+   "t1": 65.92,
    "scene": null,
    "beats": [
     "elevage"
@@ -122,8 +124,8 @@
   },
   {
    "id": "fin",
-   "t0": 55.01,
-   "t1": 61.259,
+   "t0": 65.92,
+   "t1": 72.017,
    "scene": null,
    "beats": [
     "toi",
@@ -132,7 +134,7 @@
   }
  ],
  "title": "Les rats sans queue de Hanoï",
- "hook": "des rats vivants|sans queue",
+ "hook": "payés|à la queue",
  "retention": {
   "choc": null,
   "sous": null,
