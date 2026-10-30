@@ -191,7 +191,7 @@ export const SeriesTitle: React.FC<{name: string; day: string; t0: number; t1: n
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       <AbsoluteFill style={{background: `rgba(255,248,235,${0.35 * flash})`}} />
       <div style={{position: 'absolute', left: 0, right: 0, top: y, textAlign: 'center', opacity: a}}>
-        <div style={{fontFamily: SF.cap, fontWeight: 800, fontSize: 34, letterSpacing: '0.55em', color: SV.hudRed, opacity: dayIn, marginBottom: 6, paddingLeft: '0.55em'}}>{day.toUpperCase()}</div>
+        <div style={{fontFamily: SF.cap, fontWeight: 900, fontSize: 42, letterSpacing: '0.5em', color: '#FF5A4A', opacity: dayIn, marginBottom: 8, paddingLeft: '0.5em', textShadow: '0 0 16px rgba(255,70,50,0.7), 0 4px 12px rgba(0,0,0,0.8)'}}>{day.toUpperCase()}</div>
         <div style={{display: 'inline-block', position: 'relative', transform: `scale(${lerp(1.12, 1, prog(t, t0, t0 + 0.4, easeOut))})`, filter: `blur(${flash * 8}px)`}}>
           <div style={{fontFamily: SF.title, fontSize: size, lineHeight: 1, color: '#FFF8EE', textShadow: '0 0 28px rgba(255,236,210,0.55), 0 0 6px rgba(255,236,210,0.6), 0 10px 30px rgba(0,0,0,0.7)', whiteSpace: 'nowrap'}}>{name}</div>
           <div style={{position: 'absolute', left: '-2%', right: '-2%', bottom: -6, height: 9, background: SV.tag, transform: `scaleX(${prog(t, t0 + 0.2, t0 + 0.6, easeOut)})`, boxShadow: '0 0 14px rgba(208,10,10,0.7)'}} />
@@ -296,7 +296,7 @@ export const Morse: React.FC<{groups: {at: number; on: number; off: number; long
   const out = 1 - prog(t, t1, t1 + 0.3);
   const lit = t >= sos ? 1 : 0;
   return (
-    <div style={{position: 'absolute', left: 0, right: 0, top: 440, display: 'flex', justifyContent: 'center', gap: 70, opacity: out, pointerEvents: 'none'}}>
+    <div style={{position: 'absolute', left: 0, right: 0, top: 420, display: 'flex', justifyContent: 'center', gap: 64, opacity: out, pointerEvents: 'none'}}>
       {groups.map((g, gi) => (
         <div key={gi} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6}}>
           <div style={{display: 'flex', gap: 14, height: 40, alignItems: 'center'}}>
@@ -304,10 +304,10 @@ export const Morse: React.FC<{groups: {at: number; on: number; off: number; long
               const s = g.at + i * (g.on + g.off);
               const k = sp(frame, s, {damping: 11, stiffness: 260, mass: 0.5});
               const glow = t >= s && t < s + g.on ? 1 : 0;
-              return <div key={i} style={{width: g.long ? 52 : 20, height: 20, borderRadius: 10, background: SV.lime, transform: `scale(${k})`, boxShadow: `0 0 ${10 + 22 * glow}px rgba(210,248,74,${0.5 + 0.5 * glow})`}} />;
+              return <div key={i} style={{width: g.long ? 74 : 28, height: 28, borderRadius: 14, background: SV.lime, transform: `scale(${k})`, boxShadow: `0 0 ${12 + 26 * glow}px rgba(210,248,74,${0.5 + 0.5 * glow})`}} />;
             })}
           </div>
-          <div style={{fontFamily: SF.title, fontSize: 96, lineHeight: 1, color: SV.white, opacity: lit * prog(t, sos + gi * 0.12, sos + gi * 0.12 + 0.2, easeOut), textShadow: '0 0 22px rgba(255,255,255,0.6), 0 6px 18px rgba(0,0,0,0.7)'}}>{g.letter}</div>
+          <div style={{fontFamily: SF.title, fontSize: 120, lineHeight: 1, color: SV.white, opacity: lit * prog(t, sos + gi * 0.12, sos + gi * 0.12 + 0.2, easeOut), textShadow: '0 0 22px rgba(255,255,255,0.6), 0 6px 18px rgba(0,0,0,0.7)'}}>{g.letter}</div>
         </div>
       ))}
     </div>

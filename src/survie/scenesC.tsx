@@ -196,8 +196,8 @@ export const VilleSoir: React.FC<SceneP & {t0: number; offFrom: number; offTo: n
     <svg width={1080} height={1920}>
       <Blurs />
       <defs>
-        <VGrad id="vsSky" stops={[[0, '#0E1024'], [0.5, '#3A2240'], [0.78, '#A2443A'], [0.9, '#D9724A']]} />
-        <VGrad id="vsNight" stops={[[0, '#05060F'], [0.6, '#0C1022'], [1, '#141A33']]} />
+        <VGrad id="vsSky" stops={[[0, '#14122C'], [0.3, '#4A2648'], [0.48, '#B24E3E'], [0.6, '#E8865A']]} />
+        <VGrad id="vsNight" stops={[[0, '#05060F'], [0.45, '#0E1428'], [0.6, '#1E2850']]} />
       </defs>
       <g transform={`translate(540,1000) scale(${z}) translate(-540,-1000)`}>
         <rect x={-100} y={-100} width={1280} height={2120} fill="url(#vsSky)" />
@@ -205,8 +205,9 @@ export const VilleSoir: React.FC<SceneP & {t0: number; offFrom: number; offTo: n
         <circle cx={860} cy={lerp(520, 420, night)} r={34} fill="#F2EEDC" opacity={night} />
         <Glow x={860} y={lerp(520, 420, night)} r={110} color="#DDE4FF" o={0.35 * night} blur={24} />
         <Smoke x={260} y={1200} T={T} seed={81} scale={1} color="#0E0C14" o={0.5} />
-        <Skyline y={1420} seed={83} color="#1A1828" lit="#F2BE6A" litRatio={0.32} hMin={300} hMax={700} wMin={70} wMax={150} winScale={0.8} off={offAt} />
-        <Skyline y={1620} seed={89} color="#11101B" lit="#F2BE6A" litRatio={0.3} hMin={500} hMax={1100} off={offAt} />
+        {/* silhouettes nettes sur le ciel du couchant : on lit les immeubles, pas seulement des points */}
+        <Skyline y={1420} seed={83} color="#241E36" lit="#F2BE6A" litRatio={0.32} hMin={260} hMax={520} wMin={70} wMax={150} winScale={0.8} off={offAt} />
+        <Skyline y={1620} seed={89} color="#120F1C" lit="#F2BE6A" litRatio={0.3} hMin={380} hMax={760} off={offAt} />
         <rect x={-100} y={1620} width={1280} height={400} fill="#0A0A10" />
       </g>
     </svg>
@@ -284,8 +285,9 @@ const Girl: React.FC<{T: number; up: number; on: number; x: number; y: number; h
     <g>
       <Stick p={pose} x={x} y={y} h={h} look="runner" />
       {/* couettes, robe */}
-      <circle cx={hc[0] - b.R * 1.15} cy={hc[1] - b.R * 0.2} r={b.R * 0.42} fill="#6A4A3A" stroke="#22201E" strokeWidth={3} />
-      <circle cx={hc[0] + b.R * 1.15} cy={hc[1] - b.R * 0.2} r={b.R * 0.42} fill="#6A4A3A" stroke="#22201E" strokeWidth={3} />
+      {/* cheveux : frange sur le haut de la tête, deux couettes qui pendent */}
+      <path d={`M${hc[0] - b.R * 1.02} ${hc[1] + b.R * 0.1} A${b.R * 1.04} ${b.R * 1.04} 0 0 1 ${hc[0] + b.R * 1.02} ${hc[1] + b.R * 0.1} Q${hc[0]} ${hc[1] - b.R * 0.35} ${hc[0] - b.R * 1.02} ${hc[1] + b.R * 0.1} Z`} fill="#6A4A3A" stroke="#22201E" strokeWidth={3} />
+      {[-1, 1].map((s) => <ellipse key={s} cx={hc[0] + s * b.R * 1.2} cy={hc[1] + b.R * 0.75} rx={b.R * 0.32} ry={b.R * 0.62} fill="#6A4A3A" stroke="#22201E" strokeWidth={3} />)}
       <path d={`M${x + b.sh[0] - h * 0.07} ${y + hipY + b.sh[1] + h * 0.05} L${x - h * 0.16} ${y + hipY + h * 0.08} L${x + h * 0.16} ${y + hipY + h * 0.08} L${x + b.sh[0] + h * 0.07} ${y + hipY + b.sh[1] + h * 0.05} Z`} fill="#C9506A" stroke="#22201E" strokeWidth={4} strokeLinejoin="round" />
       {/* lampe tournée vers toi */}
       <rect x={hand[0] - h * 0.03} y={hand[1] - h * 0.06} width={h * 0.06} height={h * 0.1} rx={6} fill="#2A2A30" />
@@ -366,12 +368,21 @@ export const Jumelles: React.FC<SceneP & {pov: number; signal: number; m: [numbe
       <Blurs />
       <defs>
         <VGrad id="girlRoom" stops={[[0, '#4A3624'], [1, '#2A1E14']]} />
+        {/* contour adouci de l'union des deux cercles : pas d'arc sombre au milieu de l'image */}
         <mask id="bino">
           <rect width={1080} height={1920} fill="black" />
-          <circle cx={370} cy={930} r={375} fill="white" filter="url(#b4)" />
-          <circle cx={710} cy={930} r={375} fill="white" filter="url(#b4)" />
+          <g filter="url(#b4)">
+            <circle cx={370} cy={930} r={368} fill="white" />
+            <circle cx={710} cy={930} r={368} fill="white" />
+          </g>
         </mask>
-        <RGrad id="binoVig" stops={[[0.72, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,0.8)']]} />
+        <mask id="binoEdge">
+          <rect width={1080} height={1920} fill="white" />
+          <g filter="url(#b24)">
+            <circle cx={370} cy={930} r={322} fill="black" />
+            <circle cx={710} cy={930} r={322} fill="black" />
+          </g>
+        </mask>
       </defs>
       <rect width={1080} height={1920} fill="#000" />
       <g mask="url(#bino)">
@@ -391,8 +402,8 @@ export const Jumelles: React.FC<SceneP & {pov: number; signal: number; m: [numbe
           <rect x={150} y={1340} width={780} height={40} fill="#0D0F1A" />
         </g>
         <rect width={1080} height={1920} fill={`rgba(150,190,255,0.06)`} />
-        <circle cx={370} cy={930} r={375} fill="url(#binoVig)" />
-        <circle cx={710} cy={930} r={375} fill="url(#binoVig)" />
+        {/* bord intérieur assombri le long du contour seulement */}
+        <rect width={1080} height={1920} fill="#000" opacity={0.85} mask="url(#binoEdge)" />
         <rect width={1080} height={1920} fill="#FFFBEE" opacity={toward ** 1.6} />
       </g>
     </svg>
