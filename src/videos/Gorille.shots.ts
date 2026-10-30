@@ -14,7 +14,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     // --- la révélation ---
     {t0: B.combien - 0.04, bg: 'velvet', tr: 'slam', num: {text: '11', color: 'gold', label: 'PASSES BLANCHES'}},
     {t0: W('bravo', B.combien), bg: 'marble', tr: 'whip', pic: {name: 'basket1', w: 880, zoom: 0.12}},
-    {t0: B.gorille - 0.04, bg: 'velvet', tr: 'shutter', slam: {text: 'SOIS|HONNÊTE…', at: 0.04, color: 'gold', y: 760, size: 150}},
+    {t0: B.gorille - 0.04, bg: 'velvet', tr: 'shutter', slam: {text: 'SOIS|HONNÊTE…', at: 0.04, color: 'gold', y: 760, size: 120}},
     {t0: B.vu - 0.04, bg: 'marble', tr: 'invert', still: true, anim: {name: 'TestPasses', go, stop, passes: 11, reveal: true}},
     {t0: B.milieu - 0.04, bg: 'marble', tr: 'glitch', pic: {name: 'gorilla_plein', w: 1080, full: true, focus: [0.55, 0.35], zoom: 0.18}},
     // --- l'expérience de 1999 ---
