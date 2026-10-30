@@ -41,6 +41,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     // --- les témoins ---
     {t0: B.tribunal - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'temoin', w: 840, zoom: 0.1}},
     {t0: W('69', B.tribunal) , bg: 'velvet', tr: 'flashRed', num: {text: '69 %', color: 'gold', label: 'RECONNUS PAR UN TÉMOIN', strobe: true}},
+    {t0: W('libérés', B.tribunal), bg: 'marble', tr: 'swipe', pic: {name: 'temoin', w: 840, zoom: 0.3, focus: [0.7, 0.75]}},
     {t0: W('reconnus', B.tribunal), bg: 'marble', tr: 'whip', pic: {name: 'temoin_zoom', w: 560, zoom: 0.16}, slam: {text: 'À TORT', at: B.tort - W('reconnus', B.tribunal) + 0.04, color: 'red', y: 300}},
     // --- adresse + boucle (dernière image = première) ---
     {t0: B.toi - 0.04, bg: 'velvet', tr: 'glitch', pic: {name: 'enfant', w: 520, zoom: 0.18, focus: [0.5, 0.25]}},
