@@ -310,3 +310,16 @@ def shards(dur=1.4):
                 break
             out[i0 + k] += 0.25 * math.sin(2 * math.pi * f * k / SR) * math.exp(-k / (0.03 * SR))
     return out
+
+
+def drill(dur=0.5):
+    """Visseuse : moteur aigu qui monte, cliquetis de l'embrayage."""
+    n = int(dur * SR)
+    ph, out = 0.0, []
+    for k in range(n):
+        t = k / SR
+        f = 380 + 260 * min(1, t / 0.12)
+        ph += 2 * math.pi * f / SR
+        a = min(1, t / 0.02, (dur - t) / 0.05)
+        out.append(a * (0.5 * math.tanh(3 * math.sin(ph)) + 0.25 * math.sin(3 * ph) + 0.2 * random.uniform(-1, 1) * (math.sin(2 * math.pi * 30 * t) > 0.6)))
+    return out

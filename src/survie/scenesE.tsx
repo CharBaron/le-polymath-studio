@@ -534,7 +534,9 @@ export const ToitSchema: React.FC<SceneP & {t0: number}> = ({T, t0}) => {
 };
 
 // ---------------- la nuit : la porte barricadée, on frappe en morse ----------------
-export const PorteNuit: React.FC<SceneP & {knocks: number[]; push?: number; outline?: number}> = ({T, knocks, push, outline}) => {
+/** état de la barricade et du perso (jour 3 : on la défait, on la refait) ; `voice` = créneaux où une voix traverse la porte */
+type PorteState = {arm?: number; couch?: number; items?: number; hero?: {x: number; pose: Pose; flip?: boolean; y?: number}; voice?: [number, number][]};
+export const PorteNuit: React.FC<SceneP & {knocks: number[]; push?: number; outline?: number} & PorteState> = ({T, knocks, push, outline, arm = -23.5, couch = 104, items = 1, hero, voice = []}) => {
   const last = knocks.filter((k) => T >= k).pop();
   const hit = last !== undefined ? Math.exp(-(T - last) * 16) : 0;
   const dx = hit * 5 * Math.sin(T * 90);
@@ -542,6 +544,7 @@ export const PorteNuit: React.FC<SceneP & {knocks: number[]; push?: number; outl
   const z = lerp(1.0, 1.25, kp);
   const ol = outline !== undefined ? prog(T, outline, outline + 0.5, easeOut) : 0;
   const pose: Pose = breathe({...P.sitKnees, head: 12, aL: 70, aR: 80}, T * 1.5, 1.2);
+  const speaking = voice.some(([a, b]) => T >= a && T < b);
   return (
     <svg width={1080} height={1920}>
       <Blurs />
@@ -561,18 +564,24 @@ export const PorteNuit: React.FC<SceneP & {knocks: number[]; push?: number; outl
         </g>
         {last !== undefined && T - last < 0.5 ? [0, 1].map((i) => <path key={i} d={`M${330 + i * 30} ${1000 + i * 30} q${60 + 80 * (T - last)} 120 0 240`} stroke="#9AB0FF" strokeWidth={5} fill="none" opacity={(1 - (T - last) / 0.5) * 0.8} />) : null}
         {/* armoire couchée sur la porte, canapé, objets */}
-        <g transform={`rotate(${-23.5 + hit * 0.6},330,1500)`}>
+        <g transform={`rotate(${arm + hit * 0.6},330,1500)`}>
           <rect x={330} y={740} width={170} height={760} fill="#2A1C14" stroke={ol > 0 ? '#F2A23C' : '#140C08'} strokeWidth={ol > 0 ? 8 : 6} strokeDasharray={ol > 0 ? '18 12' : undefined} />
         </g>
-        <g transform={`translate(104,${hit * -2})`}>
+        <g transform={`translate(${couch},${hit * -2})`}>
           <rect x={0} y={1250} width={400} height={170} rx={34} fill="#13282A" stroke={ol > 0 ? '#F2A23C' : '#0A1416'} strokeWidth={ol > 0 ? 8 : 6} strokeDasharray={ol > 0 ? '18 12' : undefined} />
           <rect x={18} y={1350} width={364} height={110} rx={22} fill="#163032" />
         </g>
-        <rect x={130} y={1232} width={150} height={120} fill="#3A2C1E" transform={`translate(0,${hit * -3})`} />
-        <rect x={125} y={1142} width={160} height={90} rx={8} fill="#4A4C52" transform={`translate(0,${hit * -4})`} />
-        <rect x={290} y={1092} width={190} height={110} rx={8} fill="#141418" transform={`translate(0,${hit * -3})`} />
+        <g opacity={items}>
+          <rect x={130} y={1232} width={150} height={120} fill="#3A2C1E" transform={`translate(0,${hit * -3})`} />
+          <rect x={125} y={1142} width={160} height={90} rx={8} fill="#4A4C52" transform={`translate(0,${hit * -4})`} />
+          <rect x={290} y={1092} width={190} height={110} rx={8} fill="#141418" transform={`translate(0,${hit * -3})`} />
+        </g>
+        {speaking ? [0, 1, 2].map((i) => {
+          const ph = (T * 1.4 + i / 3) % 1;
+          return <path key={`v${i}`} d={`M${330 + ph * 260} ${940 - ph * 120} q${70 + ph * 60} ${260 + ph * 120} 0 ${520 + ph * 240}`} stroke="#F2A23C" strokeWidth={6} fill="none" opacity={(1 - ph) * 0.7} />;
+        }) : null}
         {hit > 0.2 ? <Dust x0={120} y0={900} x1={520} y1={1250} T={T * 4} n={24} o={0.5 * hit} seed={last ?? 1} /> : null}
-        <Hero p={pose} x={820} y={1700} hipY={0} h={560} flip light={NIGHT} />
+        {hero ? <Hero p={hero.pose} x={hero.x} y={hero.y ?? 1700} h={hero.y ? 700 : 560} flip={hero.flip ?? true} light={NIGHT} /> : <Hero p={pose} x={820} y={1700} hipY={0} h={560} flip light={NIGHT} />}
       </g>
     </svg>
   );

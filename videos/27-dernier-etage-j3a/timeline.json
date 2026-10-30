@@ -1,0 +1,166 @@
+{
+ "fps": 30,
+ "duration": 76.918,
+ "frames": 2308,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "arm": 3.07,
+  "cana": 4.17,
+  "frappe": 6.32,
+  "sos": 8.89,
+  "ouvre": 10.83,
+  "vide": 11.5,
+  "trappe": 12.32,
+  "voix": 17.4,
+  "maman": 19.34,
+  "ta": 22.677,
+  "mot": 24.03,
+  "message": 25.21,
+  "doigts": 26.64,
+  "claque": 29.74,
+  "matin": 31.07,
+  "r7": 36.91,
+  "comprends": 32.89,
+  "imitent": 34.23,
+  "r7t": 38.39,
+  "ecoutent": 40.03,
+  "apprennent": 41.27,
+  "r8": 42.55,
+  "r8t": 44.02,
+  "vis": 45.69,
+  "tient": 48.18,
+  "vivres": 49.61,
+  "compte": 49.61,
+  "deux": 50.87,
+  "neuf": 52.27,
+  "demi": 54.08,
+  "voisin": 56.07,
+  "aprem": 56.07,
+  "sol": 59.02,
+  "ferrand": 60.4,
+  "manger": 64.05,
+  "echange": 66.32,
+  "vrai": 67.473,
+  "ou": 68.62,
+  "choix": 70.22,
+  "a": 71.65,
+  "b": 73.39,
+  "fin": 74.96
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 10.83,
+   "scene": null,
+   "beats": [
+    "h",
+    "arm",
+    "cana",
+    "frappe",
+    "sos"
+   ]
+  },
+  {
+   "id": "ouvre",
+   "t0": 10.83,
+   "t1": 31.07,
+   "scene": null,
+   "beats": [
+    "vide",
+    "trappe",
+    "voix",
+    "maman",
+    "ta",
+    "mot",
+    "message",
+    "doigts",
+    "claque"
+   ]
+  },
+  {
+   "id": "matin",
+   "t0": 31.07,
+   "t1": 36.91,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "r7",
+   "t0": 36.91,
+   "t1": 42.55,
+   "scene": null,
+   "beats": [
+    "comprends",
+    "imitent",
+    "r7t",
+    "ecoutent",
+    "apprennent"
+   ]
+  },
+  {
+   "id": "r8",
+   "t0": 42.55,
+   "t1": 49.61,
+   "scene": null,
+   "beats": [
+    "r8t",
+    "vis",
+    "tient"
+   ]
+  },
+  {
+   "id": "vivres",
+   "t0": 49.61,
+   "t1": 56.07,
+   "scene": null,
+   "beats": [
+    "compte",
+    "deux",
+    "neuf",
+    "demi"
+   ]
+  },
+  {
+   "id": "voisin",
+   "t0": 56.07,
+   "t1": 70.22,
+   "scene": null,
+   "beats": [
+    "aprem",
+    "sol",
+    "ferrand",
+    "manger",
+    "echange",
+    "vrai",
+    "ou"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 70.22,
+   "t1": 74.96,
+   "scene": null,
+   "beats": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 74.96,
+   "t1": 76.918,
+   "scene": null,
+   "beats": []
+  }
+ ],
+ "title": "Dernier étage — Jour 3 (A, j’ouvre)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ? Une vraie voix… ou une voix apprise ?"
+ }
+}

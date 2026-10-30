@@ -1,0 +1,153 @@
+{
+ "fps": 30,
+ "duration": 63.616,
+ "frames": 1908,
+ "beats": {
+  "hook": 0.22,
+  "h": 0.22,
+  "frappe": 1.07,
+  "sos": 2.839,
+  "stop": 4.21,
+  "long": 5.48,
+  "voix": 7.83,
+  "maman": 10.2,
+  "ta": 13.498,
+  "mot": 15.08,
+  "message": 16.009,
+  "nuit": 17.73,
+  "encore": 20.29,
+  "matin": 21.98,
+  "r7": 27.28,
+  "comprends": 23.8,
+  "imitent": 24.64,
+  "r7t": 28.58,
+  "ecoutent": 29.56,
+  "apprennent": 30.329,
+  "r8": 31.65,
+  "r8t": 32.739,
+  "vis": 34.14,
+  "tient": 36.269,
+  "vivres": 37.93,
+  "compte": 37.93,
+  "deux": 38.69,
+  "neuf": 40.17,
+  "demi": 41.92,
+  "voisin": 43.9,
+  "aprem": 43.9,
+  "sol": 46.48,
+  "ferrand": 47.98,
+  "manger": 50.31,
+  "echange": 52.94,
+  "vrai": 53.736,
+  "ou": 54.18,
+  "choix": 56.23,
+  "a": 58.19,
+  "b": 60.08,
+  "fin": 61.62
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.22,
+   "t1": 21.98,
+   "scene": null,
+   "beats": [
+    "h",
+    "frappe",
+    "sos",
+    "stop",
+    "long",
+    "voix",
+    "maman",
+    "ta",
+    "mot",
+    "message",
+    "nuit",
+    "encore"
+   ]
+  },
+  {
+   "id": "matin",
+   "t0": 21.98,
+   "t1": 27.28,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "r7",
+   "t0": 27.28,
+   "t1": 31.65,
+   "scene": null,
+   "beats": [
+    "comprends",
+    "imitent",
+    "r7t",
+    "ecoutent",
+    "apprennent"
+   ]
+  },
+  {
+   "id": "r8",
+   "t0": 31.65,
+   "t1": 37.93,
+   "scene": null,
+   "beats": [
+    "r8t",
+    "vis",
+    "tient"
+   ]
+  },
+  {
+   "id": "vivres",
+   "t0": 37.93,
+   "t1": 43.9,
+   "scene": null,
+   "beats": [
+    "compte",
+    "deux",
+    "neuf",
+    "demi"
+   ]
+  },
+  {
+   "id": "voisin",
+   "t0": 43.9,
+   "t1": 56.23,
+   "scene": null,
+   "beats": [
+    "aprem",
+    "sol",
+    "ferrand",
+    "manger",
+    "echange",
+    "vrai",
+    "ou"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 56.23,
+   "t1": 61.62,
+   "scene": null,
+   "beats": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 61.62,
+   "t1": 63.616,
+   "scene": null,
+   "beats": []
+  }
+ ],
+ "title": "Dernier étage — Jour 3 (B, je ne bouge pas)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ? Une vraie voix… ou une voix apprise ?"
+ }
+}
