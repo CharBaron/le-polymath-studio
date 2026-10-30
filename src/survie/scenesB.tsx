@@ -3,11 +3,12 @@
 import React from 'react';
 import {clamp01, easeInOut, easeOut, lerp, prog, rand} from '../theme';
 import {P, run, shamble, Stick} from './stick';
+import {breathe, Person} from './hero';
 import {Blurs, Cam, CarTop, Glow, RGrad, SceneP, VanTop, VGrad} from './world';
 import {DawnOutside} from './scenesA';
 
 // ---------------- toi devant la baie vitrée, en contre-jour ----------------
-export const Baie: React.FC<SceneP & {t0: number}> = ({T, t0}) => {
+export const Baie: React.FC<SceneP & {t0: number; hero?: boolean}> = ({T, t0, hero}) => {
   const lt = T - t0;
   const z = lerp(1.0, 1.08, clamp01(lt / 2));
   return (
@@ -32,7 +33,7 @@ export const Baie: React.FC<SceneP & {t0: number}> = ({T, t0}) => {
         <rect x={0} y={1268} width={1080} height={700} fill="#1A1420" />
         <path d="M90 1268 L990 1268 L1180 1920 L-100 1920 Z" fill="rgba(255,140,80,0.10)" filter="url(#b24)" />
         <Glow x={540} y={1000} r={360} color="#FF9A5A" o={0.16} blur={40} />
-        <Stick p={P.handOnGlass} x={430} y={1640} h={820} look="rimOrange" />
+        <Person hero={hero} p={hero ? breathe(P.handOnGlass, T) : P.handOnGlass} x={430} y={1640} h={820} look="rimOrange" light={{amb: 0.3, tint: '#24141C', rim: '#F2963E'}} />
       </g>
     </svg>
   );
@@ -67,8 +68,8 @@ const crowdAt = (T: number, alarm: number) =>
     return {m, x, y, dir, i};
   });
 
-export const Rue: React.FC<SceneP & {night?: boolean}> = ({T, B}) => {
-  const alarm = B.r1y - 0.15;
+export const Rue: React.FC<SceneP & {alarmAt?: number}> = ({T, B, alarmAt}) => {
+  const alarm = alarmAt ?? B.r1y - 0.15;
   const s0 = B.bas;
   // caméra : plongée inclinée qui se redresse, puis s'approche de la voiture qui sonne
   const k0 = prog(T, s0, s0 + 2.6, easeOut);

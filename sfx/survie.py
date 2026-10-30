@@ -188,3 +188,66 @@ def glitch(dur=0.35):
         sq = 1 if math.sin(2 * math.pi * f * k / SR) > 0 else -1
         out.append((0.5 * val + 0.35 * sq) * (1 - k / n))
     return out
+
+
+def scrape(dur):
+    """Meuble traîné sur le parquet : frottement grave haché par les à-coups."""
+    n = int(dur * SR)
+    w = bandnoise(n, lambda k: 340 + 120 * math.sin(k / SR * 9), q=0.5)
+    out = []
+    for k, v in enumerate(w):
+        t = k / SR
+        am = 0.55 + 0.45 * max(0.0, math.sin(2 * math.pi * 2.6 * t)) ** 0.5
+        out.append(v * am * min(1, t / 0.08, (dur - t) / 0.12) * 2.2)
+    return out
+
+
+def crash(dur=1.6):
+    """Armoire qui s'écrase : coup sourd, craquement du bois, débris."""
+    n = int(dur * SR)
+    crack = bandnoise(n, lambda k: 1800 - 1200 * min(1, k / (0.2 * SR)), q=0.6)
+    ph, out = 0.0, []
+    for k in range(n):
+        t = k / SR
+        ph += 2 * math.pi * (60 + 80 * math.exp(-t / 0.03)) / SR
+        body = math.sin(ph) * math.exp(-t / 0.35)
+        deb = crack[k] * 2.4 * (math.exp(-t / 0.08) + 0.25 * math.exp(-t / 0.5) * (random.random() < 0.02))
+        out.append(math.tanh(1.6 * (body + deb)))
+    return out
+
+
+def water(dur, bright=1.0):
+    """Robinet qui coule : souffle aigu bouillonnant."""
+    n = int(dur * SR)
+    w = bandnoise(n, lambda k: 2600 * bright + 900 * math.sin(k / SR * 23) + 400 * math.sin(k / SR * 61), q=0.35)
+    return [v * (0.7 + 0.3 * math.sin(k / SR * 37)) * min(1, k / (0.15 * SR), (n - k) / (0.4 * SR)) * 1.6 for k, v in enumerate(w)]
+
+
+def glug(n_bubbles=5):
+    """Bidon qui se remplit : petites bulles qui montent dans les graves."""
+    out = []
+    for i in range(n_bubbles):
+        d = 0.09 + random.uniform(0, 0.05)
+        m = int(d * SR)
+        f0 = 180 + i * 25 + random.uniform(-20, 20)
+        ph = 0.0
+        for k in range(m):
+            t = k / SR
+            ph += 2 * math.pi * (f0 + 500 * t / d) / SR
+            out.append(math.sin(ph) * math.sin(math.pi * t / d))
+        out += [0.0] * int(random.uniform(0.02, 0.06) * SR)
+    return out
+
+
+def clink(f=3100.0):
+    """Cuillère contre la boîte : tintement métallique très court."""
+    n = int(0.25 * SR)
+    parts = ((1.0, 1.0, 0.05), (2.7, 0.5, 0.03), (5.1, 0.3, 0.02))
+    return [sum(g * math.sin(2 * math.pi * f * r * k / SR) * math.exp(-k / (tau * SR)) for r, g, tau in parts) for k in range(n)]
+
+
+def can_open():
+    """Ouverture d'une conserve : clic de la languette + souffle."""
+    n = int(0.45 * SR)
+    hiss = bandnoise(n, lambda k: 3200, q=0.5)
+    return [(random.uniform(-1, 1) * math.exp(-k / (0.004 * SR)) * (1 if k < 0.01 * SR else 0) + hiss[k] * 1.6 * math.exp(-k / (0.12 * SR))) for k in range(n)]

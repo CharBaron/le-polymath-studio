@@ -1,0 +1,227 @@
+{
+ "fps": 30,
+ "duration": 96.36,
+ "frames": 2891,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "h2": 4.58,
+  "tel": 7.29,
+  "alerte": 9.31,
+  "conf": 11.02,
+  "lum": 12.77,
+  "dehors": 14.71,
+  "bas": 16.12,
+  "chasse": 19.36,
+  "alarme": 21.16,
+  "tous": 22.95,
+  "toi": 24.98,
+  "appart": 25.93,
+  "porte": 29.25,
+  "fen": 30.42,
+  "esc": 31.85,
+  "r1": 34.37,
+  "r1t": 35.9,
+  "cana": 37.35,
+  "armoire": 37.93,
+  "lourd": 38.44,
+  "r2": 40.21,
+  "r2t": 41.161,
+  "bain": 42.24,
+  "sec": 44.252,
+  "r3": 46.91,
+  "r3t": 47.921,
+  "jours": 48.99,
+  "fois": 50.69,
+  "frais": 52.81,
+  "nuit": 55.51,
+  "soir": 55.51,
+  "fenetres": 57.75,
+  "ration": 59.49,
+  "minuit": 62.22,
+  "allume": 63.8,
+  "face": 65.31,
+  "jumelles": 66.96,
+  "jum": 66.96,
+  "fille": 68.21,
+  "signal": 69.55,
+  "m1": 72.77,
+  "m2": 73.82,
+  "m3": 74.75,
+  "sos": 75.5,
+  "rappel": 76.57,
+  "r4": 76.57,
+  "r4x": 77.84,
+  "twist": 79.08,
+  "braque": 79.08,
+  "tafen": 80.66,
+  "tetes": 82.05,
+  "une": 84.24,
+  "dix": 85.14,
+  "cent": 86.37,
+  "choix": 87.59,
+  "a": 89.61,
+  "b": 91.79,
+  "fin": 94.28
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 7.29,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "tel",
+   "t0": 7.29,
+   "t1": 14.71,
+   "scene": null,
+   "beats": [
+    "alerte",
+    "conf",
+    "lum"
+   ]
+  },
+  {
+   "id": "dehors",
+   "t0": 14.71,
+   "t1": 24.98,
+   "scene": null,
+   "beats": [
+    "bas",
+    "chasse",
+    "alarme",
+    "tous"
+   ]
+  },
+  {
+   "id": "toi",
+   "t0": 24.98,
+   "t1": 34.37,
+   "scene": null,
+   "beats": [
+    "appart",
+    "porte",
+    "fen",
+    "esc"
+   ]
+  },
+  {
+   "id": "r1",
+   "t0": 34.37,
+   "t1": 40.21,
+   "scene": null,
+   "beats": [
+    "r1t",
+    "cana",
+    "armoire",
+    "lourd"
+   ]
+  },
+  {
+   "id": "r2",
+   "t0": 40.21,
+   "t1": 46.91,
+   "scene": null,
+   "beats": [
+    "r2t",
+    "bain",
+    "sec"
+   ]
+  },
+  {
+   "id": "r3",
+   "t0": 46.91,
+   "t1": 55.51,
+   "scene": null,
+   "beats": [
+    "r3t",
+    "jours",
+    "fois",
+    "frais"
+   ]
+  },
+  {
+   "id": "nuit",
+   "t0": 55.51,
+   "t1": 66.96,
+   "scene": null,
+   "beats": [
+    "soir",
+    "fenetres",
+    "ration",
+    "minuit",
+    "allume",
+    "face"
+   ]
+  },
+  {
+   "id": "jumelles",
+   "t0": 66.96,
+   "t1": 76.57,
+   "scene": null,
+   "beats": [
+    "jum",
+    "fille",
+    "signal",
+    "m1",
+    "m2",
+    "m3",
+    "sos"
+   ]
+  },
+  {
+   "id": "rappel",
+   "t0": 76.57,
+   "t1": 79.08,
+   "scene": null,
+   "beats": [
+    "r4",
+    "r4x"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 79.08,
+   "t1": 87.59,
+   "scene": null,
+   "beats": [
+    "braque",
+    "tafen",
+    "tetes",
+    "une",
+    "dix",
+    "cent"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 87.59,
+   "t1": 94.28,
+   "scene": null,
+   "beats": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 94.28,
+   "t1": 96.36,
+   "scene": null,
+   "beats": []
+  }
+ ],
+ "title": "Dernier étage — Jour 1 (V2)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ? Réfléchis bien avant de répondre."
+ }
+}

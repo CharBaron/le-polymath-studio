@@ -3,6 +3,7 @@
 import React from 'react';
 import {clamp01, easeIn, easeInOut, easeOut, lerp, prog, rand} from '../theme';
 import {bones, mix, P, Pose, Stick, walk} from './stick';
+import {breathe, Hero, Person} from './hero';
 import {Blurs, Cam, Dust, Glow, RGrad, SceneP, Skyline, Smoke, Tower, VGrad, winAt} from './world';
 
 // ---------------- cuisine : le frigo d'abord ----------------
@@ -238,7 +239,29 @@ const Opposite: React.FC<{T: number; lit: number; beam?: number}> = ({T, lit, be
   );
 };
 
-export const SalonNuit: React.FC<SceneP & {t0: number; lit: number; push: number}> = ({T, t0, lit, push}) => {
+/** assis par terre sous la fenêtre ; avec le perso (V2) : mange sa ration à la cuillère pendant `eat`, puis tourne la tête vers la lumière */
+const SitEat: React.FC<{T: number; hero?: boolean; look: number; eat?: [number, number]}> = ({T, hero, look, eat}) => {
+  if (!hero) return <Stick p={{...P.sitKnees, head: lerp(P.sitKnees.head, 18, look)}} x={300} y={1640} hipY={0} h={560} look="rimBlue" />;
+  const h = 600;
+  const eating = eat && T >= eat[0] && T < eat[1] ? 1 : 0;
+  const ph = eat ? (T - eat[0]) * 0.75 : 0;
+  const toMouth = eating ? Math.pow(Math.max(0, Math.sin(ph * Math.PI * 2)), 0.8) : 0;
+  const base: Pose = {...P.sitKnees, aL: 58, aLb: 40, head: lerp(-4 + 6 * toMouth, 20, look)};
+  const pose: Pose = breathe({...base, aR: lerp(70, 132, toMouth), aRb: lerp(20, -118, toMouth)}, T, 0.6);
+  const b = bones(pose, h);
+  return (
+    <Hero p={pose} x={300} y={1640} hipY={0} h={h} light={{amb: 0.3, tint: '#0C1030', rim: '#6F8BFF'}} hands={
+      <g>
+        {/* boîte de conserve dans la main gauche, cuillère dans la droite */}
+        <rect x={b.hL[0] - 0.035 * h} y={b.hL[1] - 0.075 * h} width={0.07 * h} height={0.08 * h} rx={4} fill="#3A4258" stroke="#8FA4FF" strokeWidth={2} />
+        <rect x={b.hL[0] - 0.035 * h} y={b.hL[1] - 0.06 * h} width={0.07 * h} height={0.025 * h} fill="#7A3A30" opacity={0.8} />
+        <line x1={b.hR[0]} y1={b.hR[1]} x2={b.hR[0] + 0.045 * h} y2={b.hR[1] - 0.03 * h} stroke="#C8D2FF" strokeWidth={4} strokeLinecap="round" />
+      </g>
+    } />
+  );
+};
+
+export const SalonNuit: React.FC<SceneP & {t0: number; lit: number; push: number; hero?: boolean; eat?: [number, number]}> = ({T, t0, lit, push, hero, eat}) => {
   const lt = T - t0;
   const kp = prog(T, push, push + 1.6, easeInOut);
   const z = lerp(1.0, 1.04, clamp01(lt / 3)) * lerp(1, 1.9, kp);
@@ -268,7 +291,7 @@ export const SalonNuit: React.FC<SceneP & {t0: number; lit: number; push: number
         <path d="M640 1520 q0 -90 70 -90 h300 q70 0 70 90 v160 h-440 Z" fill="#12131C" />
         <rect x={60} y={1180} width={8} height={420} fill="#12131C" />
         <path d="M20 1180 L108 1180 L88 1120 L40 1120 Z" fill="#161724" />
-        <Stick p={{...P.sitKnees, head: lerp(P.sitKnees.head, 18, look)}} x={300} y={1640} hipY={0} h={560} look="rimBlue" />
+        <SitEat T={T} hero={hero} look={look} eat={eat} />
       </Cam>
     </svg>
   );
@@ -328,7 +351,7 @@ const Binoculars: React.FC<{pose: Pose; x: number; y: number; h: number; k: numb
 };
 
 /** toi de dos devant la fenêtre, en contre-jour bleu : lève les jumelles (raise), puis les baisse (lower) */
-export const AlaFenetre: React.FC<SceneP & {raise: [number, number]; lower?: [number, number]; dim?: number}> = ({T, raise, lower, dim = 0}) => {
+export const AlaFenetre: React.FC<SceneP & {raise: [number, number]; lower?: [number, number]; dim?: number; hero?: boolean}> = ({T, raise, lower, dim = 0, hero}) => {
   const k = prog(T, raise[0], raise[1], easeOut) * (lower ? 1 - prog(T, lower[0], lower[1], easeInOut) : 1);
   const z = lerp(1.0, 1.06, prog(T, raise[0], raise[0] + 4, (x) => x));
   return (
@@ -348,7 +371,7 @@ export const AlaFenetre: React.FC<SceneP & {raise: [number, number]; lower?: [nu
         <rect x={530} y={310} width={16} height={810} fill="#05060A" />
         <path d="M110 1120 L970 1120 L1200 1920 L-120 1920 Z" fill="rgba(120,150,255,0.06)" filter="url(#b24)" />
         <rect x={0} y={1120} width={1080} height={800} fill="#090A10" opacity={0.92} />
-        <Stick p={mix(P.binoLow, P.binoBack, k)} x={600} y={2080} h={1150} look="rimBlue" />
+        <Person hero={hero} p={hero ? breathe(mix(P.binoLow, P.binoBack, k), T, 0.5) : mix(P.binoLow, P.binoBack, k)} x={600} y={2080} h={1150} look="rimBlue" light={{amb: 0.28, tint: '#0C1030', rim: '#6F8BFF'}} />
         <Binoculars pose={mix(P.binoLow, P.binoBack, k)} x={600} y={2080} h={1150} k={k} />
       </g>
       <rect width={1080} height={1920} fill={`rgba(0,0,0,${dim})`} />
@@ -411,7 +434,7 @@ export const Jumelles: React.FC<SceneP & {pov: number; signal: number; m: [numbe
 };
 
 /** le faisceau de la lampe traverse la rue et frappe ta fenêtre (vue de la rue, contre-plongée) */
-export const Faisceau: React.FC<SceneP & {t0: number}> = ({T, t0}) => {
+export const Faisceau: React.FC<SceneP & {t0: number; hero?: boolean}> = ({T, t0, hero}) => {
   const lt = T - t0;
   const z = lerp(1.06, 1.0, prog(lt, 0, 1.4, easeOut));
   const flick = 0.85 + 0.15 * Math.sin(T * 23);
@@ -437,7 +460,7 @@ export const Faisceau: React.FC<SceneP & {t0: number}> = ({T, t0}) => {
         <path d={`M70 ${oy - 46} L${ox} ${oy + 4} L${ox} ${oy + 52} L70 ${oy - 34} Z`} fill="#FFF8E4" opacity={0.5 * flick} filter="url(#b4)" />
         <Dust x0={90} y0={oy - 60} x1={ox} y1={oy + 80} T={T} n={30} o={0.6} />
         <Glow x={ox + 22} y={oy + 29} r={170} color="#FFF0C0" o={0.8 * flick} blur={40} />
-        <Stick p={P.standArmsDown} x={ox + 22} y={oy + 58} h={50} look="dark" />
+        <Person hero={hero} p={P.standArmsDown} x={ox + 22} y={oy + 58} h={50} look="dark" light={{amb: 0.35, tint: '#3A2A10'}} />
         {/* rue en bas : les premières silhouettes */}
         <rect x={0} y={1700} width={1080} height={220} fill="#07080E" />
         {Array.from({length: 9}, (_, i) => <Stick key={i} p={P.standArmsDown} x={80 + i * 110 + rand(i) * 40} y={1830 + rand(i * 3) * 40} h={120} look="dark" />)}
@@ -447,7 +470,7 @@ export const Faisceau: React.FC<SceneP & {t0: number}> = ({T, t0}) => {
 };
 
 /** fond de la carte de fin : noir, et ta fenêtre allumée tout en bas (le motif de la série) */
-export const FinFond: React.FC<SceneP> = ({T}) => (
+export const FinFond: React.FC<SceneP & {hero?: boolean}> = ({T, hero}) => (
   <svg width={1080} height={1920}>
     <Blurs />
     <rect width={1080} height={1920} fill="#050507" />
@@ -457,7 +480,7 @@ export const FinFond: React.FC<SceneP> = ({T}) => (
     <rect x={442} y={1572} width={196} height={236} fill="#F6C46A" opacity={0.9} />
     <rect x={536} y={1572} width={8} height={236} fill="#0E0B08" />
     <rect x={442} y={1686} width={196} height={8} fill="#0E0B08" />
-    <Stick p={P.standArmsDown} x={505} y={1808} h={150} look="dark" />
+    <Person hero={hero} p={P.standArmsDown} x={505} y={1808} h={150} look="dark" light={{amb: 0.3, tint: '#2A1A08'}} />
     <rect x={420} y={1820} width={240} height={14} fill="#1A140E" />
   </svg>
 );

@@ -1,12 +1,13 @@
 // Scènes du début : la chambre dans une fenêtre de la tour (dézoom continu jusqu'à la ville), le téléphone qui vibre, l'alerte d'urgence.
 import React from 'react';
 import {clamp01, easeInOut, easeOut, lerp, prog, rand} from '../theme';
-import {mix, P, Stick} from './stick';
+import {mix, P} from './stick';
+import {Person} from './hero';
 import {Blurs, Cam, CarTop, Glow, RGrad, SceneP, Siren, Skyline, Smoke, Tower, VGrad, winAt} from './world';
 import {SF} from './ui';
 
 // ---------------- la chambre (dessinée en 1080×1440, posée dans la fenêtre de l'étage 12) ----------------
-export const Bedroom: React.FC<{T: number; up: number; shade?: number}> = ({T, up, shade = 0.12}) => {
+export const Bedroom: React.FC<{T: number; up: number; shade?: number; hero?: boolean}> = ({T, up, shade = 0.12, hero}) => {
   const pose = mix(P.lieBed, P.sitBed, up);
   const hipY = lerp(948, 940, up);
   return (
@@ -52,7 +53,7 @@ export const Bedroom: React.FC<{T: number; up: number; shade?: number}> = ({T, u
       <rect x={130} y={930} width={880} height={140} rx={18} fill="#CFC8BC" />
       <ellipse cx={265} cy={925} rx={118} ry={44} fill="#E7E1D6" />
       <ellipse cx={265} cy={945} rx={110} ry={20} fill="rgba(0,0,0,0.12)" />
-      <Stick p={pose} x={600} y={hipY} hipY={0} h={560} shade={shade} />
+      <Person hero={hero} p={pose} x={600} y={hipY} hipY={0} h={560} shade={shade} light={{amb: 0.86, tint: '#2A2440'}} />
       {/* couette : remonte sur le buste quand il dort, glisse quand il se redresse */}
       <path d={`M${lerp(330, 560, up)} ${lerp(905, 930, up)} Q${lerp(600, 700, up)} ${lerp(870, 880, up)} 900 895 Q1010 900 1020 960 L1020 1075 L${lerp(300, 520, up)} 1075 Q${lerp(300, 510, up)} 990 ${lerp(330, 560, up)} ${lerp(905, 930, up)} Z`} fill="url(#brDuvet)" />
       <path d={`M${lerp(420, 620, up)} 1000 Q700 980 780 1010 M820 960 Q900 940 980 990`} stroke="#18204A" strokeWidth={6} fill="none" opacity={0.6} />
@@ -68,7 +69,7 @@ const WIN_C = [WX + 22, WY + 29.33] as const;
 export const OUR_WIN = {x: WX, y: WY, cx: WIN_C[0], cy: WIN_C[1]};
 
 /** la ville à l'aube, vue de face (sert à l'ouverture) */
-export const CityDawn: React.FC<{T: number; bedUp: number; inner?: boolean}> = ({T, bedUp, inner = true}) => (
+export const CityDawn: React.FC<{T: number; bedUp: number; inner?: boolean; hero?: boolean}> = ({T, bedUp, inner = true, hero}) => (
   <g>
     <defs>
       <VGrad id="skyDawn" stops={[[0, '#17183A'], [0.28, '#33294F'], [0.46, '#6E4060'], [0.6, '#C0644E'], [0.7, '#EE9A58'], [0.8, '#F4B66A']]} />
@@ -87,7 +88,7 @@ export const CityDawn: React.FC<{T: number; bedUp: number; inner?: boolean}> = (
     <Tower {...TW} body="url(#towerBody)" edge="#D98458" win={(f, c) => (f === 12 && c === 2 ? '#15131E' : rand(f * 13 + c * 7) < 0.1 ? '#E2AE5E' : null)} />
     {inner ? (
       <g transform={`translate(${WX},${WY}) scale(${44 / 1080})`}>
-        <Bedroom T={T} up={bedUp} />
+        <Bedroom T={T} up={bedUp} hero={hero} />
       </g>
     ) : null}
     {/* rue : voitures abandonnées, une voiture de police muette */}
@@ -103,17 +104,17 @@ export const CityDawn: React.FC<{T: number; bedUp: number; inner?: boolean}> = (
   </g>
 );
 
-export const Ouverture: React.FC<SceneP> = ({T, B}) => {
+export const Ouverture: React.FC<SceneP & {hero?: boolean; wake?: number; pull?: [number, number]}> = ({T, B, hero, wake = B.h + 1.28, pull = [2.35, 3.75]}) => {
   const Z0 = 1080 / 44;
-  const up = prog(T, B.h + 1.28, B.h + 1.95, easeOut);
-  const e = prog(T, 2.35, 3.75, easeInOut);
-  let z = Z0 * lerp(1.035, 1, prog(T, 0, 2.35, easeOut));
-  if (T > 2.35) z = Math.exp(lerp(Math.log(Z0), 0, e));
+  const up = prog(T, wake, wake + 0.67, easeOut);
+  const e = prog(T, pull[0], pull[1], easeInOut);
+  let z = Z0 * lerp(1.035, 1, prog(T, 0, pull[0], easeOut));
+  if (T > pull[0]) z = Math.exp(lerp(Math.log(Z0), 0, e));
   const wgt = clamp01((1 / z - 1 / Z0) / (1 - 1 / Z0));
   const cx = lerp(WIN_C[0], 540, wgt);
   let cy = lerp(WIN_C[1], 1010, wgt);
-  if (T > 3.75) {
-    const k = prog(T, 3.75, 7.2, (x) => x);
+  if (T > pull[1]) {
+    const k = prog(T, pull[1], 7.2, (x) => x);
     z = lerp(1, 1.07, k);
     cy = lerp(1010, 990, k);
   }
@@ -121,7 +122,7 @@ export const Ouverture: React.FC<SceneP> = ({T, B}) => {
     <svg width={1080} height={1920}>
       <Blurs />
       <Cam x={cx} y={cy} z={z}>
-        <CityDawn T={T} bedUp={up} />
+        <CityDawn T={T} bedUp={up} hero={hero} />
       </Cam>
     </svg>
   );

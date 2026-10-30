@@ -138,9 +138,9 @@ export const Rule: React.FC<{r: RuleSpec}> = ({r}) => {
   const sh = r.shrink === undefined ? 0 : prog(t, r.shrink, r.shrink + 0.38, easeInOut);
   // étiquette : rebond à l'entrée, puis rétrécit avec le titre
   const tagIn = sp(frame, r.tag, {damping: 9, stiffness: 260, mass: 0.6});
-  const tagY = lerp(414, 362, sh), tagS = lerp(1, 0.62, sh) * tagIn;
+  const tagY = lerp(414, 392, sh), tagS = lerp(1, 0.62, sh) * tagIn;
   const big = fit(r.title, 990, 178);
-  const titleY = lerp(560, 452, sh), titleS = lerp(1, 0.52, sh);
+  const titleY = lerp(560, 486, sh), titleS = lerp(1, 0.52, sh);
   const tin = prog(t, r.at - 0.02, r.at + 0.16, easeOut);
   const ul = prog(t, r.at + 0.05, r.at + 0.42, easeOut);
   const subIn = r.sub ? prog(t, r.at + 0.45, r.at + 0.62, easeOut) : 0;
@@ -285,6 +285,54 @@ export const EndCard: React.FC<{name: string; day: number; time0: string; time1:
         </div>
       </div>
     </AbsoluteFill>
+  );
+};
+
+// ---------------- inventaire (en haut à droite) : eau, vivres, batterie du téléphone ----------------
+/** valeur au temps t d'une courbe [instant, valeur] (linéaire entre deux clés) */
+const curve = (t: number, keys: [number, number][]) => {
+  let i = 0;
+  while (i + 1 < keys.length && t >= keys[i + 1][0]) i++;
+  const [t0, v0] = keys[i], nx = keys[i + 1];
+  if (!nx || t < t0) return v0;
+  return lerp(v0, nx[1], clamp01((t - t0) / Math.max(0.01, nx[0] - t0)));
+};
+const Icon: React.FC<{kind: 'eau' | 'vivres' | 'batt'; level?: number}> = ({kind, level = 1}) => (
+  <svg width={42} height={42} viewBox="0 0 34 34">
+    {kind === 'eau' ? <path d="M17 3 C17 3 6 16 6 22 a11 11 0 0 0 22 0 C28 16 17 3 17 3 Z" fill="#5AB4F0" stroke="#0A0A10" strokeWidth={2} /> : null}
+    {kind === 'vivres' ? (
+      <g><rect x={6} y={6} width={22} height={24} rx={4} fill="#F0A040" stroke="#0A0A10" strokeWidth={2} /><ellipse cx={17} cy={7} rx={11} ry={3.5} fill="#C8D0D8" stroke="#0A0A10" strokeWidth={2} /><rect x={6} y={15} width={22} height={7} fill="#C8402E" /></g>
+    ) : null}
+    {kind === 'batt' ? (
+      <g><rect x={3} y={9} width={26} height={16} rx={3} fill="none" stroke="#E8E8E8" strokeWidth={2.5} /><rect x={29} y={14} width={3} height={6} rx={1} fill="#E8E8E8" /><rect x={6} y={12} width={20 * level} height={10} rx={1.5} fill={level > 0.5 ? '#74F574' : level > 0.25 ? '#F2A23C' : '#FF4E42'} /></g>
+    ) : null}
+  </svg>
+);
+export const Inventory: React.FC<{t0: number; t1: number; eau: [number, number][]; vivres: [number, string][]; batt: [number, number][]; off?: [number, number][]}> = ({t0, t1, eau, vivres, batt, off = []}) => {
+  const t = useCurrentFrame() / FPS;
+  if (t < t0 - 0.02 || t > t1 + 0.4 || off.some(([a, b]) => t >= a && t < b)) return null;
+  const a = prog(t, t0, t0 + 0.4, easeOut) * (1 - prog(t, t1, t1 + 0.35));
+  let vi = 0;
+  while (vi + 1 < vivres.length && t >= vivres[vi + 1][0]) vi++;
+  const e = Math.round(curve(t, eau)), bt = Math.round(curve(t, batt));
+  // la ligne qui vient de changer clignote en citron
+  const hot = (keys: [number, number | string][]) => keys.some(([k], i) => i > 0 && t >= k && t < k + 0.6) ? 1 : 0;
+  const eauHot = eau.some(([k, v], i) => i > 0 && v !== eau[i - 1][1] && t >= k && t < k + 0.5) || (curve(t, eau) !== curve(t - 0.05, eau));
+  const rows: [React.ReactNode, string, string, boolean][] = [
+    [<Icon key="e" kind="eau" />, 'EAU', `${e} L`, eauHot],
+    [<Icon key="v" kind="vivres" />, 'VIVRES', vivres[vi][1], hot(vivres) > 0],
+    [<Icon key="b" kind="batt" level={bt / 100} />, 'BATTERIE', `${bt} %`, false],
+  ];
+  return (
+    <div style={{position: 'absolute', right: 68, top: 262, opacity: a, transform: `translateX(${(1 - a) * 40}px)`, display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-end', filter: 'drop-shadow(0 3px 8px rgba(0,0,0,0.7))'}}>
+      {rows.map(([ic, lab, val, h], i) => (
+        <div key={i} style={{display: 'flex', alignItems: 'center', gap: 12, transform: `scale(${h ? 1.08 : 1})`, transformOrigin: '100% 50%'}}>
+          <div style={{fontFamily: SF.mono, fontWeight: 700, fontSize: 22, letterSpacing: '0.2em', color: 'rgba(235,235,235,0.7)'}}>{lab}</div>
+          <div style={{fontFamily: SF.mono, fontWeight: 700, fontSize: 40, color: h ? SV.lime : SV.white, minWidth: 160, textAlign: 'right', textShadow: h ? '0 0 14px rgba(210,248,74,0.7)' : undefined}}>{val}</div>
+          {ic}
+        </div>
+      ))}
+    </div>
   );
 };
 
