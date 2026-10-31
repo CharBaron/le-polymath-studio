@@ -131,6 +131,14 @@ def parse(vdir):
 # ---------------- voice ----------------
 CHAIN = ('highpass=f=70,deesser=i=0.3,acompressor=threshold=-20dB:ratio=2.2:attack=10:release=120:makeup=1.5,'
          'equalizer=f=180:t=q:w=1:g=1.5,equalizer=f=3500:t=q:w=1.2:g=1.2,aresample=48000')
+# salles par perso (`voicefx:` du front-matter) : haut-parleur de quai carrelé, interphone de cabine
+VOICE_FX = {
+    'pa': ('highpass=f=330,lowpass=f=3900,equalizer=f=1700:t=q:w=1.4:g=4,'
+           'acompressor=threshold=-24dB:ratio=4:attack=4:release=90:makeup=2,'
+           'aecho=0.85:0.55:62|131|243|397:0.34|0.22|0.14|0.08,volume=5dB,apad=pad_dur=0.5'),
+    'radio': ('highpass=f=520,lowpass=f=3000,equalizer=f=1400:t=q:w=1:g=5,'
+              'acrusher=bits=9:mode=log:aa=1:mix=0.35,acompressor=threshold=-26dB:ratio=6:attack=2:release=60:makeup=3'),
+}
 
 
 def trim(y, sr, thr_db=-45):
@@ -164,11 +172,13 @@ def voice(vdir):
         mode = data['meta'].get('chunk') or ('section' if cast else 'all' if kind.startswith('gemini') else 'section' if kind == 'eleven' else 'sentence')
         say_ = lambda toks: ' '.join((f"[{tk['tag']}] " if tk.get('tag') else '') + tk['spoken'] for tk in toks)
         n_all = sum(len(sec['tokens']) for sec in data['sections'])
-        plan = []  # (texte, indices globaux, est-ce la fin d'une section)
+        # `voicefx:` (une salle par perso) : annonce=pa, conducteur=radio → la prise passe par VOICE_FX avant le montage
+        vfx = dict(kv.strip().split('=', 1) for kv in data['meta'].get('voicefx', '').split(',') if '=' in kv)
+        plan = []  # (texte, indices globaux, est-ce la fin d'une section, moteur, perso)
         off = 0
         if mode == 'all':
             text = '\n\n'.join(say_(sec['tokens']) for sec in data['sections'])
-            plan.append((text, list(range(n_all)), True, eng))
+            plan.append((text, list(range(n_all)), True, eng, ''))
         else:
             for sec in data['sections']:
                 groups_s = [list(range(len(sec['tokens'])))] if mode == 'section' else sec['sentences']
@@ -181,15 +191,22 @@ def voice(vdir):
                         else: runs.append((w, [i], idx))
                 for sj, (w, idx, _) in enumerate(runs):
                     if w and w not in cast: sys.exit(f'voice: perso « {w} » absent de `cast:`')
-                    plan.append((say_([sec['tokens'][i] for i in idx]), [off + i for i in idx], sj == len(runs) - 1, cast.get(w, eng)))
+                    plan.append((say_([sec['tokens'][i] for i in idx]), [off + i for i in idx], sj == len(runs) - 1, cast.get(w, eng), w))
                 off += len(sec['tokens'])
-        json.dump([g for _, g, _, _ in plan], open(os.path.join(build, 'units.json'), 'w'))
-        for text, gidx, end_sec, e in plan:
+        json.dump([p[1] for p in plan], open(os.path.join(build, 'units.json'), 'w'))
+        for text, gidx, end_sec, e, who in plan:
             if True:
                 h = hashlib.sha1(f'{e}|{rate}|{text}'.encode()).hexdigest()[:12]
                 f = os.path.join(cache, h + '.wav')
                 if not os.path.exists(f):
                     subprocess.run([PY, os.path.join(ROOT, 'tools', 'tts', 'say.py'), e, text, f, str(rate)], check=True)
+                fx = vfx.get(who)
+                if fx:
+                    if fx not in VOICE_FX: sys.exit(f'voicefx: effet « {fx} » inconnu ({", ".join(VOICE_FX)})')
+                    g = os.path.join(cache, f'{h}.{fx}.wav')
+                    if not os.path.exists(g):
+                        subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f, '-af', VOICE_FX[fx], g], check=True)
+                    f = g
                 y, sr = sf.read(f); y = y.mean(1) if y.ndim > 1 else y
                 y = trim(resample(y, sr), SR)
                 sents_t.append({'start': t, 'end': t + len(y) / SR, 'mode': mode})

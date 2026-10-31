@@ -1,0 +1,194 @@
+{
+ "fps": 30,
+ "duration": 63.538,
+ "frames": 1906,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "h1": 1.252,
+  "h2": 3.082,
+  "h3": 5.216,
+  "defi": 7.04,
+  "dil": 7.04,
+  "voix": 8.838,
+  "rame": 10.59,
+  "toi": 10.59,
+  "batt": 13.6,
+  "reseau": 13.871,
+  "trois": 14.76,
+  "annonce": 16.73,
+  "portes": 16.73,
+  "hp": 18.02,
+  "pers": 18.986,
+  "r1": 20.41,
+  "r1t": 22.172,
+  "traces": 23.44,
+  "porte": 25.617,
+  "r2": 27.09,
+  "r2t": 28.748,
+  "yeux": 30.389,
+  "vitre": 31.955,
+  "approche": 32.795,
+  "r3": 34.27,
+  "r3t": 35.631,
+  "plus": 37.048,
+  "rep": 38.27,
+  "un": 39.628,
+  "deux": 40.442,
+  "trois2": 41.276,
+  "noir": 43.515,
+  "clac": 41.68,
+  "pas": 44.387,
+  "revient": 45.628,
+  "quatre": 46.96,
+  "prenom": 48.303,
+  "interphone": 50.84,
+  "inter": 50.84,
+  "npas": 52.032,
+  "desc": 53.673,
+  "ferme": 54.257,
+  "choix": 55.47,
+  "qui": 57.235,
+  "a": 58.233,
+  "b": 59.72,
+  "fin": 61.11,
+  "flip": 62.386
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 7.04,
+   "scene": null,
+   "beats": [
+    "h",
+    "h1",
+    "h2",
+    "h3"
+   ]
+  },
+  {
+   "id": "defi",
+   "t0": 7.04,
+   "t1": 10.59,
+   "scene": null,
+   "beats": [
+    "dil",
+    "voix"
+   ]
+  },
+  {
+   "id": "rame",
+   "t0": 10.59,
+   "t1": 16.73,
+   "scene": null,
+   "beats": [
+    "toi",
+    "batt",
+    "reseau",
+    "trois"
+   ]
+  },
+  {
+   "id": "annonce",
+   "t0": 16.73,
+   "t1": 20.41,
+   "scene": null,
+   "beats": [
+    "portes",
+    "hp",
+    "pers"
+   ]
+  },
+  {
+   "id": "r1",
+   "t0": 20.41,
+   "t1": 27.09,
+   "scene": null,
+   "beats": [
+    "r1t",
+    "traces",
+    "porte"
+   ]
+  },
+  {
+   "id": "r2",
+   "t0": 27.09,
+   "t1": 34.27,
+   "scene": null,
+   "beats": [
+    "r2t",
+    "yeux",
+    "vitre",
+    "approche"
+   ]
+  },
+  {
+   "id": "r3",
+   "t0": 34.27,
+   "t1": 43.515,
+   "scene": null,
+   "beats": [
+    "r3t",
+    "plus",
+    "rep",
+    "un",
+    "deux",
+    "trois2"
+   ]
+  },
+  {
+   "id": "noir",
+   "t0": 43.515,
+   "t1": 50.84,
+   "scene": null,
+   "beats": [
+    "clac",
+    "pas",
+    "revient",
+    "quatre",
+    "prenom"
+   ]
+  },
+  {
+   "id": "interphone",
+   "t0": 50.84,
+   "t1": 55.47,
+   "scene": null,
+   "beats": [
+    "inter",
+    "npas",
+    "desc",
+    "ferme"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 55.47,
+   "t1": 61.11,
+   "scene": null,
+   "beats": [
+    "qui",
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 61.11,
+   "t1": 63.538,
+   "scene": null,
+   "beats": [
+    "flip"
+   ]
+  }
+ ],
+ "title": "TERMINUS — Jour 1",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ?"
+ }
+}

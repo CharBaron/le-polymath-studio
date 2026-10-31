@@ -323,3 +323,156 @@ def drill(dur=0.5):
         a = min(1, t / 0.02, (dur - t) / 0.05)
         out.append(a * (0.5 * math.tanh(3 * math.sin(ph)) + 0.25 * math.sin(3 * ph) + 0.2 * random.uniform(-1, 1) * (math.sin(2 * math.pi * 30 * t) > 0.6)))
     return out
+
+
+# ---------------- métro (série « TERMINUS ») ----------------
+def rumble(dur, f=46.0):
+    """Rame à l'arrêt : compresseur et moteur au ralenti, grondement grave qui pulse, très sourd."""
+    n = int(dur * SR)
+    low = bandnoise(n, lambda k: 90, q=0.5)
+    out = []
+    for k in range(n):
+        t = k / SR
+        am = 0.75 + 0.25 * math.sin(2 * math.pi * 0.9 * t) * math.sin(2 * math.pi * 0.23 * t)
+        a = min(1, t / 0.8, (dur - t) / 0.8)
+        out.append(a * am * (0.5 * math.sin(2 * math.pi * f * t) + 0.22 * math.sin(2 * math.pi * 2 * f * t + 0.4) + low[k] * 2.4))
+    return out
+
+
+def brakes(dur=2.4):
+    """Freins de métro : crissement aigu qui ondule et descend, frottement métallique, puis le « pschhh » de l'air."""
+    n = int(dur * SR)
+    grind = bandnoise(n, lambda k: 1800 - 900 * k / n, q=0.35)
+    hiss = bandnoise(n, lambda k: 5200, q=0.6)
+    ph1 = ph2 = 0.0
+    out = []
+    for k in range(n):
+        t = k / SR
+        u = t / dur
+        f1 = 3150 - 900 * u + 60 * math.sin(2 * math.pi * 7.3 * t)
+        f2 = 2380 - 600 * u + 45 * math.sin(2 * math.pi * 5.1 * t + 1)
+        ph1 += 2 * math.pi * f1 / SR
+        ph2 += 2 * math.pi * f2 / SR
+        sq = min(1, t / 0.15) * max(0, 1 - max(0, u - 0.72) / 0.12)
+        air = max(0, min(1, (u - 0.78) / 0.04)) * math.exp(-max(0, u - 0.82) * 7)
+        out.append(sq * (0.32 * math.sin(ph1) + 0.22 * math.sin(ph2) + grind[k] * 1.1 * (0.6 + 0.4 * math.sin(2 * math.pi * 13 * t))) + air * hiss[k] * 2.6)
+    return out
+
+
+def neon_buzz(dur, f=100.0):
+    """Néon : bourdonnement à 100 Hz riche en harmoniques, un peu de grésillement."""
+    n = int(dur * SR)
+    fizz = bandnoise(n, lambda k: 3800, q=0.7)
+    out = []
+    for k in range(n):
+        t = k / SR
+        a = min(1, t / 0.05, (dur - t) / 0.05)
+        s = math.sin(2 * math.pi * f * t)
+        out.append(a * (0.35 * math.copysign(abs(s) ** 0.4, s) + 0.12 * math.sin(2 * math.pi * 3 * f * t) + fizz[k] * 0.35 * (0.5 + 0.5 * math.sin(2 * math.pi * 50 * t))))
+    return out
+
+
+def neon_flick():
+    """Néon qui grésille : claquement électrique sec et bref."""
+    n = int(0.09 * SR)
+    hp = bandnoise(n, lambda k: 4200, q=0.5)
+    return [hp[k] * 3.2 * math.exp(-k / (0.012 * SR)) + random.uniform(-1, 1) * 0.6 * math.exp(-k / (0.002 * SR)) for k in range(n)]
+
+
+def neon_pop():
+    """Le tube qui claque : pop électrique + tintement du verre, puis plus rien."""
+    n = int(0.9 * SR)
+    hp = bandnoise(n, lambda k: 2600, q=0.4)
+    out = []
+    for k in range(n):
+        t = k / SR
+        glass = sum(g * math.sin(2 * math.pi * fr * t) * math.exp(-t / tau) for fr, g, tau in ((3420, 0.3, 0.18), (5130, 0.18, 0.1), (7260, 0.1, 0.06)))
+        out.append(math.tanh(2.5 * (hp[k] * 2.2 * math.exp(-t / 0.03) + random.uniform(-1, 1) * math.exp(-t / 0.004))) * 0.8 + glass)
+    return out
+
+
+def chime_pa(notes=(784.0, 659.25, 523.25), gap=0.32):
+    """Carillon d'annonce de quai : trois notes de cloche qui descendent, avec l'écho du carrelage."""
+    dur = gap * len(notes) + 1.6
+    n = int(dur * SR)
+    dry = [0.0] * n
+    for i, f in enumerate(notes):
+        k0 = int(i * gap * SR)
+        for k in range(n - k0):
+            t = k / SR
+            dry[k0 + k] += (0.55 * math.sin(2 * math.pi * f * t) + 0.18 * math.sin(2 * math.pi * 2.01 * f * t) + 0.08 * math.sin(2 * math.pi * 3.02 * f * t)) * math.exp(-t / 0.55) * min(1, t / 0.004)
+    out = list(dry)
+    for d, g in ((0.083, 0.42), (0.171, 0.28), (0.29, 0.18), (0.43, 0.1)):
+        dk = int(d * SR)
+        for k in range(dk, n):
+            out[k] += dry[k - dk] * g
+    return [v * 0.8 for v in out]
+
+
+def doors_open():
+    """Portes de métro qui s'ouvrent : souffle d'air comprimé, roulement des vantaux, butée."""
+    n = int(1.1 * SR)
+    air = bandnoise(n, lambda k: 3000 - 1800 * k / n, q=0.55)
+    roll = bandnoise(n, lambda k: 220, q=0.6)
+    out = []
+    for k in range(n):
+        t = k / SR
+        a = math.exp(-t / 0.35) * min(1, t / 0.02)
+        r = (0.5 + 0.5 * math.sin(2 * math.pi * 38 * t)) * (1 if 0.1 < t < 0.75 else 0.2)
+        stop = math.sin(2 * math.pi * 90 * t) * math.exp(-max(0, t - 0.76) / 0.05) if t > 0.76 else 0
+        out.append(air[k] * 2.4 * a + roll[k] * 2.0 * r * 0.5 + stop * 0.8)
+    return out
+
+
+def door_beep():
+    """Signal de fermeture des portes : bip électronique aigu et sec."""
+    n = int(0.16 * SR)
+    return [0.5 * (math.sin(2 * math.pi * 1180 * k / SR) + 0.35 * math.sin(2 * math.pi * 3540 * k / SR)) * min(1, k / 120, (n - k) / 240) for k in range(n)]
+
+
+def static(dur):
+    """Interphone : souffle radio haché, craquements."""
+    n = int(dur * SR)
+    hiss = bandnoise(n, lambda k: 2400, q=0.3)
+    out = []
+    for k in range(n):
+        t = k / SR
+        gate = 1.0 if math.sin(t * 61.3) * math.sin(t * 17.9) > 0.2 else 0.35
+        crack = random.uniform(-1, 1) * 2.5 if random.random() < 0.0009 else 0
+        a = min(1, t / 0.05, (dur - t) / 0.08)
+        out.append(a * (hiss[k] * 1.8 * gate + crack))
+    return out
+
+
+def drip():
+    """Goutte qui tombe dans une flaque : « plip » qui monte, très court."""
+    n = int(0.12 * SR)
+    ph, out = 0.0, []
+    for k in range(n):
+        t = k / SR
+        ph += 2 * math.pi * (900 + 1600 * (t / 0.12)) / SR
+        out.append(math.sin(ph) * math.exp(-t / 0.025) * 0.7)
+    return out
+
+
+def wet_step():
+    """Pas mouillé sur le carrelage : claquement mat + petit clapotis."""
+    n = int(0.3 * SR)
+    sl = bandnoise(n, lambda k: 900, q=0.6)
+    sp = bandnoise(n, lambda k: 3200, q=0.5)
+    return [math.tanh(1.4 * (sl[k] * 2.2 * math.exp(-k / (0.02 * SR)) + sp[k] * 1.4 * math.exp(-max(0, k - 0.03 * SR) / (0.05 * SR)) * (k > 0.03 * SR))) for k in range(n)]
+
+
+def whisper(dur, seed=3):
+    """Murmure inintelligible : souffle aigu qui forme des syllabes."""
+    rnd = random.Random(seed)
+    n = int(dur * SR)
+    w = bandnoise(n, lambda k: 2600 + 900 * math.sin(k / SR * 9.1), q=0.35)
+    rate = [rnd.uniform(5, 8) for _ in range(4)]
+    out = []
+    for k in range(n):
+        t = k / SR
+        syl = max(0, math.sin(2 * math.pi * rate[int(t * 2) % 4] * t)) ** 1.5
+        a = min(1, t / 0.15, (dur - t) / 0.2)
+        out.append(w[k] * 2.2 * syl * a)
+    return out
