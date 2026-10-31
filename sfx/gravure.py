@@ -155,6 +155,18 @@ def anim_sfx(mix, s, N):
         mix.put(t0 + 0.1, scratch(0.3), 0.07); mix.put(t0 + 0.35, scratch(0.3), 0.07)
         sh = num('shrink', 99)
         if sh < t1 - t0: mix.put(t0 + sh, whoosh(0.6, 2400, 300, peak=0.3), 0.08); mix.put(t0 + sh + 0.45, impact(1.0), 0.12)
+    elif name == 'Partage':
+        if a.get('freezeAt') is not None: return
+        if a.get('reveal'):
+            mix.put(t0 + 0.05, pop(500, 300, 0.15), 0.09); b = num('burn'); mix.put(b, riser(0.8, 200, 1600), 0.06); mix.put(b + 0.1, scratch(0.8), 0.06); mix.put(b + 0.8, boom(1.0, 50), 0.1); return
+        sp = num('split')
+        for k in range(10): mix.put(sp + k * 0.05, scratch(0.06), 0.05, pan=-0.4 + 0.08 * k)
+        mix.put(sp + 0.5, thud(0.15), 0.08)
+        mix.put(num('btn'), pop(600, 1100, 0.12), 0.07); mix.put(num('acc'), blip(N['A5'], 0.2, 0.06), 0.05); mix.put(num('ref'), blip(N['D5'], 0.25, 0.08), 0.05)
+        cd = a.get('cd', [])
+        for k, tt in enumerate(cd): mix.put(tt - 0.03, blip(N['A5'] if k < len(cd) - 1 else N['D5'] * 2, 0.22, 0.06), 0.07); mix.put(tt - 0.03, thud(0.15), 0.08)
+    elif name == 'Insula':
+        g = t0 + num('glow', 0.8); mix.put(g - 0.3, riser(0.35, 300, 2200), 0.05); mix.put(g, boom(0.9, 70), 0.1); mix.put(g + 0.05, blip(N['D5'] * 2, 0.5, 0.15), 0.04)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 
