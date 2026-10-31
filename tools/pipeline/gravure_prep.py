@@ -1,7 +1,7 @@
 """Préparation des images « Gravure » v3.1, commune à toutes les vidéos : un style visuel par vidéo.
 Dans videos/<id>/prep_img.py :  from tools.pipeline.gravure_prep import run ; run(__file__, STYLE, JOBS)
 Styles : or (marbre noir, sépia crème) · archive (carton kraft, registre ligné, sépia jauni) · labo (bleu nuit quadrillé, bichromie bleue)
-         · grec (vernis noir, terre cuite : gravures en figures rouges) · anatomie (parchemin taché, encre brune) · atlas (nuit étoilée, parchemin).
+         · grec (vernis noir, terre cuite : gravures en figures rouges) · anatomie (parchemin taché, encre brune) · atlas (nuit étoilée, parchemin) · cabinet (vitrine en acajou, velours pourpre).
 JOBS = {nom: (type, source, recadrage, largeur max[, options])}
   carte  : recadrage x0 y0 x1 y1 (fractions), bichromie du style, bord de papier déchiré + liseré
   plein  : image plein écran 1080×1920 (recadrage = zone visée, ramenée au format 9:16), bichromie, sans bord
@@ -24,6 +24,7 @@ STYLES = {
     'optique':  {'ink': (30, 10, 10), 'paper': (242, 234, 226), 'card': (246, 240, 234), 'rim': (214, 40, 40)},
     'empire':   {'ink': (16, 26, 18), 'paper': (236, 228, 204), 'card': (240, 233, 212), 'rim': (92, 190, 120)},
     'caverne':  {'ink': (26, 16, 26), 'paper': (232, 222, 210), 'card': (238, 230, 220), 'rim': (196, 120, 230)},
+    'cabinet':  {'ink': (28, 14, 22), 'paper': (238, 228, 212), 'card': (242, 234, 220), 'rim': (186, 110, 220)},
 }
 S = dict(STYLES['or'])
 
@@ -243,6 +244,13 @@ def textures(out, style):
         base = np.array([16, 12, 16], np.float32)[None, None] * (0.6 + 0.8 * rock[..., None]) + fire[..., None] * np.array([120, 58, 24]) * (0.6 + 0.6 * rock[..., None])
         light = np.array([234, 224, 212], np.float32)[None, None] * (0.93 + 0.1 * n2[..., None])
         vel = cloth((60, 18, 72), 21)
+    elif style == 'cabinet':   # vitrine de musée en acajou (veinage vertical, panneaux) ; papier de musée ; velours pourpre
+        vein = ndi.gaussian_filter(rng.normal(0, 1, (H, W)).astype(np.float32), (60, 1.4)) * 3 + (fbm(H, W, 41, 4, 120) - 0.5) * 1.5
+        panel = ((np.abs(xx - 90) < 3) | (np.abs(xx - 990) < 3) | (np.abs(yy - 150) < 3) | (np.abs(yy - 1770) < 3)) & (xx > 80) & (xx < 1000) & (yy > 140) & (yy < 1780)
+        base = np.array([40, 17, 12], np.float32)[None, None] * (0.75 + 0.45 * n1[..., None] + 0.12 * vein[..., None])
+        base[panel] = base[panel] * 0.45 + np.array([150, 96, 60]) * 0.2
+        light = np.array([238, 230, 216], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
+        vel = cloth((58, 18, 70), 21)
     else:                      # atlas : nuit étoilée, parchemin, indigo
         base = np.array([9, 15, 38], np.float32)[None, None] * (0.8 + 0.45 * n1[..., None])
         stars = rng.random((H, W)) > 0.9985

@@ -1,0 +1,100 @@
+{
+ "fps": 30,
+ "duration": 40.441,
+ "frames": 1213,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "h2": 2.84,
+  "corps": 5.93,
+  "legue": 5.93,
+  "public": 9.15,
+  "squelette": 12.04,
+  "nom": 14.88,
+  "tete": 17.55,
+  "cire": 20.75,
+  "jambes": 22.6,
+  "vol": 24.92,
+  "rancon": 27.97,
+  "conseil": 29.57,
+  "fin": 33.53,
+  "toi": 33.53,
+  "loop": 35.561
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 5.93,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "corps",
+   "t0": 5.93,
+   "t1": 12.04,
+   "scene": null,
+   "beats": [
+    "legue",
+    "public"
+   ]
+  },
+  {
+   "id": "squelette",
+   "t0": 12.04,
+   "t1": 17.55,
+   "scene": null,
+   "beats": [
+    "nom"
+   ]
+  },
+  {
+   "id": "tete",
+   "t0": 17.55,
+   "t1": 24.92,
+   "scene": null,
+   "beats": [
+    "cire",
+    "jambes"
+   ]
+  },
+  {
+   "id": "vol",
+   "t0": 24.92,
+   "t1": 29.57,
+   "scene": null,
+   "beats": [
+    "rancon"
+   ]
+  },
+  {
+   "id": "conseil",
+   "t0": 29.57,
+   "t1": 33.53,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "fin",
+   "t0": 33.53,
+   "t1": 40.441,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le philosophe empaillé",
+ "hook": "mort en 1832|réunion en 2013",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Mort depuis 1832 et toujours plus assidu aux réunions que la moitié de ton groupe de projet."
+ }
+}

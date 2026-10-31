@@ -201,6 +201,15 @@ def anim_sfx(mix, s, N):
     elif name == 'Porte':
         pa, pb = a.get('pass', [t0, t1])
         mix.put(pa, whoosh(pb - pa, 220, 1400, peak=0.5), 0.1, pan=-0.3); mix.put((pa + pb) / 2, thud(0.25), 0.1)
+    elif name == 'Habille':
+        w = num('at', t0 + 1); mix.put(w - 0.1, riser(0.4, 400, 2600), 0.05); mix.put(w, scratch(0.9), 0.08); mix.put(w + 0.9, thud(0.2), 0.1)
+    elif name == 'Tetes':
+        if a.get('mode') == 'jambes': mix.put(t0, whoosh(0.5, 300, 2200, peak=0.6), 0.08); mix.put(t0 + 0.5, scratch(0.4), 0.07); mix.put(t0 + 0.75, boom(1.0, 55), 0.1)
+        else: mix.put(t0 + 0.1, scratch(0.45), 0.1); mix.put(t0 + 0.5, thud(0.2), 0.1)
+    elif name == 'Rancon':
+        mix.put(t0, pop(500, 300, 0.15), 0.08)
+        for k in range(17):
+            if t0 + 0.3 + k * 0.05 < t1: mix.put(t0 + 0.3 + k * 0.05, scratch(0.05), 0.05, pan=-0.4 + 0.05 * k)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 
