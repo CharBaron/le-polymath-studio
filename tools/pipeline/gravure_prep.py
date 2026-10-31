@@ -1,7 +1,7 @@
 """Préparation des images « Gravure » v3.1, commune à toutes les vidéos : un style visuel par vidéo.
 Dans videos/<id>/prep_img.py :  from tools.pipeline.gravure_prep import run ; run(__file__, STYLE, JOBS)
 Styles : or (marbre noir, sépia crème) · archive (carton kraft, registre ligné, sépia jauni) · labo (bleu nuit quadrillé, bichromie bleue)
-         · grec (vernis noir, terre cuite : gravures en figures rouges) · anatomie (parchemin taché, encre brune) · atlas (nuit étoilée, parchemin) · cabinet (vitrine en acajou, velours pourpre).
+         · grec (vernis noir, terre cuite : gravures en figures rouges) · anatomie (parchemin taché, encre brune) · atlas (nuit étoilée, parchemin) · cabinet (vitrine en acajou, velours pourpre) · ecole (ardoise, cahier Seyès).
 JOBS = {nom: (type, source, recadrage, largeur max[, options])}
   carte  : recadrage x0 y0 x1 y1 (fractions), bichromie du style, bord de papier déchiré + liseré
   plein  : image plein écran 1080×1920 (recadrage = zone visée, ramenée au format 9:16), bichromie, sans bord
@@ -25,6 +25,7 @@ STYLES = {
     'empire':   {'ink': (16, 26, 18), 'paper': (236, 228, 204), 'card': (240, 233, 212), 'rim': (92, 190, 120)},
     'caverne':  {'ink': (26, 16, 26), 'paper': (232, 222, 210), 'card': (238, 230, 220), 'rim': (196, 120, 230)},
     'cabinet':  {'ink': (28, 14, 22), 'paper': (238, 228, 212), 'card': (242, 234, 220), 'rim': (186, 110, 220)},
+    'ecole':    {'ink': (14, 22, 40), 'paper': (238, 234, 222), 'card': (242, 238, 228), 'rim': (96, 150, 255)},
 }
 S = dict(STYLES['or'])
 
@@ -251,6 +252,16 @@ def textures(out, style):
         base[panel] = base[panel] * 0.45 + np.array([150, 96, 60]) * 0.2
         light = np.array([238, 230, 216], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
         vel = cloth((58, 18, 70), 21)
+    elif style == 'ecole':     # tableau noir d'école (ardoise, traces de craie) ; cahier à carreaux Seyès ; velours bleu nuit
+        chalk = np.clip((fbm(H, W, 43, 5, 180) - 0.55) / 0.45, 0, 1) ** 1.5
+        streak = ndi.gaussian_filter(rng.normal(0, 1, (H, W)).astype(np.float32), (2, 40)) * 2
+        base = np.array([28, 36, 34], np.float32)[None, None] * (0.8 + 0.35 * n1[..., None]) + (chalk[..., None] * 34 + streak[..., None] * 3) * np.array([1, 1, 1.05])
+        light = np.array([240, 237, 228], np.float32)[None, None] * (0.95 + 0.06 * n2[..., None])
+        fine = (yy % 32) < 1; bold = ((yy % 128) < 2) | ((xx % 128) < 2)
+        light[fine] = light[fine] * 0.9 + np.array([150, 170, 220]) * 0.1
+        light[bold] = light[bold] * 0.78 + np.array([90, 120, 210]) * 0.22
+        mg = np.abs(xx - 150) < 2; light[mg] = light[mg] * 0.5 + np.array([210, 60, 70]) * 0.5
+        vel = cloth((14, 30, 74), 21)
     else:                      # atlas : nuit étoilée, parchemin, indigo
         base = np.array([9, 15, 38], np.float32)[None, None] * (0.8 + 0.45 * n1[..., None])
         stars = rng.random((H, W)) > 0.9985

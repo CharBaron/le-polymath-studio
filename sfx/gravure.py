@@ -210,6 +210,15 @@ def anim_sfx(mix, s, N):
         mix.put(t0, pop(500, 300, 0.15), 0.08)
         for k in range(17):
             if t0 + 0.3 + k * 0.05 < t1: mix.put(t0 + 0.3 + k * 0.05, scratch(0.05), 0.05, pan=-0.4 + 0.05 * k)
+    elif name == 'Triangle':
+        if a.get('reveal'): mix.put(t0 + 0.3, scratch(0.3), 0.1); mix.put(t0 + 0.8, scratch(0.3), 0.1); mix.put(t0 + 1.0, thud(0.2), 0.1); return
+        cd = a.get('at', [])
+        for k, tt in enumerate(cd): mix.put(tt - 0.03, blip(N['A5'] if k < len(cd) - 1 else N['D5'] * 2, 0.22, 0.06), 0.07); mix.put(tt - 0.03, thud(0.15), 0.08)
+        if cd: st = num('stop'); mix.put(st - 0.1, whoosh(0.4, 600, 3400, peak=0.4), 0.09); mix.put(st, impact(1.2), 0.16)
+    elif name == 'Plaque':
+        if a.get('static'): return
+        mix.put(t0 + 0.05, thud(0.25), 0.1); mix.put(t0 + 0.08, click(900, 0.04), 0.06)
+        mix.put(num('lu'), pop(700, 1100, 0.14), 0.08); mix.put(num('barre'), scratch(0.3), 0.11); mix.put(num('barre') + 0.3, boom(0.8, 60), 0.1)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 

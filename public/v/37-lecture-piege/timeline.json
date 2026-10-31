@@ -1,0 +1,102 @@
+{
+ "fps": 30,
+ "duration": 34.428,
+ "frames": 1033,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "c3": 4.01,
+  "c2": 4.79,
+  "c1": 5.7,
+  "stop": 6.42,
+  "reveal": 7.28,
+  "relis": 7.28,
+  "deux": 8.16,
+  "essai": 9.89,
+  "lu": 12.54,
+  "pasle": 14.32,
+  "existe": 15.67,
+  "nom": 17.82,
+  "devine": 19.49,
+  "exp": 22.7,
+  "an": 22.7,
+  "p54": 26.09,
+  "fin": 29.78,
+  "envoie": 29.78,
+  "loop": 32.2
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 7.28,
+   "scene": null,
+   "beats": [
+    "h",
+    "c3",
+    "c2",
+    "c1",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 7.28,
+   "t1": 9.89,
+   "scene": null,
+   "beats": [
+    "relis",
+    "deux"
+   ]
+  },
+  {
+   "id": "essai",
+   "t0": 9.89,
+   "t1": 17.82,
+   "scene": null,
+   "beats": [
+    "lu",
+    "pasle",
+    "existe"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 17.82,
+   "t1": 22.7,
+   "scene": null,
+   "beats": [
+    "devine"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 22.7,
+   "t1": 29.78,
+   "scene": null,
+   "beats": [
+    "an",
+    "p54"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 29.78,
+   "t1": 34.428,
+   "scene": null,
+   "beats": [
+    "envoie",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Lis à voix haute",
+ "hook": "test de lecture|à voix haute",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Ceux qui disent avoir vu le double « au » tout de suite ont aussi lu « le printemps »."
+ }
+}
