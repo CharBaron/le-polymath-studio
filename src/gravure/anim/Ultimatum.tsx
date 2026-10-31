@@ -14,7 +14,7 @@ import {Choice, Countdown, nums, pop, RED, src} from './tests';
 const BW = 300, BH = 150;
 /** billet de 10 € gravé : papier crème, cadre double, guillochis, rosace, « 10 » aux coins */
 const Bill: React.FC<{x: number; y: number; rot: number; s?: number; burn?: number; k: number}> = ({x, y, rot, s = 1, burn = 0, k}) => (
-  <div style={{position: 'absolute', left: x - BW / 2, top: y - BH / 2, width: BW, height: BH, transform: `rotate(${rot}deg) scale(${s})`, opacity: 1 - clamp01((burn - 0.6) / 0.4), filter: burn ? `sepia(${burn}) brightness(${1 - 0.7 * burn}) contrast(${1 + burn})` : undefined, boxShadow: '0 10px 18px rgba(0,0,0,0.55)'}}>
+  <div style={{position: 'absolute', left: x - BW / 2, top: y - BH / 2, width: BW, height: BH, transform: `rotate(${rot}deg) scale(${s})`, opacity: 1 - clamp01((burn - 0.6) / 0.4), filter: burn ? `sepia(${burn}) brightness(${1 - 0.85 * burn}) contrast(${1 + 1.5 * burn})` : undefined, boxShadow: '0 10px 18px rgba(0,0,0,0.55)'}}>
     <svg width={BW} height={BH} viewBox={`0 0 ${BW} ${BH}`}>
       <InkDefs p={`b${k}`} ink="#3A2A0E" />
       <rect x={0} y={0} width={BW} height={BH} fill="#EADBB0" />
@@ -44,7 +44,7 @@ export const Partage: React.FC<AnimProps> = ({id, t: tNow, lt, p}) => {
   const show = Number(p.show ?? 0.5), split = reveal ? -1e9 : Number(p.split ?? 1e9), btn = reveal ? -1e9 : Number(p.btn ?? 1e9);
   const cd = nums(p, 'cd');
   const burnAt = reveal ? Number(p.burn ?? 1e9) : 1e9;
-  const burn = prog(t, burnAt, burnAt + 0.9);
+  const burn = prog(t, burnAt, burnAt + 0.7);
   const refuse = reveal ? prog(lt, 0.05, 0.25) : 0;
   const lab = (txt: string, y: number, on: number, col: string) => (
     <div style={{position: 'absolute', left: 0, right: 0, top: y, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 48, letterSpacing: '0.12em', color: col, opacity: on, textShadow: '0 4px 12px rgba(0,0,0,0.95)'}}>{txt}</div>
@@ -67,7 +67,7 @@ export const Partage: React.FC<AnimProps> = ({id, t: tNow, lt, p}) => {
         return inK > 0 ? <Bill key={i} k={i} x={lerp(a.x, dest.x, k)} y={lerp(a.y, dest.y, k) - (1 - inK) * 300} rot={lerp(a.rot, dest.rot, k)} s={lerp(1.3, 1, inK)} burn={burn} /> : null;
       })}
       {t < split + 0.3 && live ? lab('100 €', 590, pop(t, show + 0.5), G.gold) : null}
-      {lab(zero ? 'LUI · 0 €' : refOn ? 'LUI · 90 € → 0 €' : 'LUI · 90 €', 400, prog(t, split + 0.3, split + 0.6), zero || refOn ? RED : G.gold)}
+      {lab(zero ? 'LUI · 0 €' : refOn ? 'LUI · 90 € → 0 €' : 'LUI · 90 €', 330, prog(t, split + 0.3, split + 0.6), zero || refOn ? RED : G.gold)}
       {lab(zero ? 'TOI · 0 €' : refOn ? 'TOI · 10 € → 0 €' : 'TOI · 10 €', 1060, prog(t, split + 0.5, split + 0.8), zero || refOn ? RED : G.text)}
       <Choice x={300} y={1210} w={360} text="ACCEPTER" o={prog(t, btn, btn + 0.2)} on={accOn} pulse={live && t > ask ? 0.5 + 0.5 * Math.sin(t * 9) : 0} size={44} />
       <Choice x={720} y={1210} w={360} text="REFUSER" red o={prog(t, btn, btn + 0.2)} on={Math.max(refuse, refOn)} pulse={live && t > ask ? 0.5 + 0.5 * Math.sin(t * 9 + 1.5) : 0} size={44} />

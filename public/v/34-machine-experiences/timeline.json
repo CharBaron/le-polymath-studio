@@ -113,7 +113,7 @@
   }
  ],
  "title": "La machine à plaisir",
- "hook": "tout le plaisir que tu veux|tu te branches",
+ "hook": "tout le plaisir|tu te branches ?",
  "retention": {
   "choc": null,
   "sous": null,

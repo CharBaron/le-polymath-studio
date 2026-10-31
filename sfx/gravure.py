@@ -167,6 +167,19 @@ def anim_sfx(mix, s, N):
         for k, tt in enumerate(cd): mix.put(tt - 0.03, blip(N['A5'] if k < len(cd) - 1 else N['D5'] * 2, 0.22, 0.06), 0.07); mix.put(tt - 0.03, thud(0.15), 0.08)
     elif name == 'Insula':
         g = t0 + num('glow', 0.8); mix.put(g - 0.3, riser(0.35, 300, 2200), 0.05); mix.put(g, boom(0.9, 70), 0.1); mix.put(g + 0.05, blip(N['D5'] * 2, 0.5, 0.15), 0.04)
+    elif name == 'Branche':
+        if a.get('freezeAt') is not None: return
+        if a.get('reveal'): mix.put(t0 + 0.05, pop(500, 300, 0.15), 0.09); mix.put(t0 + 0.1, boom(0.9, 60), 0.08); return
+        for k, tt in enumerate(a.get('at', [])): mix.put(tt - 0.03, blip(N['A5'] if k < 3 else N['D5'], 0.3, 0.1), 0.05); mix.put(tt - 0.03, whoosh(0.3, 800, 2600, peak=0.5), 0.05)
+        mix.put(num('ask'), pop(600, 1100, 0.12), 0.07)
+        cd = a.get('cd', [])
+        for k, tt in enumerate(cd): mix.put(tt - 0.03, blip(N['A5'] if k < len(cd) - 1 else N['D5'] * 2, 0.22, 0.06), 0.07); mix.put(tt - 0.03, thud(0.15), 0.08)
+    elif name == 'Retour':
+        if a.get('mode') == 'q':
+            for k in range(int(min(t1 - t0, 3.6) / 0.08)): mix.put(t0 + k * 0.08, click(1900 + (k * 331) % 900, 0.015), 0.04, pan=-0.2 + 0.4 * ((k * 7) % 10) / 10)
+        else:
+            mix.put(t0 + 0.15, riser(0.55, 300, 2000), 0.05); mix.put(t0 + 0.7, thud(0.2), 0.1)
+            if a.get('prison'): mix.put(t0 + 0.8, impact(1.0), 0.12)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 

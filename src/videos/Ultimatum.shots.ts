@@ -23,12 +23,12 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     {t0: W('refusées', B.vrai), bg: 'marble', tr: 'swipe', pic: {name: 'couple_main', w: 760, zoom: 0.12}, stamp: {text: 'REFUSÉ', at: W('refusées', B.vrai) + 0.15, size: 130, y: 1150, rot: -7}},
     // --- le nom ---
     {t0: B.nom - 0.04, bg: 'marble', tr: 'blur', concept: {word: 'L’AVERSION|À L’INJUSTICE', sub: '« inequity aversion » · Fehr & Schmidt, 1999'}},
-    {t0: B.filtre - 0.04, bg: 'velvet', tr: 'zoom', pic: {name: 'couple', w: 880, zoom: 0.2, focus: [0.35, 0.4]}, slam: {text: 'TE FAIRE AVOIR', at: W('avoir', B.filtre) - B.filtre + 0.04, color: 'gold', y: 430, size: 92}},
+    {t0: B.filtre - 0.04, bg: 'velvet', tr: 'zoom', pic: {name: 'couple', w: 880, zoom: 0.2, focus: [0.35, 0.4]}, slam: {text: 'TE FAIRE AVOIR', at: W('avoir', B.filtre) - B.filtre + 0.04, color: 'gold', y: 450, size: 80}},
     // --- relance ---
     {t0: B.relance - 0.04, bg: 'velvet', tr: 'shutter', pic: {name: 'preteur_plein', w: 1080, full: true, zoom: 0.14, focus: [0.5, 0.35]}},
     // --- Princeton, 2003 : l'insula ---
     {t0: B.scanner - 0.04, bg: 'white', tr: 'invert', num: {text: '2003', color: 'ink', label: 'PRINCETON · IRM', strobe: true}},
-    {t0: W('scanner', B.scanner + 1), bg: 'marble', tr: 'swipe', pic: {name: 'insula', w: 880, zoom: 0.12}},
+    {t0: W('chercheurs', B.scanner), bg: 'marble', tr: 'swipe', pic: {name: 'insula', w: 880, zoom: 0.12}},
     {t0: B.insula - 0.04, bg: 'marble', tr: 'zoom', still: true, anim: {name: 'Insula', glow: W('allume', B.insula) - B.insula + 0.04}},
     {t0: B.pourri - 0.04, bg: 'velvet', tr: 'flashRed', pic: {name: 'pieces', w: 880, zoom: 0.3, focus: [0.75, 0.5]}, stamp: {text: 'POURRI', at: W('pourrie', B.pourri) + 0.04, size: 130, y: 1150, rot: 6}},
     // --- les chimpanzés ---

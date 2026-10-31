@@ -6,7 +6,7 @@ tempo: 1.0
 pauses: 0.45
 tail: 0.8
 fx: 0.42
-hook: une proposition indécente|un seul essai
+hook: proposition|indécente
 motcle: proposition
 hashtags: #economie #psychologie #test #argent #lepolymath
 description: Un inconnu te fait une proposition indécente : il garde 90 €, il t'en donne 10. Tu acceptes ? Le jeu de l'ultimatum (Güth, 1982).

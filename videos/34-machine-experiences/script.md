@@ -6,7 +6,7 @@ tempo: 1.0
 pauses: 0.45
 tail: 0.8
 fx: 0.42
-hook: tout le plaisir que tu veux|tu te branches
+hook: tout le plaisir|tu te branches ?
 motcle: machine
 hashtags: #philosophie #test #nozick #plaisir #lepolymath
 description: Une machine te donne tout le plaisir que tu veux, toute ta vie. Tu te branches ? La machine à expériences (Nozick, 1974).
