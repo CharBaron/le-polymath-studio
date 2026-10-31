@@ -1,0 +1,124 @@
+{
+ "fps": 30,
+ "duration": 63.885,
+ "frames": 1917,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "toute": 3.7,
+  "reves": 5.65,
+  "faux": 8.74,
+  "choix": 10.68,
+  "stop": 11.68,
+  "reveal": 14.09,
+  "non": 14.09,
+  "tous": 14.93,
+  "fier": 16.5,
+  "exp": 18.23,
+  "an": 18.23,
+  "preuve": 23.33,
+  "reel": 25.87,
+  "nom": 29.58,
+  "filtre": 32.06,
+  "relance": 35.35,
+  "retour": 38.34,
+  "an2": 38.34,
+  "deja": 42.77,
+  "veux": 46.52,
+  "moitie": 47.958,
+  "prison": 50.14,
+  "p87": 52.23,
+  "statu": 54.68,
+  "fin": 57.74,
+  "toi": 57.74,
+  "loop": 60.75
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 14.09,
+   "scene": null,
+   "beats": [
+    "h",
+    "toute",
+    "reves",
+    "faux",
+    "choix",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 14.09,
+   "t1": 18.23,
+   "scene": null,
+   "beats": [
+    "non",
+    "tous",
+    "fier"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 18.23,
+   "t1": 29.58,
+   "scene": null,
+   "beats": [
+    "an",
+    "preuve",
+    "reel"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 29.58,
+   "t1": 35.35,
+   "scene": null,
+   "beats": [
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 35.35,
+   "t1": 38.34,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "retour",
+   "t0": 38.34,
+   "t1": 57.74,
+   "scene": null,
+   "beats": [
+    "an2",
+    "deja",
+    "veux",
+    "moitie",
+    "prison",
+    "p87",
+    "statu"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 57.74,
+   "t1": 63.885,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "La machine à plaisir",
+ "hook": "tout le plaisir que tu veux|tu te branches",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Ceux qui ont dit oui sont juste plus honnêtes que les autres."
+ }
+}

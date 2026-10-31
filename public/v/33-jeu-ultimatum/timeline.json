@@ -1,0 +1,124 @@
+{
+ "fps": 30,
+ "duration": 70.13,
+ "frames": 2104,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "cent": 4.01,
+  "regle": 7.97,
+  "choix": 13.13,
+  "stop": 14.1,
+  "reveal": 16.78,
+  "refuse": 16.78,
+  "jete": 17.92,
+  "juste": 19.61,
+  "exp": 21.77,
+  "an": 21.77,
+  "theorie": 26.48,
+  "vrai": 31.94,
+  "nom": 35.86,
+  "filtre": 38.33,
+  "relance": 41.73,
+  "cerveau": 44.82,
+  "scanner": 44.82,
+  "insula": 48.98,
+  "degout": 52.82,
+  "pourri": 54.24,
+  "chimp": 57.52,
+  "tout": 59.11,
+  "rationnel": 60.55,
+  "pas": 62.92,
+  "fin": 64.16,
+  "toi": 64.16,
+  "loop": 66.95
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 16.78,
+   "scene": null,
+   "beats": [
+    "h",
+    "cent",
+    "regle",
+    "choix",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 16.78,
+   "t1": 21.77,
+   "scene": null,
+   "beats": [
+    "refuse",
+    "jete",
+    "juste"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 21.77,
+   "t1": 35.86,
+   "scene": null,
+   "beats": [
+    "an",
+    "theorie",
+    "vrai"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 35.86,
+   "t1": 41.73,
+   "scene": null,
+   "beats": [
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 41.73,
+   "t1": 44.82,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "cerveau",
+   "t0": 44.82,
+   "t1": 64.16,
+   "scene": null,
+   "beats": [
+    "scanner",
+    "insula",
+    "degout",
+    "pourri",
+    "chimp",
+    "tout",
+    "rationnel",
+    "pas"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 64.16,
+   "t1": 70.13,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "La proposition indécente",
+ "hook": "une proposition indécente|un seul essai",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Ceux qui ont accepté : les chimpanzés vous saluent."
+ }
+}

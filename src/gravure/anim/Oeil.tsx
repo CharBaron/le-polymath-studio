@@ -12,13 +12,13 @@ import {G, GF} from '../Gravure';
 import {nums, Order, pop, RED, src} from './tests';
 
 const CROSS = {x: 150, y: 800}, DOT = {x: 930, y: 800, r: 38};
-const INK = '#1C0A0A';
+const INK = '#F4E9DE'; // croix et consignes claires sur le fond noir du style
 
-export const TacheTest: React.FC<AnimProps> = ({t: tNow, lt, p}) => {
+export const TacheTest: React.FC<AnimProps> = ({id, t: tNow, lt, p}) => {
   const at = nums(p, 'at'); // [fixe, approche]
-  const reveal = !!p.reveal;
+  const reveal = !!p.reveal, patch = !!p.patch;
   const t = p.freezeAt !== undefined ? Number(p.freezeAt) : tNow;
-  const live = p.freezeAt === undefined && !reveal;
+  const live = p.freezeAt === undefined && !reveal && !patch;
   const step = live ? at.filter((a) => t >= a - 0.05).length : 0;
   const ORDERS = ["FERME L'ŒIL GAUCHE", "FIXE LA CROIX|AVEC L'ŒIL DROIT", 'APPROCHE-TOI|DOUCEMENT…'];
   const ok = live ? prog(t, step ? at[step - 1] - 0.05 : 3.0, (step ? at[step - 1] : 3.0) + 0.2, easeOut) : 0;
@@ -44,6 +44,21 @@ export const TacheTest: React.FC<AnimProps> = ({t: tNow, lt, p}) => {
       </svg>
       {reveal ? <div style={{position: 'absolute', left: DOT.x - 60, top: DOT.y - 66, width: 120, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 100, color: RED, opacity: gone}}>?</div> : null}
       {reveal ? <Order text="DISPARU." k={prog(lt, 0.5, 0.75, easeOut)} y={980} color={RED} size={80} /> : null}
+      {/* patch : le trou (noir) puis le cerveau le comble avec du « papier » inventé */}
+      {patch ? (() => {
+        const hole = prog(lt, 0.1, 0.35, easeOut), fill = prog(lt, 0.9, 1.4, easeOut), r = DOT.r * 2.4;
+        return (
+          <>
+            <div style={{position: 'absolute', left: DOT.x - r, top: DOT.y - r, width: 2 * r, height: 2 * r, borderRadius: '50%', overflow: 'hidden', transform: `scale(${hole})`, background: '#050202', boxShadow: '0 0 40px rgba(0,0,0,0.6)'}}>
+              <Img src={src(id, 'marble')} style={{position: 'absolute', left: -(DOT.x - r), top: -(DOT.y - r), width: 1080, height: 1920, clipPath: `circle(${fill * 100}% at 50% 50%)`, filter: 'brightness(1.6) contrast(1.1)'}} />
+            </div>
+            <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
+              <circle cx={DOT.x} cy={DOT.y} r={r + 6} fill="none" stroke={RED} strokeWidth={5} strokeDasharray="12 10" opacity={hole} />
+            </svg>
+            <Order text="INVENTÉ PAR|TON CERVEAU" k={prog(lt, 1.2, 1.5, easeOut)} y={980} color={RED} size={60} />
+          </>
+        );
+      })() : null}
     </>
   );
 };
@@ -71,7 +86,7 @@ export const Nerf: React.FC<AnimProps> = ({id, lt, p}) => {
   );
 };
 
-export const Saccades: React.FC<AnimProps> = ({id, lt, t, p}) => {
+export const Saccades: React.FC<AnimProps> = ({id, lt, p}) => {
   const count = Number(p.count ?? 1.2), hour = Number(p.hour ?? 2.4);
   // sauts : toutes les 0,28 s, regard à gauche / à droite ; noir pendant 2 images après chaque saut
   const k = Math.floor(lt / 0.28), f = lt - k * 0.28;
@@ -93,7 +108,6 @@ export const Saccades: React.FC<AnimProps> = ({id, lt, t, p}) => {
         </div>
       ) : null}
       {hk > 0 ? <div style={{position: 'absolute', left: 0, right: 0, top: 1110, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 56, letterSpacing: '0.08em', color: RED, transform: `scale(${hk})`, textShadow: '0 4px 14px rgba(0,0,0,0.9)'}}>≈ 1 H D'AVEUGLEMENT</div> : null}
-      {void t}
     </>
   );
 };

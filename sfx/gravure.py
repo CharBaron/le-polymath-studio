@@ -131,6 +131,30 @@ def anim_sfx(mix, s, N):
         n, ev = int(num('n', 6)), num('every', 0.32)
         for k in range(n):
             if t0 + k * ev < t1: mix.put(t0 + k * ev, thud(0.14), 0.07 + 0.01 * k, pan=-0.2 + 0.4 * (k % 2)); mix.put(t0 + k * ev, click(1200 + 150 * k, 0.02), 0.05)
+    elif name == 'TacheTest':
+        if a.get('freezeAt') is not None: return
+        if a.get('reveal'): mix.put(t0 + 0.25, whoosh(0.5, 2600, 300, peak=0.3), 0.07); mix.put(t0 + 0.55, boom(1.0, 60), 0.1); return
+        if a.get('patch'):
+            mix.put(t0 + 0.1, boom(0.8, 50), 0.1); mix.put(t0 + 0.9, riser(0.5, 400, 2400), 0.05); mix.put(t0 + 1.4, chime([N['D5'], N['A5']], 1.0, 0.4), 0.05); return
+        for tt in a.get('at', []): mix.put(tt - 0.03, blip(N['A5'], 0.25, 0.08), 0.05)
+    elif name == 'Nerf':
+        h = t0 + num('hit', 0.6); mix.put(t0 + 0.15, riser(max(0.2, h - t0 - 0.15), 600, 3000), 0.05); mix.put(h, thud(0.25), 0.12); mix.put(h + 0.05, blip(N['D5'] * 2, 0.4, 0.12), 0.05)
+    elif name == 'Saccades':
+        k = 1
+        while t0 + k * 0.28 < t1: mix.put(t0 + k * 0.28, click(700 + (k * 97) % 300, 0.02), 0.06, pan=-0.4 + 0.8 * (k % 2)); k += 1
+        c = t0 + num('count', 1.2)
+        for j in range(14): mix.put(c + j * 0.065, click(2200 + j * 90, 0.015), 0.04)
+        mix.put(t0 + num('hour', 2.4), impact(1.0), 0.12)
+    elif name == 'Toise':
+        if a.get('freezeAt') is not None: return
+        if a.get('reveal'):
+            l = num('lift'); mix.put(l, whoosh(0.5, 300, 2400, peak=0.4), 0.08); mix.put(num('wrong'), scratch(0.3), 0.1); mix.put(num('right'), chime([N['D5'], N['F5'], N['A5']], 1.2, 0.5), 0.06); mix.put(num('right'), thud(0.2), 0.1); return
+        for k, tt in enumerate(a.get('at', [])): mix.put(tt - 0.03, scratch(0.2), 0.07); mix.put(tt - 0.03, blip(N['A5'] if k < 2 else N['D5'] * 2, 0.2, 0.06), 0.05)
+        st = num('stop'); mix.put(st - 0.1, whoosh(0.4, 600, 3400, peak=0.4), 0.09); mix.put(st, impact(1.2), 0.16)
+    elif name == 'Pouces':
+        mix.put(t0 + 0.1, scratch(0.3), 0.07); mix.put(t0 + 0.35, scratch(0.3), 0.07)
+        sh = num('shrink', 99)
+        if sh < t1 - t0: mix.put(t0 + sh, whoosh(0.6, 2400, 300, peak=0.3), 0.08); mix.put(t0 + sh + 0.45, impact(1.0), 0.12)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 

@@ -24,7 +24,8 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     {t0: B.savais - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'paires', w: 880, zoom: 0.16, focus: [0.6, 0.6]}},
     // --- l'expérience de 1981 ---
     {t0: B.an - 0.04, bg: 'white', tr: 'invert', num: {text: '1981', color: 'ink', label: 'ERICKSON & MATTSON', strobe: true}},
-    {t0: W('posent', B.an), bg: 'marble', tr: 'swipe', pic: {name: 'brueghel', w: 880, zoom: 0.18, focus: [0.55, 0.6]}},
+    {t0: W('psychologues', B.an), bg: 'marble', tr: 'swipe', pic: {name: 'brueghel', w: 880, zoom: 0.18, focus: [0.55, 0.6]}},
+    {t0: W('posent', B.an), bg: 'velvet', tr: 'whip', pic: {name: 'paires', w: 880, zoom: 0.22, focus: [0.3, 0.5]}},
     {t0: B.previens - 0.04, bg: 'velvet', tr: 'slam', pic: {name: 'colombe', w: 840, zoom: 0.1}, stamp: {text: 'PIÉGÉES', at: W('piégées', B.previens) + 0.04, size: 120, y: 1150, rot: -6}},
     {t0: B.dedans - 0.04, bg: 'marble', tr: 'whip', pic: {name: 'deluge', w: 760, zoom: 0.16, focus: [0.4, 0.45]}, slam: {text: 'QUAND MÊME', at: W('même', B.dedans) - B.dedans + 0.04, color: 'red', y: 430}},
     // --- le nom ---
