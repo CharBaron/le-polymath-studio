@@ -6,7 +6,7 @@ tempo: 1.0
 pauses: 0.45
 tail: 0.8
 fx: 0.42
-hook: napoléon mesurait combien|un seul essai
+hook: combien mesurait|napoléon ?
 motcle: Napoléon
 hashtags: #histoire #napoleon #test #propagande #lepolymath
 description: Napoléon mesurait combien ? Un seul essai. Comment une erreur de conversion et un caricaturiste anglais l'ont rapetissé pour 200 ans.

@@ -37,7 +37,7 @@ export const fit = (s: string, w: number, max: number, k = 0.4) => Math.min(max,
 
 // ---------------- sous-titres karaoké ----------------
 type Chunk = {words: {text: string; t0: number; t1: number}[]; t0: number; t1: number};
-const PUNCT = /[.,!?…:;]$/;
+const PUNCT = /[.,!?…:;»]$/; // » : la réplique d’un perso ne partage jamais sa ligne avec le narrateur
 /** groupes de 1 à 3 mots (≤ 17 signes), coupés à la ponctuation et aux silences */
 export const chunksOf = (words: Word[]): Chunk[] => {
   const out: Chunk[] = [];
@@ -48,7 +48,7 @@ export const chunksOf = (words: Word[]): Chunk[] => {
     const prev = words[i - 1];
     const gap = prev ? t0 - prev.endMs / 1000 : 0;
     const len = cur ? cur.words.map((x) => x.text).join(' ').length + 1 + text.length : 0;
-    if (!cur || cur.words.length >= 3 || len > 17 || gap > 0.32 || PUNCT.test(cur.words[cur.words.length - 1].text)) {
+    if (!cur || cur.words.length >= 3 || len > 17 || gap > 0.32 || PUNCT.test(cur.words[cur.words.length - 1].text) || text.startsWith('«')) {
       cur = {words: [], t0, t1};
       out.push(cur);
     }
