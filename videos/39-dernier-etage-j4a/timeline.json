@@ -1,0 +1,164 @@
+{
+ "fps": 30,
+ "duration": 62.039,
+ "frames": 1861,
+ "beats": {
+  "hook": 0.3,
+  "h": 0.3,
+  "h1": 2.97,
+  "defi": 4.36,
+  "dil": 4.36,
+  "dil2": 6.411,
+  "test": 7.85,
+  "un": 9.5,
+  "deux": 10.47,
+  "trois": 11.42,
+  "quatre": 12.151,
+  "rep": 13.74,
+  "compte": 14.9,
+  "homme": 16.11,
+  "marche": 17.05,
+  "corde": 17.05,
+  "descend": 18.915,
+  "monte": 20.657,
+  "balle": 22.184,
+  "ferrand": 23.17,
+  "eau": 25.39,
+  "glou": 25.39,
+  "baisse": 27.89,
+  "dessous": 29.81,
+  "vide": 31.563,
+  "r9": 34.76,
+  "vanne": 33.45,
+  "r9t": 36.004,
+  "perdu": 37.06,
+  "nuit": 38.83,
+  "radio": 41.23,
+  "lucas": 42.07,
+  "ami": 45.391,
+  "prix": 46.51,
+  "colle": 49.46,
+  "nom": 51.15,
+  "choix": 54.03,
+  "q": 55.274,
+  "a": 56.42,
+  "b": 58.01,
+  "fin": 59.56,
+  "flip": 60.896
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.3,
+   "t1": 4.36,
+   "scene": null,
+   "beats": [
+    "h",
+    "h1"
+   ]
+  },
+  {
+   "id": "defi",
+   "t0": 4.36,
+   "t1": 7.85,
+   "scene": null,
+   "beats": [
+    "dil",
+    "dil2"
+   ]
+  },
+  {
+   "id": "test",
+   "t0": 7.85,
+   "t1": 17.05,
+   "scene": null,
+   "beats": [
+    "un",
+    "deux",
+    "trois",
+    "quatre",
+    "rep",
+    "compte",
+    "homme"
+   ]
+  },
+  {
+   "id": "marche",
+   "t0": 17.05,
+   "t1": 25.39,
+   "scene": null,
+   "beats": [
+    "corde",
+    "descend",
+    "monte",
+    "balle",
+    "ferrand"
+   ]
+  },
+  {
+   "id": "eau",
+   "t0": 25.39,
+   "t1": 34.76,
+   "scene": null,
+   "beats": [
+    "glou",
+    "baisse",
+    "dessous",
+    "vide"
+   ]
+  },
+  {
+   "id": "r9",
+   "t0": 34.76,
+   "t1": 38.83,
+   "scene": null,
+   "beats": [
+    "vanne",
+    "r9t",
+    "perdu"
+   ]
+  },
+  {
+   "id": "nuit",
+   "t0": 38.83,
+   "t1": 54.03,
+   "scene": null,
+   "beats": [
+    "radio",
+    "lucas",
+    "ami",
+    "prix",
+    "colle",
+    "nom"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 54.03,
+   "t1": 59.56,
+   "scene": null,
+   "beats": [
+    "q",
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 59.56,
+   "t1": 62.039,
+   "scene": null,
+   "beats": [
+    "flip"
+   ]
+  }
+ ],
+ "title": "Dernier étage — Jour 4 (A, je lui réponds)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ?"
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "fps": 30,
+ "duration": 60.943,
+ "frames": 1828,
+ "beats": {
+  "hook": 0.23,
+  "h": 0.23,
+  "h1": 2.94,
+  "defi": 4.46,
+  "dil": 4.46,
+  "dil2": 6.258,
+  "silence": 8.32,
+  "jour": 8.32,
+  "ferr": 10.54,
+  "rien": 12.499,
+  "mort": 14.99,
+  "eau": 16.99,
+  "glou": 16.99,
+  "baisse": 19.61,
+  "dessous": 21.515,
+  "vide": 23.42,
+  "r9": 27.97,
+  "vanne": 26.59,
+  "r9t": 29.029,
+  "perdu": 30.49,
+  "nuit": 32.35,
+  "biche": 34.68,
+  "craque": 36.35,
+  "radio": 37.33,
+  "lucas": 40.3,
+  "ami": 43.894,
+  "fente": 45.836,
+  "nom": 47.665,
+  "choix": 50.21,
+  "trompe": 51.198,
+  "q": 52.177,
+  "a": 54.22,
+  "b": 56.37,
+  "fin": 58.43,
+  "flip": 59.771
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.23,
+   "t1": 4.46,
+   "scene": null,
+   "beats": [
+    "h",
+    "h1"
+   ]
+  },
+  {
+   "id": "defi",
+   "t0": 4.46,
+   "t1": 8.32,
+   "scene": null,
+   "beats": [
+    "dil",
+    "dil2"
+   ]
+  },
+  {
+   "id": "silence",
+   "t0": 8.32,
+   "t1": 16.99,
+   "scene": null,
+   "beats": [
+    "jour",
+    "ferr",
+    "rien",
+    "mort"
+   ]
+  },
+  {
+   "id": "eau",
+   "t0": 16.99,
+   "t1": 27.97,
+   "scene": null,
+   "beats": [
+    "glou",
+    "baisse",
+    "dessous",
+    "vide"
+   ]
+  },
+  {
+   "id": "r9",
+   "t0": 27.97,
+   "t1": 32.35,
+   "scene": null,
+   "beats": [
+    "vanne",
+    "r9t",
+    "perdu"
+   ]
+  },
+  {
+   "id": "nuit",
+   "t0": 32.35,
+   "t1": 50.21,
+   "scene": null,
+   "beats": [
+    "biche",
+    "craque",
+    "radio",
+    "lucas",
+    "ami",
+    "fente",
+    "nom"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 50.21,
+   "t1": 58.43,
+   "scene": null,
+   "beats": [
+    "trompe",
+    "q",
+    "a",
+    "b"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 58.43,
+   "t1": 60.943,
+   "scene": null,
+   "beats": [
+    "flip"
+   ]
+  }
+ ],
+ "title": "Dernier étage — Jour 4 (B, je me tais)",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ?"
+ }
+}
