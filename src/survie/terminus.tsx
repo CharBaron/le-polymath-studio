@@ -95,7 +95,7 @@ export const Station: React.FC<{v: View; o: StationOpts}> = ({v, o}) => {
   PROFILE.forEach((q, j) => { if (q[2] === 1 || q[2] === 2) joints.push(lineZ(q[0], q[1], 1, 'rgba(0,0,0,0.3)', 1, 2 + j)); });
   // plaques émaillées « TERMINUS » et sièges orange sur le mur de droite
   const plates = [6, 18, 30].map((z) => {
-    const a = pj(v, ST.wall - 0.01, -0.45, z - 1.2), b = pj(v, ST.wall - 0.01, -0.45, z + 1.2), c = pj(v, ST.wall - 0.01, 0.1, z - 1.2);
+    const a = pj(v, ST.wall - 0.01, -0.45, z + 1.2), b = pj(v, ST.wall - 0.01, -0.45, z - 1.2), c = pj(v, ST.wall - 0.01, 0.1, z + 1.2);
     if (z - 1.2 < v.cz + 0.5) return null;
     const lk = clamp01(litAt(z, o) * fog(z) * 1.1);
     // carte affine du rectangle 240×55 vers le quadrilatère (approximation suffisante sur 2,4 m)
@@ -206,7 +206,7 @@ export const Station: React.FC<{v: View; o: StationOpts}> = ({v, o}) => {
 // ---------------- 1 · le quai (accroche) : quai désert, néon qui grésille, la silhouette au bout ----------------
 export const Quai: React.FC<SceneP & {tilt: number; out: number}> = ({T, tilt, out}) => {
   const k = prog(T, 0, out, (q) => q);
-  const v: View = {cx: lerp(0.95, 0.8, k), cy: 0.04 * Math.sin(T * 1.3), cz: lerp(0, 6, easeOut(k)), F: lerp(760, 900, k), VX: 540, VY: 820};
+  const v: View = {cx: lerp(0.95, 0.8, k), cy: 0.04 * Math.sin(T * 1.3), cz: lerp(2, 7.2, easeOut(k)), F: lerp(800, 900, k), VX: 540, VY: 820};
   const neon = (i: number) => (i === 0 ? 0.32 * flicker(T, 3, 0.12) : i === 2 ? flicker(T, 11, 0.3) : 0);
   return (
     <svg width={1080} height={1920}>
@@ -684,7 +684,7 @@ export const Interphone: React.FC<SceneP & {t0: number; talk: [number, number]; 
   const jx = sh * (rand(frame * 1.9) - 0.5) * 10, jy = sh * (rand(frame * 2.7) - 0.5) * 8;
   const z = lerp(1.0, 1.18, prog(T, t0, talk[1] + 0.5, (q) => q));
   const holes: React.ReactNode[] = [];
-  for (let y = -190; y <= 190; y += 34) for (let x = -190; x <= 190; x += 34) if (x * x + y * y < 190 * 190) holes.push(<circle key={`${x},${y}`} cx={540 + x} cy={800 + y} r={10} fill="#0B0C0D" />);
+  for (let y = -190; y <= 190; y += 34) for (let x = -190; x <= 190; x += 34) if (x * x + y * y < 190 * 190) holes.push(<circle key={`${x},${y}`} cx={540 + x} cy={725 + y} r={10} fill="#0B0C0D" />);
   return (
     <svg width={1080} height={1920}>
       <Blurs />
@@ -694,24 +694,24 @@ export const Interphone: React.FC<SceneP & {t0: number; talk: [number, number]; 
       </defs>
       <g transform={`translate(${540 + jx},${960 + jy}) scale(${z}) translate(-540,-960)`}>
         <rect width={1080} height={1920} fill="url(#ipWall)" />
-        <rect x={190} y={380} width={700} height={1060} rx={36} fill="#22272B" />
-        <rect x={200} y={390} width={680} height={1040} rx={30} fill="url(#ipSteel)" />
-        {Array.from({length: 30}, (_, i) => <rect key={i} x={200} y={392 + i * 34.5} width={680} height={2} fill="#FFFFFF" opacity={0.06} />)}
-        {[[240, 430], [840, 430], [240, 1390], [840, 1390]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r={14} fill="#4A5056" stroke="#2A2E32" strokeWidth={4} />)}
-        <rect x={300} y={450} width={480} height={70} rx={10} fill="#1A1E22" />
-        <text x={540} y={500} textAnchor="middle" fontFamily={SF.cap} fontWeight={900} fontSize={40} letterSpacing="8" fill="#E9E6DD">INTERPHONE</text>
-        <circle cx={540} cy={800} r={215} fill="#3A4046" stroke="#22272B" strokeWidth={10} />
+        <rect x={190} y={380} width={700} height={1180} rx={36} fill="#22272B" />
+        <rect x={200} y={390} width={680} height={1160} rx={30} fill="url(#ipSteel)" />
+        {Array.from({length: 33}, (_, i) => <rect key={i} x={200} y={392 + i * 34.5} width={680} height={2} fill="#FFFFFF" opacity={0.06} />)}
+        {[[240, 430], [840, 430], [240, 1510], [840, 1510]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r={14} fill="#4A5056" stroke="#2A2E32" strokeWidth={4} />)}
+        <rect x={350} y={418} width={380} height={56} rx={10} fill="#1A1E22" />
+        <text x={540} y={458} textAnchor="middle" fontFamily={SF.cap} fontWeight={900} fontSize={32} letterSpacing="7" fill="#E9E6DD">INTERPHONE</text>
+        <circle cx={540} cy={725} r={215} fill="#3A4046" stroke="#22272B" strokeWidth={10} />
         {holes}
         {on ? [0, 1, 2].map((i) => {
           const ph = (T * 2.2 + i / 3) % 1;
-          return <circle key={i} cx={540} cy={800} r={230 + ph * 260} fill="none" stroke="#FF6A50" strokeWidth={8} opacity={(1 - ph) * 0.65 * (0.6 + 0.4 * sh)} />;
+          return <circle key={i} cx={540} cy={725} r={230 + ph * 260} fill="none" stroke="#FF6A50" strokeWidth={8} opacity={(1 - ph) * 0.65 * (0.6 + 0.4 * sh)} />;
         }) : null}
-        <circle cx={540} cy={1080} r={22} fill={led > 0.5 ? '#FF3A2A' : '#4A1612'} />
-        {led > 0.5 ? <circle cx={540} cy={1080} r={70} fill="#FF3A2A" opacity={0.6} filter="url(#b14)" /> : null}
-        <circle cx={540} cy={1240} r={100} fill="#2A0E0C" />
-        <circle cx={540} cy={1240} r={84} fill="#C8261C" stroke="#7A120C" strokeWidth={8} />
-        <text x={540} y={1256} textAnchor="middle" fontFamily={SF.cap} fontWeight={900} fontSize={40} fill="#FFF0EC">APPEL</text>
-        <text x={540} y={1380} textAnchor="middle" fontFamily={SF.mono} fontWeight={700} fontSize={26} letterSpacing="6" fill="#2A2E32">CONDUCTEUR · VOITURE 5</text>
+        <circle cx={540} cy={975} r={22} fill={led > 0.5 ? '#FF3A2A' : '#4A1612'} />
+        {led > 0.5 ? <circle cx={540} cy={975} r={70} fill="#FF3A2A" opacity={0.6} filter="url(#b14)" /> : null}
+        <circle cx={540} cy={1395} r={70} fill="#2A0E0C" />
+        <circle cx={540} cy={1395} r={58} fill="#C8261C" stroke="#7A120C" strokeWidth={6} />
+        <text x={540} y={1406} textAnchor="middle" fontFamily={SF.cap} fontWeight={900} fontSize={28} fill="#FFF0EC">APPEL</text>
+        <text x={540} y={1050} textAnchor="middle" fontFamily={SF.mono} fontWeight={700} fontSize={26} letterSpacing="6" fill="#2A2E32">CONDUCTEUR · VOITURE 5</text>
       </g>
       <rect width={1080} height={1920} fill="url(#ipVig)" />
       <defs><radialGradient id="ipVig" cx="0.5" cy="0.45" r="0.7"><stop offset="0.5" stopColor="#000" stopOpacity={0} /><stop offset="1" stopColor="#000" stopOpacity={0.7} /></radialGradient></defs>
@@ -779,7 +779,7 @@ export const TInventory: React.FC<{t0: number; t1: number; batt: [number, number
         return (
           <div key={k} style={{display: 'flex', alignItems: 'center', gap: 12, transform: `scale(${(h ? 1.08 : 1) * pop})`, transformOrigin: '100% 50%', opacity: prog(t, from, from + 0.25, easeOut)}}>
             <div style={{fontFamily: SF.mono, fontWeight: 700, fontSize: 22, letterSpacing: '0.2em', color: 'rgba(235,235,235,0.7)'}}>{lab}</div>
-            <div style={{fontFamily: SF.mono, fontWeight: 700, fontSize: 40, color: red ? SV.neon : h ? SV.lime : SV.white, minWidth: 160, textAlign: 'right', textShadow: red ? '0 0 16px rgba(255,78,66,0.85)' : h ? '0 0 14px rgba(210,248,74,0.7)' : undefined}}>{val}</div>
+            <div style={{fontFamily: SF.mono, fontWeight: 700, fontSize: 40, color: red ? SV.neon : h ? SV.lime : SV.white, minWidth: 116, textAlign: 'right', textShadow: red ? '0 0 16px rgba(255,78,66,0.85)' : h ? '0 0 14px rgba(210,248,74,0.7)' : undefined}}>{val}</div>
             {ic}
           </div>
         );

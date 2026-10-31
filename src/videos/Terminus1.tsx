@@ -42,7 +42,7 @@ export const Terminus1 = makeEpisode((B) => {
       {t0: B.r2 - 0.05, tr: 'black', render: (p) => <Reflet {...p} t0={B.r2} jumps={[[B.vitre, 14], [B.approche, 7.5], [B.approche + 0.85, 2.7]]} />},
       {
         t0: B.r3 - 0.05, tr: 'black', render: (p) => (
-          <Voiture {...p} cam={camK(p.T, [[B.r3, {x: 840, y: 1000, z: 0.84}], [B.clac, {x: 820, y: 990, z: 0.9}]])} s={{L: 1, out: 0.85, phone: 0, four: 0, lean: 0, doors: 1, count: [{at: B.un, who: 0}, {at: B.deux, who: 1}, {at: B.trois2, who: 2}]}} />
+          <Voiture {...p} cam={camK(p.T, [[B.r3, {x: 840, y: 1000, z: 0.84}], [B.clac, {x: 820, y: 990, z: 0.9}]])} s={{L: 1, out: 0.85, phone: 0, four: 0, lean: 0, doors: 1, count: [{at: B.un, who: 0}, {at: B.deux, who: 1}, {at: B.trois2 - 0.12, who: 2}]}} />
         ),
       },
       {
@@ -58,7 +58,7 @@ export const Terminus1 = makeEpisode((B) => {
       {t0: B.ferme - 0.05, tr: 'cut', render: (p) => <Portes {...p} open={[-10, -9]} close={[B.ferme, endT]} hand={B.choix - 0.2} dark={0.35 * prog(p.T, B.qui - 0.3, B.qui + 0.4)} />},
       {t0: endT, tr: 'black', render: (p) => <TFinFond {...p} />},
     ],
-    hud: {day: 'JOUR 1', floor: 'DERNIER MÉTRO · VOITURE 5', t0: B.h1 - 0.05, t1: endT - 0.25, clock: CLOCK},
+    hud: {day: 'JOUR 1', floor: 'DERNIER MÉTRO', t0: B.h1 - 0.05, t1: endT - 0.25, clock: CLOCK},
     series: {name: 'TERMINUS', day: 'JOUR 1', y: 290, t0: B.dil + 0.1, t1: B.toi - 0.35},
     pin: {text: 'TOI · VOITURE 5', x: 540 + (1548 - RAME_CAM.x) * 0.9, y: 960 + (820 - RAME_CAM.y) * 0.9, t0: B.voix - 0.3, t1: B.toi - 0.3},
     rules: [
