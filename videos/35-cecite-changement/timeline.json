@@ -1,0 +1,92 @@
+{
+ "fps": 30,
+ "duration": 34.316,
+ "frames": 1029,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "c5": 3.89,
+  "c4": 4.94,
+  "c3": 5.78,
+  "c2": 6.54,
+  "c1": 7.46,
+  "stop": 8.15,
+  "reveal": 9.02,
+  "tour": 9.02,
+  "fleche": 10.01,
+  "gris": 12.87,
+  "nom": 15.34,
+  "porte": 22.35,
+  "an": 18.09,
+  "autre": 24.25,
+  "moitie": 26.43,
+  "fin": 28.63,
+  "envoie": 28.63,
+  "loop": 30.98
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 9.02,
+   "scene": null,
+   "beats": [
+    "h",
+    "c5",
+    "c4",
+    "c3",
+    "c2",
+    "c1",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 9.02,
+   "t1": 15.34,
+   "scene": null,
+   "beats": [
+    "tour",
+    "fleche",
+    "gris"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 15.34,
+   "t1": 22.35,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "porte",
+   "t0": 22.35,
+   "t1": 28.63,
+   "scene": null,
+   "beats": [
+    "an",
+    "autre",
+    "moitie"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 28.63,
+   "t1": 34.316,
+   "scene": null,
+   "beats": [
+    "envoie",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Trouve ce qui change",
+ "hook": "trouve ce qui|change",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Tout le monde va dire qu'il l'a trouvée avant le « trois ». En labo, certains ont mis cinquante secondes."
+ }
+}

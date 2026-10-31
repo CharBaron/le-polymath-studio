@@ -180,6 +180,27 @@ def anim_sfx(mix, s, N):
         else:
             mix.put(t0 + 0.15, riser(0.55, 300, 2000), 0.05); mix.put(t0 + 0.7, thud(0.2), 0.1)
             if a.get('prison'): mix.put(t0 + 0.8, impact(1.0), 0.12)
+    elif name == 'Flicker':
+        mode = a.get('mode', 'test')
+        if a.get('freezeAt') is not None: return
+        if mode == 'reveal':
+            if not a.get('zoom'): mix.put(t0 + 0.05, pop(500, 300, 0.15), 0.09); mix.put(t0 + 0.1, scratch(0.4), 0.09)
+            else: mix.put(t0, whoosh(0.4, 300, 2400, peak=0.5), 0.07)
+            k = 0
+            while t0 + 0.55 + k * 0.4 < t1 - 0.05: mix.put(t0 + 0.55 + k * 0.4, click(900 + 300 * (k % 2), 0.02), 0.04); k += 1
+            return
+        stop, hold = num('stop', 1e9), num('holdFrom', 1e9)
+        f = int(t0 * 30) + 1
+        while f / 30 < min(t1, stop, hold):  # tic de projecteur discret à chaque écran gris (aucun indice sur le changement)
+            if f % 10 == 7 and mode != 'nogray': mix.put(f / 30, click(3200, 0.012), 0.012, pan=-0.2)
+            if f % 20 == 0 and mode == 'nogray': mix.put(f / 30, click(1100, 0.02), 0.04)
+            f += 1
+        cd = a.get('at', [])
+        for k, tt in enumerate(cd): mix.put(tt - 0.03, blip(N['A5'] if k < len(cd) - 1 else N['D5'] * 2, 0.22, 0.06), 0.07); mix.put(tt - 0.03, thud(0.15), 0.08)
+        if stop < t1: mix.put(stop - 0.1, whoosh(0.4, 600, 3400, peak=0.4), 0.09); mix.put(stop, impact(1.2), 0.16)
+    elif name == 'Porte':
+        pa, pb = a.get('pass', [t0, t1])
+        mix.put(pa, whoosh(pb - pa, 220, 1400, peak=0.5), 0.1, pan=-0.3); mix.put((pa + pb) / 2, thud(0.25), 0.1)
     elif name == 'Colomb':
         mix.put(t0 + 0.2, chime([N['D5'], N['A5']], 1.2, 0.5), 0.05); mix.put(t0 + 1.0, boom(1.4, 46), 0.13)
 

@@ -1,7 +1,7 @@
 """Pose un morceau sous la voix d'une vidéo finie, sans re-rendre l'image (flux vidéo copié tel quel).
-python3 -I scripts/musique.py <morceau.mp3> <drop> videos/<id> [videos/<id2> …]
+python3 -I scripts/musique.py <morceau.mp3> <drop> videos/<id>[@<balise|secondes>] [videos/<id2> …]
 → videos/<id>/final_musique.mp4. Le morceau est calé pour que <drop> (en s dans le morceau) tombe sur la relance
-de la vidéo (beats.relance de timeline.json). Il est creusé là où la voix vit (2,8 et 5,5 kHz), baissé quand la voix
+de la vidéo (beats.relance de timeline.json, ou la balise donnée après @). Il est creusé là où la voix vit (2,8 et 5,5 kHz), baissé quand la voix
 parle (compression déclenchée par la piste voix + bruitages), puis le tout est masterisé à -14 LUFS, crête ≤ -2 dBFS.
 Encodeur AAC d'Apple (aac_at, macOS) : celui de ffmpeg fait déborder les crêtes de 2 à 4 dB sur ce genre de mix."""
 import json, os, re, subprocess, sys
@@ -35,11 +35,15 @@ mi, _ = loud(ff('-i', track, '-af', f'{EQ},ebur128', '-f', 'null', '-'))
 gain = MUSIC_LUFS - mi
 print(f'morceau : {tlen:.1f} s, {mi:.1f} LUFS après égalisation → {gain:+.1f} dB')
 
-for vdir in sys.argv[3:]:
+for arg in sys.argv[3:]:
+    # videos/<id>@<balise|secondes> : moment du drop pour une vidéo sans beats.relance (le moment le plus fort)
+    vdir, _, at = arg.partition('@')
     src = os.path.join(vdir, 'final.mp4')
     dur = probe(src)
-    rel = json.load(open(os.path.join(vdir, 'timeline.json')))['beats']['relance']
+    beats = json.load(open(os.path.join(vdir, 'timeline.json')))['beats']
+    rel = beats[at] if at in beats else float(at) if at else beats['relance']
     off = min(max(drop - rel, 0.0), tlen - dur - 0.05)
+    if abs(drop - off - rel) > 0.05: print(f'⚠ morceau trop court : le drop tombe à {drop - off:.2f} s au lieu de {rel:.2f} s')
     music = (f'[1:a]atrim=start={off:.3f}:duration={dur:.3f},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,'
              f'{EQ},volume={gain:.2f}dB,afade=t=in:d=0.03,afade=t=out:st={dur - FADE:.3f}:d={FADE}[m];'
              f'[0:a]asplit[v][k];[m][k]{DUCK}[md]')
@@ -52,5 +56,5 @@ for vdir in sys.argv[3:]:
     ff(*ins, '-filter_complex', f'{mix};[mix]volume={TARGET - xi:.2f}dB,alimiter=limit=0.79:level=false:attack=5:release=60:latency=1[o]',
        '-map', '0:v', '-map', '[o]', '-c:v', 'copy', '-c:a', 'aac_at', '-b:a', '256k', '-movflags', '+faststart', out)
     fi, fp = loud(ff('-i', out, '-af', 'ebur128=peak=true', '-f', 'null', '-'))
-    print(f'{os.path.basename(vdir)} : morceau à {off:.2f} s (drop sur la relance {rel:.2f} s) · voix {vi:.1f} · musique sous la voix {di:.1f}'
+    print(f'{os.path.basename(vdir)} : morceau à {off:.2f} s (drop à {drop - off:.2f} s) · voix {vi:.1f} · musique sous la voix {di:.1f}'
           f' (écart {vi - di:.1f} LU) · final {fi:.1f} LUFS, crête vraie {fp:.1f} dBTP, {probe(out):.2f} s / {dur:.2f} s')
