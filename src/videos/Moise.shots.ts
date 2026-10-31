@@ -19,27 +19,27 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     // --- la question : un seul plan ---
     {t0: 0, bg: 'marble', still: true, anim: test},
     // --- la correction ---
-    {t0: B.deux - 0.04, bg: 'marble', tr: 'glitch', still: true, anim: {name: 'Correction', words: Q.join('|'), fix: W('noé', B.noe)}},
-    {t0: B.moise - 0.04, bg: 'velvet', tr: 'whip', pic: {name: 'moise', w: 760, zoom: 0.12, focus: [0.4, 0.3]}, stamp: {text: 'PERSONNE', at: W('personne', B.moise) + 0.04, size: 110, y: 1180, rot: -7}},
+    {t0: B.deux - 0.04, bg: 'marble', tr: 'glitch', still: true, anim: {name: 'Correction', words: Q.join('|'), ring: W('arche', B.noe), fix: W('noé', B.noe)}},
+    {t0: W('jamais', B.moise), bg: 'velvet', tr: 'whip', pic: {name: 'moise', w: 760, zoom: 0.12, focus: [0.4, 0.3]}, stamp: {text: 'PERSONNE', at: W('personne', B.moise) + 0.04, size: 110, y: 1180, rot: -7}},
     {t0: B.savais - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'paires', w: 880, zoom: 0.16, focus: [0.6, 0.6]}},
     // --- l'expérience de 1981 ---
     {t0: B.an - 0.04, bg: 'white', tr: 'invert', num: {text: '1981', color: 'ink', label: 'ERICKSON & MATTSON', strobe: true}},
     {t0: W('posent', B.an), bg: 'marble', tr: 'swipe', pic: {name: 'brueghel', w: 880, zoom: 0.18, focus: [0.55, 0.6]}},
-    {t0: B.previens - 0.04, bg: 'velvet', tr: 'slam', pic: {name: 'colombe', w: 840, zoom: 0.1}, title: 'ATTENTION AU PIÈGE'},
-    {t0: B.dedans - 0.04, bg: 'marble', tr: 'whip', pic: {name: 'deluge', w: 760, zoom: 0.16, focus: [0.4, 0.45]}, slam: {text: 'QUAND MÊME', at: W('même', B.dedans) - B.dedans + 0.04, color: 'red', y: 290}},
+    {t0: B.previens - 0.04, bg: 'velvet', tr: 'slam', pic: {name: 'colombe', w: 840, zoom: 0.1}, stamp: {text: 'PIÉGÉES', at: W('piégées', B.previens) + 0.04, size: 120, y: 1150, rot: -6}},
+    {t0: B.dedans - 0.04, bg: 'marble', tr: 'whip', pic: {name: 'deluge', w: 760, zoom: 0.16, focus: [0.4, 0.45]}, slam: {text: 'QUAND MÊME', at: W('même', B.dedans) - B.dedans + 0.04, color: 'red', y: 430}},
     // --- le nom ---
     {t0: B.nom - 0.04, bg: 'marble', tr: 'blur', concept: {word: 'L’ILLUSION|DE MOÏSE', sub: '« Moses illusion » · Erickson & Mattson, 1981'}},
     {t0: B.filtre - 0.04, bg: 'marble', tr: 'zoom', pic: {name: 'renard_zoom', w: 640, zoom: 0.12, focus: [0.5, 0.35]}},
-    {t0: W('vérifie', B.filtre + 1.2), bg: 'velvet', tr: 'whip', pic: {name: 'renard', w: 760, zoom: 0.1}, slam: {text: 'ÇA SONNE|JUSTE', at: W('sonne', B.filtre + 1.2) - W('vérifie', B.filtre + 1.2) + 0.04, color: 'gold', y: 280}},
+    {t0: W('vérifie', B.filtre + 1.2), bg: 'velvet', tr: 'whip', pic: {name: 'renard', w: 760, zoom: 0.1}, slam: {text: 'ÇA SONNE JUSTE', at: W('sonne', B.filtre + 1.2) - W('vérifie', B.filtre + 1.2) + 0.04, color: 'gold', y: 430, size: 96}},
     // --- relance ---
     {t0: B.relance - 0.04, bg: 'velvet', tr: 'shutter', pic: {name: 'moise_zoom', w: 760, zoom: 0.2, focus: [0.35, 0.3]}},
     // --- Cologne 2021 : payés pour trouver l'erreur ---
     {t0: B.argent - 0.04, bg: 'white', tr: 'invert', num: {text: '2021', color: 'ink', label: 'UNIVERSITÉ DE COLOGNE'}},
-    {t0: W('paient', B.argent), bg: 'marble', tr: 'swipe', pic: {name: 'hicks', w: 880, zoom: 0.14, focus: [0.4, 0.4]}, stamp: {text: 'PAYÉS', at: W('paient', B.argent) + 0.12, size: 120, y: 1150, rot: 6}},
+    {t0: W('paient', B.argent), bg: 'marble', tr: 'swipe', pic: {name: 'hicks', w: 880, zoom: 0.14, focus: [0.4, 0.4]}},
     {t0: B.douze - 0.04, bg: 'velvet', tr: 'slam', num: {text: '+12 €', color: 'gold', label: 'POUR TROUVER L’ERREUR'}},
     {t0: B.seize - 0.04, bg: 'velvet', tr: 'flashRed', num: {text: '−16 %', color: 'gold', label: 'D’ILLUSION, SEULEMENT', strobe: true}},
     // --- l'illusion de vérité ---
-    {t0: B.pire - 0.04, bg: 'marble', tr: 'glitch', still: true, anim: {name: 'Repete', text: 'LA GRANDE MURAILLE SE VOIT DE L’ESPACE.', n: 6, every: 0.42}},
+    {t0: B.pire - 0.04, bg: 'marble', tr: 'glitch', still: true, anim: {name: 'Repete', text: 'LA GRANDE MURAILLE SE VOIT DE L’ESPACE.', n: 5, every: 0.55}},
     {t0: B.meme - 0.04, bg: 'velvet', tr: 'slam', balance: {tilt: [-14, 12], left: 'SAVOIR', right: 'ENTENDRE'}},
     {t0: B.muraille - 0.04, bg: 'marble', tr: 'whip', pic: {name: 'muraille', w: 880, zoom: 0.12, focus: [0.5, 0.35]}, stamp: {text: 'FAUX', at: W('faux', B.muraille) + 0.04, size: 150, y: 1150, rot: -8}},
     {t0: W('pourtant', B.muraille), bg: 'velvet', tr: 'zoom', pic: {name: 'muraille', w: 880, zoom: 0.35, focus: [0.25, 0.75]}},

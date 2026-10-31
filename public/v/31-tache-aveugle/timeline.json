@@ -1,0 +1,133 @@
+{
+ "fps": 30,
+ "duration": 65.208,
+ "frames": 1956,
+ "beats": {
+  "hook": 0.23,
+  "h": 0.23,
+  "fixe": 2.79,
+  "approche": 6.27,
+  "plus": 9.0,
+  "stop": 10.96,
+  "reveal": 11.79,
+  "point": 11.79,
+  "disparu": 12.97,
+  "trou": 14.26,
+  "nerf": 16.37,
+  "chaque": 20.37,
+  "naissance": 22.25,
+  "exp": 23.71,
+  "an": 23.71,
+  "piece": 28.23,
+  "pfft": 30.18,
+  "nom": 31.27,
+  "filtre": 33.43,
+  "relance": 38.75,
+  "saccades": 41.86,
+  "miroir": 41.86,
+  "bouger": 46.07,
+  "coupe": 48.04,
+  "milliers": 50.99,
+  "heure": 53.49,
+  "recolle": 56.33,
+  "fin": 59.72,
+  "toi": 59.72,
+  "loop": 61.93
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.23,
+   "t1": 11.79,
+   "scene": null,
+   "beats": [
+    "h",
+    "fixe",
+    "approche",
+    "plus",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 11.79,
+   "t1": 16.37,
+   "scene": null,
+   "beats": [
+    "point",
+    "disparu",
+    "trou"
+   ]
+  },
+  {
+   "id": "nerf",
+   "t0": 16.37,
+   "t1": 23.71,
+   "scene": null,
+   "beats": [
+    "chaque",
+    "naissance"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 23.71,
+   "t1": 31.27,
+   "scene": null,
+   "beats": [
+    "an",
+    "piece",
+    "pfft"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 31.27,
+   "t1": 38.75,
+   "scene": null,
+   "beats": [
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 38.75,
+   "t1": 41.86,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "saccades",
+   "t0": 41.86,
+   "t1": 59.72,
+   "scene": null,
+   "beats": [
+    "miroir",
+    "bouger",
+    "coupe",
+    "milliers",
+    "heure",
+    "recolle"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 59.72,
+   "t1": 65.208,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le trou dans ton œil",
+ "hook": "ferme l'œil gauche|un seul essai",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Si le point n'a pas disparu, c'est que t'as fermé le mauvais œil. Recommence."
+ }
+}

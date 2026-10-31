@@ -126,7 +126,7 @@ def anim_sfx(mix, s, N):
         st = num('stop'); mix.put(st - 0.1, whoosh(0.4, 600, 3400, peak=0.4), 0.09); mix.put(st, impact(1.2), 0.16)
     elif name == 'Correction':
         mix.put(t0 + 0.05, pop(700, 1200, 0.12), 0.08); mix.put(t0 + 0.35, chime([N['D5'], N['A5']], 0.8, 0.3), 0.04)
-        f = num('fix'); mix.put(f, scratch(0.35), 0.1); mix.put(f + 0.3, scratch(0.2), 0.12); mix.put(f + 0.55, thud(0.2), 0.12)
+        f = num('fix'); r = num('ring', f - 0.8); mix.put(r, scratch(0.4), 0.1); mix.put(f - 0.25, scratch(0.2), 0.12); mix.put(f, thud(0.2), 0.12)
     elif name == 'Repete':
         n, ev = int(num('n', 6)), num('every', 0.32)
         for k in range(n):

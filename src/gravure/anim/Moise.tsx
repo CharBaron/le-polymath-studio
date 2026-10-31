@@ -13,8 +13,8 @@ import {Choice, Countdown, list, nums, Paper, pop, RED, src, Stop} from './tests
 const INK = '#0E1A2C';
 const TRAP = 'MOÏSE';
 
-const Card: React.FC<{id: string; t: number; W: string[]; at: number[]; all?: boolean; fix?: number; s?: number}> = ({id, t, W, at, all, fix = 1e9, s = 1}) => {
-  const ck = prog(t, fix, fix + 0.35, easeOut), sk = prog(t, fix + 0.3, fix + 0.5, easeOut), nk = pop(t, fix + 0.55, 0.22);
+const Card: React.FC<{id: string; t: number; W: string[]; at: number[]; all?: boolean; ring?: number; fix?: number; s?: number}> = ({id, t, W, at, all, ring = 1e9, fix = 1e9, s = 1}) => {
+  const ck = prog(t, ring, ring + 0.4, easeOut), sk = prog(t, fix - 0.25, fix - 0.05, easeOut);
   const shown = all ? W.length : at.filter((a) => t >= a - 0.06).length;
   return (
     <Paper id={id} x={540} y={700} w={920} h={540} rot={-1.2} s={s}>
@@ -33,12 +33,19 @@ const Card: React.FC<{id: string; t: number; W: string[]; at: number[]; all?: bo
                   <path d="M 10 54 L 250 46" fill="none" stroke={RED} strokeWidth={9} strokeLinecap="round" pathLength={1000} strokeDasharray={1000} strokeDashoffset={1000 * (1 - sk)} />
                 </svg>
               ) : null}
-              {trap && nk > 0 ? <span style={{position: 'absolute', left: 30, top: -78, fontFamily: '"Special Elite", "Courier New", monospace', fontWeight: 700, fontSize: 74, color: RED, transform: `rotate(-7deg) scale(${nk})`, transformOrigin: 'left bottom', whiteSpace: 'nowrap'}}>NOÉ</span> : null}
             </span>
           );
         })}
       </div>
     </Paper>
+  );
+};
+
+/** NOÉ écrit en grand à l'encre rouge sous la fiche */
+const Noe: React.FC<{t: number; fix: number}> = ({t, fix}) => {
+  const k = pop(t, fix, 0.22);
+  return k <= 0 ? null : (
+    <div style={{position: 'absolute', left: 0, right: 0, top: 1000, textAlign: 'center', fontFamily: '"Special Elite", "Courier New", monospace', fontWeight: 700, fontSize: 190, color: RED, transform: `rotate(-6deg) scale(${k})`, textShadow: '0 0 30px rgba(255,60,60,0.45), 0 8px 20px rgba(0,0,0,0.9)'}}>NOÉ.</div>
   );
 };
 
@@ -73,7 +80,7 @@ export const QuestionPiege: React.FC<AnimProps> = ({id, t: tNow, p}) => {
 };
 
 export const Correction: React.FC<AnimProps> = ({id, t, t0, p}) => {
-  const W = list(p, 'words'), fix = Number(p.fix);
+  const W = list(p, 'words'), fix = Number(p.fix), ring = Number(p.ring ?? fix - 0.8);
   const bravo = pop(t, t0 + 0.35);
   return (
     <>
@@ -81,9 +88,10 @@ export const Correction: React.FC<AnimProps> = ({id, t, t0, p}) => {
         <Img src={src(id, 'deluge_plein')} style={{width: '100%', height: '100%'}} />
       </div>
       <div style={{position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 40%, rgba(4,8,18,0.15) 25%, rgba(4,8,18,0.88) 90%)'}} />
-      <Card id={id} t={t} W={W} at={[]} all fix={fix} />
-      <Answers t={t} from={t0 - 1} pick={t0 + 0.05} o={1 - prog(t, fix, fix + 0.3) * 0.65} />
-      {t < fix ? <div style={{position: 'absolute', left: 0, right: 0, top: 1150, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 96, color: G.gold, opacity: bravo, transform: `scale(${bravo})`, textShadow: `0 0 26px rgba(${G.goldRgb},0.5)`}}>BRAVO.</div> : null}
+      <Card id={id} t={t} W={W} at={[]} all ring={ring} fix={fix} />
+      <Answers t={t} from={t0 - 1} pick={t0 + 0.05} o={1 - prog(t, ring, ring + 0.3) * 0.65 - prog(t, fix - 0.1, fix + 0.1) * 0.35} />
+      <Noe t={t} fix={fix} />
+      {t < ring ? <div style={{position: 'absolute', left: 0, right: 0, top: 1150, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 96, color: G.gold, opacity: bravo, transform: `scale(${bravo})`, textShadow: `0 0 26px rgba(${G.goldRgb},0.5)`}}>BRAVO.</div> : null}
     </>
   );
 };
@@ -98,9 +106,9 @@ export const Repete: React.FC<AnimProps> = ({id, lt, p}) => {
         const a = prog(lt, i * every, i * every + 0.12, easeOut);
         const age = k - 1 - i;
         return (
-          <Paper key={i} id={id} x={540 + (i % 2 ? 26 : -26)} y={470 + i * 92} w={900} h={150} rot={(i % 3 - 1) * 1.6} s={lerp(1.2, 1, a)} o={a * (age ? Math.max(0.35, 0.9 - age * 0.12) : 1)}>
-            <div style={{position: 'absolute', left: 30, right: 80, top: 34, fontFamily: GF.serif, fontWeight: 700, fontSize: 46, lineHeight: 1.1, color: INK}}>{text}</div>
-            <div style={{position: 'absolute', right: 26, top: 46, fontFamily: GF.label, fontWeight: 700, fontSize: 34, color: `rgba(${G.goldRgb},1)`}}>×{i + 1}</div>
+          <Paper key={i} id={id} x={540 + (i % 2 ? 22 : -22)} y={470 + i * 128} w={880} h={120} rot={(i % 3 - 1) * 1.6} s={lerp(1.2, 1, a)} o={a * (age ? Math.max(0.35, 0.9 - age * 0.12) : 1)}>
+            <div style={{position: 'absolute', left: 30, right: 90, top: 16, fontFamily: GF.serif, fontWeight: 700, fontSize: 40, lineHeight: 1.08, color: INK}}>{text}</div>
+            <div style={{position: 'absolute', right: 24, top: 38, fontFamily: GF.label, fontWeight: 700, fontSize: 34, color: `rgba(${G.goldRgb},1)`}}>×{i + 1}</div>
           </Paper>
         );
       })}

@@ -1,0 +1,120 @@
+{
+ "fps": 30,
+ "duration": 66.955,
+ "frames": 2009,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "choix": 3.07,
+  "stop": 7.81,
+  "reveal": 8.65,
+  "petit": 8.65,
+  "tous": 10.11,
+  "faux": 11.23,
+  "moyenne": 13.77,
+  "mesure": 16.12,
+  "mort": 16.12,
+  "pouce": 21.51,
+  "convertir": 24.8,
+  "rabot": 26.73,
+  "nom": 35.83,
+  "gillray": 29.38,
+  "boney": 34.35,
+  "filtre": 37.4,
+  "relance": 40.91,
+  "complexe": 45.18,
+  "petits": 47.6,
+  "compte": 50.25,
+  "an": 52.68,
+  "grands": 56.29,
+  "fin": 60.21,
+  "toi": 60.21,
+  "loop": 63.75
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 8.65,
+   "scene": null,
+   "beats": [
+    "h",
+    "choix",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 8.65,
+   "t1": 16.12,
+   "scene": null,
+   "beats": [
+    "petit",
+    "tous",
+    "faux",
+    "moyenne"
+   ]
+  },
+  {
+   "id": "mesure",
+   "t0": 16.12,
+   "t1": 35.83,
+   "scene": null,
+   "beats": [
+    "mort",
+    "pouce",
+    "convertir",
+    "rabot"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 35.83,
+   "t1": 40.91,
+   "scene": null,
+   "beats": [
+    "gillray",
+    "boney",
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 40.91,
+   "t1": 45.18,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "complexe",
+   "t0": 45.18,
+   "t1": 60.21,
+   "scene": null,
+   "beats": [
+    "petits",
+    "compte",
+    "an",
+    "grands"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 60.21,
+   "t1": 66.955,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "La taille de Napoléon",
+ "hook": "napoléon mesurait combien|un seul essai",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "1,69 m. Plus grand que la moitié des mecs qui vont se moquer de lui en commentaires."
+ }
+}
