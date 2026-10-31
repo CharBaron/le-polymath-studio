@@ -22,9 +22,9 @@ export const shotsOf = (B: Record<string, number>, words: Word[]): Shot[] => {
     {t0: W('médecin', B.mort), bg: 'velvet', tr: 'whip', pic: {name: 'mort', w: 880, zoom: 0.35, focus: [0.3, 0.45]}},
     {t0: W('cinq', B.mort + 1), bg: 'velvet', tr: 'slam', pic: {name: 'masque', w: 640, zoom: 0.1}, stamp: {text: '5 PIEDS 2 POUCES', at: W('pouces', B.mort + 1) + 0.04, size: 78, y: 1150, rot: -5}},
     // --- pouce français / pouce anglais ---
-    {t0: B.pouce - 0.04, bg: 'marble', tr: 'swipe', anim: {name: 'Pouces', shrink: 99}},
+    {t0: B.pouce - 0.04, bg: 'marble', tr: 'swipe', still: true, anim: {name: 'Pouces', shrink: 99}},
     {t0: B.convertir - 0.04, bg: 'velvet', tr: 'whip', pic: {name: 'pudding', w: 880, zoom: 0.18, focus: [0.3, 0.4]}},
-    {t0: B.rabot - 0.04, bg: 'marble', tr: 'zoom', anim: {name: 'Pouces', shrink: W('onze', B.rabot) - B.rabot}},
+    {t0: B.rabot - 0.04, bg: 'marble', tr: 'zoom', still: true, anim: {name: 'Pouces', shrink: W('onze', B.rabot) - B.rabot}},
     // --- Gillray ---
     {t0: B.gillray - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'maniac', w: 880, zoom: 0.1}},
     {t0: W('nabot', B.gillray), bg: 'velvet', tr: 'slam', pic: {name: 'maniac_zoom', w: 700, zoom: 0.14, focus: [0.5, 0.35]}, slam: {text: 'NABOT', at: 0.08, color: 'red', y: 430}},
