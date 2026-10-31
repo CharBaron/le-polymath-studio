@@ -58,4 +58,4 @@ def score(mix, tl):
     mix.put(B['maman'] - 0.1, boom(1.6, 44), 0.16)
     mix.put(B['message'], glitch(0.3), 0.08)
     mix.put(B['encore'] + 0.6, boom(1.8, 48), 0.24)
-    common(mix, B, end_t, 63.25)
+    common(mix, B, end_t, B['flip'])

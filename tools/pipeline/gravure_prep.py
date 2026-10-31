@@ -20,6 +20,10 @@ STYLES = {
     'anatomie': {'ink': (44, 24, 14), 'paper': (240, 228, 202), 'card': (243, 234, 212), 'rim': (150, 32, 28)},
     'atlas':    {'ink': (14, 22, 52), 'paper': (236, 224, 192), 'card': (238, 228, 200), 'rim': (226, 177, 74)},
     'reve':     {'ink': (24, 14, 44), 'paper': (234, 226, 242), 'card': (238, 231, 245), 'rim': (185, 138, 240)},
+    'deluge':   {'ink': (10, 18, 32), 'paper': (214, 224, 232), 'card': (226, 233, 238), 'rim': (90, 170, 255)},
+    'optique':  {'ink': (30, 10, 10), 'paper': (242, 234, 226), 'card': (246, 240, 234), 'rim': (214, 40, 40)},
+    'empire':   {'ink': (16, 26, 18), 'paper': (236, 228, 204), 'card': (240, 233, 212), 'rim': (92, 190, 120)},
+    'caverne':  {'ink': (26, 16, 26), 'paper': (232, 222, 210), 'card': (238, 230, 220), 'rim': (196, 120, 230)},
 }
 S = dict(STYLES['or'])
 
@@ -213,6 +217,32 @@ def textures(out, style):
         base[stars] = np.array([214, 200, 240]) * rng.uniform(0.3, 0.8, (stars.sum(), 1))
         light = np.array([232, 224, 238], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
         vel = cloth((58, 20, 86), 21)
+    elif style == 'deluge':    # mer de nuit sous la pluie : bleu noir, pluie oblique, écume ; papier gris bleu ; velours marine
+        rain = ndi.gaussian_filter((rng.random((H, W)) > 0.9965).astype(np.float32), (9, 0.6))
+        rain = ndi.rotate(rain, -12, reshape=False, order=1)
+        swell = np.exp(-((yy - 1500) / 600) ** 2) * fbm(H, W, 29, 4, 120)
+        base = np.array([6, 12, 24], np.float32)[None, None] * (0.75 + 0.5 * n1[..., None]) + swell[..., None] * np.array([10, 26, 44]) + rain[..., None] * np.array([90, 130, 170]) * 1.4
+        light = np.array([220, 228, 234], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
+        vel = cloth((12, 30, 70), 21)
+    elif style == 'optique':   # cabinet d'ophtalmo : noir sang, cercles d'iris concentriques ; papier d'optotype ; velours cramoisi
+        r = np.hypot(xx - 540, yy - 820)
+        rings = (np.abs(np.sin(r / 18)) < 0.04) * np.clip(1 - r / 1100, 0, 1) * 0.5
+        fibres = np.abs(np.sin(np.arctan2(yy - 820, xx - 540) * 90 + n1 * 6)) ** 12 * np.exp(-((r - 300) / 220) ** 2) * 0.35
+        base = np.array([20, 7, 8], np.float32)[None, None] * (0.8 + 0.45 * n1[..., None]) + (rings + fibres)[..., None] * np.array([150, 40, 36])
+        light = np.array([244, 238, 230], np.float32)[None, None] * (0.95 + 0.06 * n2[..., None])
+        vel = cloth((96, 10, 16), 21)
+    elif style == 'empire':    # vert bouteille impérial, abeilles d'or semées (points) ; papier de pamphlet ; velours vert
+        seed_ = ((yy % 160 < 5) & (xx % 160 < 5)) | (((yy + 80) % 160 < 5) & ((xx + 80) % 160 < 5))
+        base = np.array([10, 26, 16], np.float32)[None, None] * (0.75 + 0.5 * n1[..., None])
+        base[ndi.binary_dilation(seed_, iterations=2)] = base[ndi.binary_dilation(seed_, iterations=2)] * 0.5 + np.array([180, 150, 70]) * 0.5 * 0.45
+        light = np.array([238, 229, 204], np.float32)[None, None] * (0.93 + 0.1 * n2[..., None]) - 20 * np.clip((fbm(H, W, 31, 4, 160)[..., None] - 0.7) / 0.3, 0, 1) * np.array([0.6, 0.9, 1.3])
+        vel = cloth((18, 70, 40), 21)
+    elif style == 'caverne':   # roche de caverne éclairée par un feu en bas ; papier crayeux ; velours pourpre
+        rock = fbm(H, W, 37, 6, 90)
+        fire = np.exp(-(((xx - 540) / 700) ** 2 + ((yy - 2000) / 900) ** 2))
+        base = np.array([16, 12, 16], np.float32)[None, None] * (0.6 + 0.8 * rock[..., None]) + fire[..., None] * np.array([120, 58, 24]) * (0.6 + 0.6 * rock[..., None])
+        light = np.array([234, 224, 212], np.float32)[None, None] * (0.93 + 0.1 * n2[..., None])
+        vel = cloth((60, 18, 72), 21)
     else:                      # atlas : nuit étoilée, parchemin, indigo
         base = np.array([9, 15, 38], np.float32)[None, None] * (0.8 + 0.45 * n1[..., None])
         stars = rng.random((H, W)) > 0.9985

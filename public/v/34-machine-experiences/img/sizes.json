@@ -1,0 +1,50 @@
+{
+ "bosch_plein": [
+  1080,
+  1920
+ ],
+ "bosch": [
+  778,
+  834
+ ],
+ "bosch_zoom": [
+  878,
+  351
+ ],
+ "caverne": [
+  898,
+  499
+ ],
+ "caverne_ombres": [
+  696,
+  545
+ ],
+ "caverne_plein": [
+  1080,
+  1920
+ ],
+ "prison": [
+  898,
+  693
+ ],
+ "prison2": [
+  898,
+  701
+ ],
+ "prison_plein": [
+  1080,
+  1920
+ ],
+ "duchenne": [
+  658,
+  877
+ ],
+ "duchenne_zoom": [
+  718,
+  688
+ ],
+ "tel": [
+  658,
+  651
+ ]
+}

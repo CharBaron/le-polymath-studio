@@ -49,7 +49,7 @@ def score(mix, tl):
     l, r = drone(dur, roots, volume=vol)
     mix.put_stereo(0, l, r, 0.10)
     # ta lampe (S O S), puis la réponse de Lina (M U R) : bips calés sur les créneaux de l'image
-    for s, sym in zip([B['s1'] + 0.05, B['s1'] + 1.1, B['s1'] + 2.15], ['...', '---', '...']):
+    for s, sym in zip([B['s1'] + 0.05, B['s2'] + 0.05, B['s3'] + 0.05], ['...', '---', '...']):
         t = s
         for c in sym:
             d = 0.27 if c == '-' else 0.09
@@ -72,9 +72,9 @@ def score(mix, tl):
     # la vitre : il écoute, toc toc toc
     mix.put(B['vitre'], boom(1.4, 40), 0.18)
     mix.put(B['vitre'], heartbeat(76, B['matin'] - B['vitre']), 0.16)
-    for t in (B['toc'], B['toc'] + 0.92, B['toc'] + 1.84):
+    for t in (B['toc'], B['toc2'], B['toc3']):
         mix.put(t, glass_tap(), 0.32)
-    mix.put(31.9, boom(1.8, 48), 0.24)
+    mix.put(B['toc3'] + 0.55, boom(1.8, 48), 0.24)
     mix.put(B['matin'] - 0.05, whoosh(0.6, 300, 2400, peak=0.5), 0.1)
     mix.put(B['matin'], wind(B['r5'] - B['matin'], 380), 0.05)
     rules_and_phone(mix, B)
@@ -85,5 +85,5 @@ def score(mix, tl):
     mix.put(B['dix'], pop(600, 1000, 0.14), 0.12)
     mix.put(B['sous'] - 0.05, whoosh(0.6, 300, 1500, peak=0.5), 0.1)
     mix.put(B['sous'] + 0.4, riser(1.4, 300, 2000), 0.06)
-    knocks_and_end(mix, B, end_t, 108.27)
+    knocks_and_end(mix, B, end_t, B['flip'])
     mix.put(B['face'], whoosh(0.4, 900, 300, peak=0.4), 0.08)

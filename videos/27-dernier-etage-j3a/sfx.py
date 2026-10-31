@@ -66,4 +66,4 @@ def score(mix, tl):
     mix.put(B['claque'], knock(), 0.4)
     mix.put(B['claque'] + 0.3, heartbeat(96, B['matin'] - B['claque']), 0.18)
     mix.put(B['claque'] + 0.3, boom(1.8, 48), 0.18)
-    common(mix, B, end_t, 76.33)
+    common(mix, B, end_t, B['flip'])

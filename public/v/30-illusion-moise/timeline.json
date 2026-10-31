@@ -1,0 +1,118 @@
+{
+ "fps": 30,
+ "duration": 63.567,
+ "frames": 1907,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "q": 2.21,
+  "timer": 6.13,
+  "stop": 8.68,
+  "reveal": 9.56,
+  "deux": 9.56,
+  "noe": 10.908,
+  "moise": 13.04,
+  "savais": 15.45,
+  "exp": 16.98,
+  "an": 16.98,
+  "previens": 23.27,
+  "dedans": 26.72,
+  "nom": 28.23,
+  "filtre": 30.49,
+  "relance": 35.03,
+  "argent": 37.83,
+  "douze": 42.3,
+  "seize": 43.78,
+  "pire": 46.18,
+  "meme": 50.94,
+  "muraille": 52.97,
+  "fin": 57.46,
+  "toi": 57.46,
+  "loop": 60.85
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 9.56,
+   "scene": null,
+   "beats": [
+    "h",
+    "q",
+    "timer",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 9.56,
+   "t1": 16.98,
+   "scene": null,
+   "beats": [
+    "deux",
+    "noe",
+    "moise",
+    "savais"
+   ]
+  },
+  {
+   "id": "exp",
+   "t0": 16.98,
+   "t1": 28.23,
+   "scene": null,
+   "beats": [
+    "an",
+    "previens",
+    "dedans"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 28.23,
+   "t1": 35.03,
+   "scene": null,
+   "beats": [
+    "filtre"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 35.03,
+   "t1": 37.83,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "argent",
+   "t0": 37.83,
+   "t1": 57.46,
+   "scene": null,
+   "beats": [
+    "douze",
+    "seize",
+    "pire",
+    "meme",
+    "muraille"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 57.46,
+   "t1": 63.567,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "La question piège",
+ "hook": "réponds vite|un seul essai",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Toi, évidemment, t'avais tout de suite vu que c'était Noé."
+ }
+}

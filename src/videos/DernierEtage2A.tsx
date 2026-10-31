@@ -12,11 +12,11 @@ const hm = (h: number, m: number) => h * 60 + m;
 
 export const DernierEtage2A = makeEpisode((B) => {
   const endT = B.fin + 0.35;
-  const mine = morseSpans(0, 'SOS', 0.09, [B.s1 + 0.05, B.s1 + 1.1, B.s1 + 2.15]);
+  const mine = morseSpans(0, 'SOS', 0.09, [B.s1 + 0.05, B.s2 + 0.05, B.s3 + 0.05]);
   const hers = morseSpans(0, 'MUR', 0.11, [B.mot + 1.2, B.mot + 2.3, B.mot + 3.4]);
   const knockL = morseSpans(0, 'SOS', 0.09, [B.k1 + 0.05, B.k2 + 0.05, B.k3 + 0.05]);
   const knocks = knockL.flatMap((l) => l.on.map(([a]) => a));
-  const toc = [B.toc, B.toc + 0.92, B.toc + 1.84];
+  const toc = [B.toc, B.toc2, B.toc3];
   const batt = (t: number) => lerp(19, 15, prog(t, B.maman, B.aime + 0.5));
   return {
     scenes: [
@@ -48,14 +48,14 @@ export const DernierEtage2A = makeEpisode((B) => {
         [B.aprem, hm(15, 20)], [B.dix, hm(15, 20)], [B.nuit - 0.3, hm(18, 0), true], [B.nuit, hm(23, 40)], [B.frappe - 0.2, hm(23, 58), true], [B.frappe, hm(23, 59)],
       ],
     },
-    series: {name: 'DERNIER ÉTAGE', day: 'JOUR 2', y: 560, t0: 31.9, t1: B.matin + 1.6},
+    series: {name: 'DERNIER ÉTAGE', day: 'JOUR 2', y: 560, t0: B.toc3 + 0.55, t1: B.matin + 1.6},
     rules: [
       {n: 4, title: 'AUCUNE LUMIÈRE', sub: 'CERTAINS GRIMPENT.', subAt: B.certains, tag: B.comprends, at: B.comprends + 0.5, end: B.r5 - 0.15},
       {n: 5, title: 'OCCULTE TES FENÊTRES', tag: B.r5, at: B.r5t, shrink: B.cartons + 0.4, end: B.r6 - 0.15},
       {n: 6, title: 'ÉCONOMISE TA BATTERIE', tag: B.r6, at: B.r6t, shrink: B.avion + 0.6, end: B.aprem - 0.15},
     ],
     choice: {q: 'ALORS… TU OUVRES ?', a: 'A · J’OUVRE', b: 'B · JE NE BOUGE PAS', tq: B.choix, ta: B.a, tb: B.b, tc: B.b + 0.35, t1: endT - 0.45},
-    end: {name: 'DERNIER ÉTAGE', day: 2, time0: '23:59', time1: '00:00', cta: 'ABONNE-TOI POUR LE JOUR 3', t0: endT, flip: 108.27},
+    end: {name: 'DERNIER ÉTAGE', day: 2, time0: '23:59', time1: '00:00', cta: 'ABONNE-TOI POUR LE JOUR 3', t0: endT, flip: B.flip},
     hideCaps: [[endT, 999]],
     dialog: [{t0: B.maman - 0.05, t1: B.aime + 1.0, label: 'MAMAN · MESSAGE VOCAL'}],
     extra: (

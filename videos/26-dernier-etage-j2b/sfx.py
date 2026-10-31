@@ -49,7 +49,7 @@ def score(mix, tl):
     l, r = drone(dur, roots, volume=vol)
     mix.put_stereo(0, l, r, 0.10)
     # sa lampe qui insiste (S O S ×2), puis qui tombe
-    for grp, u in (([B['insiste'] + 0.1, B['insiste'] + 0.74, B['insiste'] + 1.86], 0.08), ([B['s1'] + 0.05, B['s1'] + 1.25, B['s1'] + 2.35], 0.1)):
+    for grp, u in (([B['insiste'] + 0.05, B['insiste'] + 0.55, B['insiste'] + 1.45], 0.065), ([B['s1'] + 0.05, B['s2'] + 0.05, B['s3'] + 0.05], 0.1)):
         for s, sym in zip(grp, ['...', '---', '...']):
             t = s
             for c in sym:
@@ -63,9 +63,9 @@ def score(mix, tl):
     mix.put(B['vitre'], claw(0.4), 0.12)
     mix.put(B['vitre'] + 1.3, boom(1.4, 40), 0.18)
     mix.put(B['vitre'], heartbeat(78, B['matin'] - B['vitre']), 0.16)
-    for t in (B['toc'], B['toc'] + 0.97, B['toc'] + 1.88):
+    for t in (B['toc'], B['toc2'], B['toc3']):
         mix.put(t, glass_tap(), 0.32)
-    mix.put(B['toc'] + 2.3, boom(1.8, 48), 0.24)
+    mix.put(B['toc3'] + 0.45, boom(1.8, 48), 0.24)
     mix.put(B['matin'] - 0.05, whoosh(0.6, 300, 2400, peak=0.5), 0.1)
     # sa fenêtre brisée, IL GRIMPE
     mix.put(B['brisee'], shards(), 0.12, pan=-0.3)
@@ -79,5 +79,5 @@ def score(mix, tl):
     mix.put(B['dix'], pop(600, 1000, 0.14), 0.12)
     mix.put(B['sous'] - 0.05, whoosh(0.6, 300, 1500, peak=0.5), 0.1)
     mix.put(B['sous'] + 0.4, riser(1.4, 300, 2000), 0.06)
-    knocks_and_end(mix, B, end_t, 98.48)
+    knocks_and_end(mix, B, end_t, B['flip'])
     mix.put(B['signal'], whoosh(0.4, 900, 300, peak=0.4), 0.08)

@@ -11,6 +11,9 @@ Syntaxe de script.md :
   [affiché|dit] texte des sous-titres ≠ texte prononcé (chiffres en sous-titres, lettres à la voix)
   *mot*         mot clé (surligné et en bleu dans les sous-titres)
   > note        ligne ignorée (indications de mise en scène)
+  {=maman} … {=}  réplique dite par un autre perso (voix dans `cast:` du front-matter), {=} = retour au narrateur
+  {!scared}     indication de jeu pour la voix (ElevenLabs v3/v4 : envoyée en [scared] au mot suivant, jamais sous-titrée)
+  front-matter  cast: maman=eleven:<voice_id>, ferrand=eleven:<voice_id>
 """
 import hashlib, json, os, re, subprocess, sys, unicodedata
 import numpy as np, soundfile as sf
@@ -84,22 +87,27 @@ def parse(vdir):
         cur['text'] += ' ' + s
     out = []
     for sec in sections:
-        tokens, pending = [], []
-        # découpe en éléments : [a|b], {@x}, mots
+        tokens, pending, who, tag = [], [], '', ''
+        # découpe en éléments : [a|b], {@x}, {=perso}, {!jeu}, mots
         # un préfixe/suffixe collé ([d'][a|b][,]) reste attaché au mot affiché et dit
-        for m in re.finditer(r"([^\s\[{]*)\[([^\]|]+)\|([^\]]+)\]([^\s\[{]*)|\{@([\w-]+)\}|(\S+)", sec['text']):
+        for m in re.finditer(r"([^\s\[{]*)\[([^\]|]+)\|([^\]]+)\]([^\s\[{]*)|\{@([\w-]+)\}|\{=([\w-]*)\}|\{!([^}]*)\}|(\S+)", sec['text']):
             if m.group(5):
                 pending.append(m.group(5)); continue
+            if m.group(6) is not None:
+                who = m.group(6); continue
+            if m.group(7) is not None:
+                tag = (tag + ', ' if tag else '') + m.group(7).strip(); continue
             if m.group(2):
                 pre, post = m.group(1), m.group(4)
                 disp, spoken = pre + m.group(2).strip() + post, pre + m.group(3).strip() + post
             else:
-                disp = spoken = m.group(6)
+                disp = spoken = m.group(8)
             if tokens and not pending and re.fullmatch(r'[.,;:!?…»)]+', disp):
                 tokens[-1]['display'] += disp; tokens[-1]['spoken'] += spoken; continue
             key = '*' in disp
             disp = disp.replace('*', ''); spoken = spoken.replace('*', '')
-            tokens.append({'display': disp, 'spoken': spoken, 'key': key, 'beats': pending}); pending = []
+            tokens.append({'display': disp, 'spoken': spoken, 'key': key, 'beats': pending, **({'who': who} if who else {}), **({'tag': tag} if tag else {})})
+            pending, tag = [], ''
         if tokens:
             tokens[0]['beats'] = [sec['id']] + tokens[0]['beats']
         if pending and tokens:
@@ -151,26 +159,37 @@ def voice(vdir):
         # découpage des prises : gemini = tout le script d'un coup (quota gratuit : 10 requêtes/jour, et la voix garde son élan),
         # eleven = une prise par section, voix locales = une prise par phrase. Forçable avec `chunk: all|section|sentence`.
         kind = eng.split(':')[0]
-        mode = data['meta'].get('chunk') or ('all' if kind.startswith('gemini') else 'section' if kind == 'eleven' else 'sentence')
+        # `cast:` (une voix par perso) : chaque section est découpée en répliques, une prise par réplique
+        cast = dict(kv.strip().split('=', 1) for kv in data['meta'].get('cast', '').split(',') if '=' in kv)
+        mode = data['meta'].get('chunk') or ('section' if cast else 'all' if kind.startswith('gemini') else 'section' if kind == 'eleven' else 'sentence')
+        say_ = lambda toks: ' '.join((f"[{tk['tag']}] " if tk.get('tag') else '') + tk['spoken'] for tk in toks)
         n_all = sum(len(sec['tokens']) for sec in data['sections'])
         plan = []  # (texte, indices globaux, est-ce la fin d'une section)
         off = 0
         if mode == 'all':
-            text = '\n\n'.join(' '.join(tk['spoken'] for tk in sec['tokens']) for sec in data['sections'])
-            plan.append((text, list(range(n_all)), True))
+            text = '\n\n'.join(say_(sec['tokens']) for sec in data['sections'])
+            plan.append((text, list(range(n_all)), True, eng))
         else:
             for sec in data['sections']:
                 groups_s = [list(range(len(sec['tokens'])))] if mode == 'section' else sec['sentences']
-                for sj, idx in enumerate(groups_s):
-                    plan.append((' '.join(sec['tokens'][i]['spoken'] for i in idx), [off + i for i in idx], sj == len(groups_s) - 1))
+                # coupe aussi à chaque changement de perso
+                runs = []
+                for idx in groups_s:
+                    for i in idx:
+                        w = sec['tokens'][i].get('who', '')
+                        if runs and runs[-1][0] == w and runs[-1][2] is idx: runs[-1][1].append(i)
+                        else: runs.append((w, [i], idx))
+                for sj, (w, idx, _) in enumerate(runs):
+                    if w and w not in cast: sys.exit(f'voice: perso « {w} » absent de `cast:`')
+                    plan.append((say_([sec['tokens'][i] for i in idx]), [off + i for i in idx], sj == len(runs) - 1, cast.get(w, eng)))
                 off += len(sec['tokens'])
-        json.dump([g for _, g, _ in plan], open(os.path.join(build, 'units.json'), 'w'))
-        for text, gidx, end_sec in plan:
+        json.dump([g for _, g, _, _ in plan], open(os.path.join(build, 'units.json'), 'w'))
+        for text, gidx, end_sec, e in plan:
             if True:
-                h = hashlib.sha1(f'{eng}|{rate}|{text}'.encode()).hexdigest()[:12]
+                h = hashlib.sha1(f'{e}|{rate}|{text}'.encode()).hexdigest()[:12]
                 f = os.path.join(cache, h + '.wav')
                 if not os.path.exists(f):
-                    subprocess.run([PY, os.path.join(ROOT, 'tools', 'tts', 'say.py'), eng, text, f, str(rate)], check=True)
+                    subprocess.run([PY, os.path.join(ROOT, 'tools', 'tts', 'say.py'), e, text, f, str(rate)], check=True)
                 y, sr = sf.read(f); y = y.mean(1) if y.ndim > 1 else y
                 y = trim(resample(y, sr), SR)
                 sents_t.append({'start': t, 'end': t + len(y) / SR, 'mode': mode})

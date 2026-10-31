@@ -15,7 +15,7 @@ export const DernierEtage3B = makeEpisode((B) => {
   const knockL = morseSpans(B.frappe + 0.2, 'SOS', 0.09);
   const knocks = knockL.flatMap((l) => l.on.map(([a]) => a));
   const CLOCK: [number, number, boolean?][] = [[0, hm(0, 0)], [B.stop, hm(0, 1)], [B.voix, hm(0, 4)], [B.nuit, hm(0, 30)], [B.matin - 0.3, hm(6, 10), true], [B.matin, hm(6, 30)], [B.r8, hm(9, 10)], [B.vis, hm(9, 10)], [B.compte - 0.3, hm(11, 30), true], [B.compte, hm(12, 0)], [B.aprem - 0.3, hm(16, 40), true], [B.aprem, hm(17, 0)], [B.choix, hm(17, 6)]];
-  const SERIES0 = B.encore + 0.6, FLIP = 63.25, KNOCK_END = B.stop + 0.4, MAMAN_LABEL = '« MAMAN » · DERRIÈRE LA PORTE';
+  const SERIES0 = B.encore + 0.6, FLIP = B.flip, KNOCK_END = B.stop + 0.4, MAMAN_LABEL = '« MAMAN » · DERRIÈRE LA PORTE';
   return {
     scenes: [
       {t0: 0, render: (p) => <PorteNuit {...p} knocks={knocks} push={B.voix} voice={[[B.maman - 0.1, B.ta], [B.nuit + 0.2, B.matin - 0.3]]} />},
