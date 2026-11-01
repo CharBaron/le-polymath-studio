@@ -1,0 +1,115 @@
+{
+ "fps": 30,
+ "duration": 44.246,
+ "frames": 1327,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "h2": 3.24,
+  "qui": 4.75,
+  "lois": 7.44,
+  "osselets": 9.61,
+  "montagne": 12.01,
+  "hait": 12.01,
+  "herbe": 13.653,
+  "eau": 16.62,
+  "gonfle": 16.62,
+  "enigme": 18.29,
+  "bouse": 21.78,
+  "etable": 21.78,
+  "nom": 23.651,
+  "chaleur": 25.581,
+  "chiens": 32.67,
+  "mort": 27.58,
+  "seche": 29.75,
+  "fin": 34.25,
+  "toi": 34.25,
+  "vache": 36.53,
+  "envoie": 38.37,
+  "loop": 41.02
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 4.75,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "qui",
+   "t0": 4.75,
+   "t1": 12.01,
+   "scene": null,
+   "beats": [
+    "lois",
+    "osselets"
+   ]
+  },
+  {
+   "id": "montagne",
+   "t0": 12.01,
+   "t1": 16.62,
+   "scene": null,
+   "beats": [
+    "hait",
+    "herbe"
+   ]
+  },
+  {
+   "id": "eau",
+   "t0": 16.62,
+   "t1": 21.78,
+   "scene": null,
+   "beats": [
+    "gonfle",
+    "enigme"
+   ]
+  },
+  {
+   "id": "bouse",
+   "t0": 21.78,
+   "t1": 32.67,
+   "scene": null,
+   "beats": [
+    "etable",
+    "nom",
+    "chaleur"
+   ]
+  },
+  {
+   "id": "chiens",
+   "t0": 32.67,
+   "t1": 34.25,
+   "scene": null,
+   "beats": [
+    "mort",
+    "seche"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 34.25,
+   "t1": 44.246,
+   "scene": null,
+   "beats": [
+    "toi",
+    "vache",
+    "envoie",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Enterré dans la bouse",
+ "hook": "philosophe|enterré vivant|dans la bouse",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Héraclite a inventé le « tout coule ». Il a juste oublié de prévenir la bouse."
+ }
+}

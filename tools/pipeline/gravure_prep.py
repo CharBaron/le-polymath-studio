@@ -1,7 +1,7 @@
 """Préparation des images « Gravure » v3.1, commune à toutes les vidéos : un style visuel par vidéo.
 Dans videos/<id>/prep_img.py :  from tools.pipeline.gravure_prep import run ; run(__file__, STYLE, JOBS)
 Styles : or (marbre noir, sépia crème) · archive (carton kraft, registre ligné, sépia jauni) · labo (bleu nuit quadrillé, bichromie bleue)
-         · grec (vernis noir, terre cuite : gravures en figures rouges) · anatomie (parchemin taché, encre brune) · atlas (nuit étoilée, parchemin) · cabinet (vitrine en acajou, velours pourpre) · ecole (ardoise, cahier Seyès).
+         · grec (vernis noir, terre cuite : gravures en figures rouges) · anatomie (parchemin taché, encre brune) · atlas (nuit étoilée, parchemin) · cabinet (vitrine en acajou, velours pourpre) · ecole (ardoise, cahier Seyès) · etable (planches d'étable, paille, brun fumier).
 JOBS = {nom: (type, source, recadrage, largeur max[, options])}
   carte  : recadrage x0 y0 x1 y1 (fractions), bichromie du style, bord de papier déchiré + liseré
   plein  : image plein écran 1080×1920 (recadrage = zone visée, ramenée au format 9:16), bichromie, sans bord
@@ -26,6 +26,7 @@ STYLES = {
     'caverne':  {'ink': (26, 16, 26), 'paper': (232, 222, 210), 'card': (238, 230, 220), 'rim': (196, 120, 230)},
     'cabinet':  {'ink': (28, 14, 22), 'paper': (238, 228, 212), 'card': (242, 234, 220), 'rim': (186, 110, 220)},
     'ecole':    {'ink': (14, 22, 40), 'paper': (238, 234, 222), 'card': (242, 238, 228), 'rim': (96, 150, 255)},
+    'etable':   {'ink': (34, 22, 10), 'paper': (234, 218, 178), 'card': (238, 224, 188), 'rim': (214, 150, 52)},
 }
 S = dict(STYLES['or'])
 
@@ -262,6 +263,23 @@ def textures(out, style):
         light[bold] = light[bold] * 0.78 + np.array([90, 120, 210]) * 0.22
         mg = np.abs(xx - 150) < 2; light[mg] = light[mg] * 0.5 + np.array([210, 60, 70]) * 0.5
         vel = cloth((14, 30, 74), 21)
+    elif style == 'etable':    # étable de nuit : planches verticales mal jointes, brins de paille ; papier paille ; velours brun fumier
+        board = ((xx // 135) * 7919 % 97) / 97
+        gap = (xx % 135) < 4
+        wood = ndi.gaussian_filter(rng.normal(0, 1, (H, W)).astype(np.float32), (70, 1.2)) * 3 + (fbm(H, W, 47, 4, 140) - 0.5) * 1.6
+        base = np.array([34, 24, 14], np.float32)[None, None] * (0.7 + 0.35 * board[..., None] + 0.4 * n1[..., None] + 0.1 * wood[..., None])
+        base[gap] *= 0.35
+        straw = np.zeros((H, W), np.float32)
+        for k in range(260):   # brins de paille (traits courts obliques, plus nombreux en bas)
+            x0, y0 = rng.uniform(0, W), H - abs(rng.normal(0, 520))
+            a, L = rng.uniform(-0.9, 0.9), rng.uniform(20, 70)
+            for u in np.linspace(0, 1, 40):
+                x, y = int(x0 + math.sin(a) * L * u), int(y0 - math.cos(a) * L * u)
+                if 0 <= x < W and 0 <= y < H: straw[y, x] = 1
+        straw = ndi.gaussian_filter(straw, 0.8) * 2.2
+        base += np.clip(straw, 0, 1)[..., None] * np.array([150, 112, 48])
+        light = np.array([234, 218, 178], np.float32)[None, None] * (0.93 + 0.1 * n2[..., None]) - 22 * np.clip((fbm(H, W, 53, 4, 160)[..., None] - 0.7) / 0.3, 0, 1) * np.array([0.5, 0.8, 1.3])
+        vel = cloth((62, 40, 18), 21)
     else:                      # atlas : nuit étoilée, parchemin, indigo
         base = np.array([9, 15, 38], np.float32)[None, None] * (0.8 + 0.45 * n1[..., None])
         stars = rng.random((H, W)) > 0.9985

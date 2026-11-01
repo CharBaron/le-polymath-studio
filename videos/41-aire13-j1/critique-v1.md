@@ -22,3 +22,12 @@ l'autoroute, la clé qui tourne, le gobelet, le panneau, la tête au volant dans
 
 Son (contrôlé à la mesure, pas à l'oreille) : silences de 17 dB sous l'impact avant les deux sursauts ✔, klaxon et moteur qui cale
 entendus 0,1 à 0,3 s avant l'image ✔, dernier bond calé sur le mot « avance » (41,63 s) ✔. À garder tel quel.
+
+## Ce qui a été corrigé pour la V2
+Les 13 points ont été repris dans le code (`src/videos/Aire1.tsx`, `src/survie/aire.tsx`, `aire2.tsx`, `rider.tsx`) et vérifiés
+sur images fixes avant le 2e rendu : poussée + tête qui casse à 1,2 s (1) ; plafonnier à 0,55 et coupe sur la silhouette dans le
+pare-brise (2) ; caméra du titre à 0,75 m, flou réduit, ronds de pluie plus nets (3) ; glisse qui finit sur la Clio (4) ; néon entier,
+dos du papier et scotch dans la déchirure (5) ; règle 2 en longue focale à droite de la Clio (6) ; silhouette plein cadre, liseré pâle,
+tête qui casse en deux temps (7) ; lueur chaude de l'habitacle par la portière, plus de halo de feu collé à l'objectif (8) ; berline
+au centre en cadrage serré (9) ; dernier bond = zoom ×1,6 + secousse + flash blanc d'1/10 s (10) ; la chose plus grande (1,95 m),
+plus proche, liseré froid (11) ; choix en grand angle, les deux voitures entières (12) ; liseré du perso affiné (13).
