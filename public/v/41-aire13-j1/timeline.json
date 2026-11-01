@@ -1,0 +1,186 @@
+{
+ "fps": 30,
+ "duration": 61.622,
+ "frames": 1849,
+ "beats": {
+  "hook": 0.21,
+  "h": 0.21,
+  "h1": 0.961,
+  "h1b": 2.33,
+  "h1c": 3.151,
+  "h2": 4.46,
+  "h3": 6.11,
+  "defi": 7.89,
+  "dil": 7.89,
+  "briser": 9.042,
+  "toi": 10.43,
+  "gare": 13.2,
+  "coupe": 14.31,
+  "clio": 17.03,
+  "sors": 15.59,
+  "cafe": 18.846,
+  "pers": 20.7,
+  "panneau": 21.73,
+  "pan": 21.73,
+  "arr": 23.69,
+  "arr2": 24.897,
+  "r2": 25.86,
+  "r2t": 27.63,
+  "bout": 29.87,
+  "att": 31.294,
+  "r3": 32.7,
+  "r3t": 34.17,
+  "panne": 36.58,
+  "klax": 36.58,
+  "cale": 37.585,
+  "eteint": 38.668,
+  "avance": 40.469,
+  "monte": 42.286,
+  "rallume": 43.454,
+  "twist": 44.82,
+  "ta": 44.82,
+  "noire": 45.342,
+  "marche": 46.756,
+  "regle": 49.378,
+  "r1t": 50.525,
+  "choix": 52.27,
+  "a": 53.77,
+  "b": 55.7,
+  "noir": 57.84,
+  "fin": 58.28,
+  "flip": 59.517
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.21,
+   "t1": 7.89,
+   "scene": null,
+   "beats": [
+    "h",
+    "h1",
+    "h1b",
+    "h1c",
+    "h2",
+    "h3"
+   ]
+  },
+  {
+   "id": "defi",
+   "t0": 7.89,
+   "t1": 10.43,
+   "scene": null,
+   "beats": [
+    "dil",
+    "briser"
+   ]
+  },
+  {
+   "id": "toi",
+   "t0": 10.43,
+   "t1": 17.03,
+   "scene": null,
+   "beats": [
+    "gare",
+    "coupe"
+   ]
+  },
+  {
+   "id": "clio",
+   "t0": 17.03,
+   "t1": 21.73,
+   "scene": null,
+   "beats": [
+    "sors",
+    "cafe",
+    "pers"
+   ]
+  },
+  {
+   "id": "panneau",
+   "t0": 21.73,
+   "t1": 25.86,
+   "scene": null,
+   "beats": [
+    "pan",
+    "arr",
+    "arr2"
+   ]
+  },
+  {
+   "id": "r2",
+   "t0": 25.86,
+   "t1": 32.7,
+   "scene": null,
+   "beats": [
+    "r2t",
+    "bout",
+    "att"
+   ]
+  },
+  {
+   "id": "r3",
+   "t0": 32.7,
+   "t1": 36.58,
+   "scene": null,
+   "beats": [
+    "r3t"
+   ]
+  },
+  {
+   "id": "panne",
+   "t0": 36.58,
+   "t1": 44.82,
+   "scene": null,
+   "beats": [
+    "klax",
+    "cale",
+    "eteint",
+    "avance",
+    "monte",
+    "rallume"
+   ]
+  },
+  {
+   "id": "twist",
+   "t0": 44.82,
+   "t1": 52.27,
+   "scene": null,
+   "beats": [
+    "ta",
+    "noire",
+    "marche",
+    "regle",
+    "r1t"
+   ]
+  },
+  {
+   "id": "choix",
+   "t0": 52.27,
+   "t1": 58.28,
+   "scene": null,
+   "beats": [
+    "a",
+    "b",
+    "noir"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 58.28,
+   "t1": 61.622,
+   "scene": null,
+   "beats": [
+    "flip"
+   ]
+  }
+ ],
+ "title": "AIRE 13 — Jour 1",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "A ou B ?"
+ }
+}

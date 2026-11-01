@@ -43,6 +43,8 @@ export type Look = {
   skin: string; top: string; topDark: string; legs: string; shoes: string; line: string;
   hair?: string; hairStyle?: 'rider' | 'bun' | 'wet' | 'none'; hat?: string; scarf?: string;
   coat?: boolean; thin?: number; k?: K;
+  /** AIRE 13 : manches d'une autre couleur que le buste (sweat sous une doudoune), casquette, doudoune sans manches matelassée */
+  sleeve?: string; cap?: string; capDark?: string; vest?: boolean;
 };
 export const LOOKS = {
   // toi
@@ -52,6 +54,10 @@ export const LOOKS = {
   // l'homme à l'imperméable : trench beige, chapeau, journal
   imper: {skin: '#E8DDCB', top: '#B49C6E', topDark: '#8A7650', legs: '#3A3A42', shoes: '#1E1A18', line: '#221E19', hat: '#2C2927', hairStyle: 'none', coat: true},
   // l'usager / le quatrième : trop grand, bras trop longs, peau grise, cheveux mouillés sur le visage
+  // AIRE 13 · toi : casquette blanche, doudoune sans manches orange sur un sweat à capuche noir, jean bleu, baskets rouges
+  driver: {skin: '#F1EBDD', top: '#F07A22', topDark: '#1C1C21', sleeve: '#26262C', legs: '#3A5482', shoes: '#D8312A', line: '#1B1816', hairStyle: 'none', cap: '#F2EFE8', capDark: '#D9D4C8', vest: true},
+  // AIRE 13 · ceux qui attendent au bout des faisceaux : trop grands, trop maigres, bras trop longs, manteau sombre, sans visage
+  attendant: {skin: '#24272B', top: '#14161A', topDark: '#0D0F11', legs: '#111317', shoes: '#0A0B0C', line: '#050607', hairStyle: 'none', coat: true, thin: 0.55, k: {arm: 1.75, leg: 1.45, torso: 1.18, head: 0.72}},
   usager: {skin: '#AAB4AA', top: '#1A221E', topDark: '#111714', legs: '#141A17', shoes: '#0C0E0D', line: '#070908', hair: '#0A0C0B', hairStyle: 'wet', coat: true, thin: 0.72, k: {arm: 1.32, leg: 1.1, torso: 1.12, head: 0.92}},
 } satisfies Record<string, Look>;
 const BAG = {bag: '#B3392F', bagDark: '#7C241E', cup: '#F5A623', cupDark: '#B8741A', band: '#1E1E22'};
@@ -68,10 +74,22 @@ export type FigureProps = {
   paper?: boolean;
   /** doigts trop longs (l'usager) */
   fingers?: number;
+  /** d'où on le voit (seulement la casquette change) : profil, dos (visière cachée), face (visière en largeur) */
+  view?: 'side' | 'back' | 'front';
 };
 
-export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, light = {}, opacity = 1, hipY, gear, phone = 0, paper, fingers = 0}) => {
-  const b = bonesK(p, h, look.k);
+export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, light = {}, opacity = 1, hipY, gear, phone = 0, paper, fingers = 0, view = 'side'}) => {
+  const b0 = bonesK(p, h, look.k);
+  // de dos / de face : épaules et hanches écartées de chaque côté du buste (le squelette de profil part d'un seul point)
+  const b = (() => {
+    if (view === 'side') return {...b0, shL: b0.sh, shR: b0.sh, hpL: b0.hip, hpR: b0.hip};
+    const ux = b0.sh[0] - b0.hip[0], uy = b0.sh[1] - b0.hip[1], L0 = Math.hypot(ux, uy) || 1;
+    const nx = -uy / L0, ny = ux / L0;
+    const so = 0.07 * h * (look.thin ?? 1), ho = 0.035 * h * (look.thin ?? 1);
+    const mv = (q: Pt, d: number): Pt => [q[0] + nx * d, q[1] + ny * d];
+    return {...b0, shL: mv(b0.sh, -so), shR: mv(b0.sh, so), eL: mv(b0.eL, -so), hL: mv(b0.hL, -so), eR: mv(b0.eR, so), hR: mv(b0.hR, so),
+      hpL: mv(b0.hip, -ho), hpR: mv(b0.hip, ho), kL: mv(b0.kL, -ho), fL: mv(b0.fL, -ho), kR: mv(b0.kR, ho), fR: mv(b0.fR, ho)};
+  })();
   const amb = light.amb ?? 1, tint = light.tint ?? '#141626';
   const L = (c: string) => (amb >= 1 ? c : mixHex(c, tint, 1 - amb));
   const back = (c: string) => mixHex(L(c), '#000000', 0.18);
@@ -92,20 +110,20 @@ export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, l
   const arm = (s: Pt, e: Pt, hd: Pt, dark: boolean, k: string) => (
     <g key={k}>
       <polyline points={pts([s, e, hd])} fill="none" stroke={line} strokeWidth={w * 1.12 + 2 * o} strokeLinecap="round" strokeLinejoin="round" />
-      <polyline points={pts([s, e, hd])} fill="none" stroke={dark ? back(look.top) : L(look.top)} strokeWidth={w * 1.12} strokeLinecap="round" strokeLinejoin="round" />
+      <polyline points={pts([s, e, hd])} fill="none" stroke={dark ? back(look.sleeve ?? look.top) : L(look.sleeve ?? look.top)} strokeWidth={w * 1.12} strokeLinecap="round" strokeLinejoin="round" />
       <circle cx={hd[0]} cy={hd[1]} r={w * 0.62 + o} fill={line} />
       <circle cx={hd[0]} cy={hd[1]} r={w * 0.62} fill={dark ? back(look.skin) : L(look.skin)} />
     </g>
   );
   // jambe : la cuisse prend la couleur du manteau quand il descend dessus
-  const leg = (k0: Pt, f: Pt, dark: boolean, k: string) => {
+  const leg = (k0: Pt, f: Pt, dark: boolean, k: string, hp: Pt = b.hip) => {
     const thigh = look.coat ? look.top : look.legs;
     const c = (s: string) => (dark ? back(s) : L(s));
     return (
       <g key={k}>
-        <polyline points={pts([b.hip, k0, f])} fill="none" stroke={line} strokeWidth={w * 1.08 + 2 * o} strokeLinecap="round" strokeLinejoin="round" />
+        <polyline points={pts([hp, k0, f])} fill="none" stroke={line} strokeWidth={w * 1.08 + 2 * o} strokeLinecap="round" strokeLinejoin="round" />
         <polyline points={pts([k0, f])} fill="none" stroke={c(look.legs)} strokeWidth={w * 1.08} strokeLinecap="round" />
-        <polyline points={pts([b.hip, k0])} fill="none" stroke={c(thigh)} strokeWidth={w * (look.coat ? 1.5 : 1.08)} strokeLinecap="round" />
+        <polyline points={pts([hp, k0])} fill="none" stroke={c(thigh)} strokeWidth={w * (look.coat ? 1.5 : 1.08)} strokeLinecap="round" />
         <ellipse cx={f[0] + (flip ? -1 : 1) * 0.014 * h} cy={f[1] + 0.006 * h} rx={w * 0.95} ry={w * 0.5} fill={L(look.shoes)} stroke={line} strokeWidth={o} />
         {rider ? <rect x={f[0] - w * 0.75 + (flip ? -1 : 1) * 0.014 * h} y={f[1] + 0.006 * h + w * 0.18} width={w * 1.5} height={w * 0.28} rx={w * 0.12} fill={L('#C9C3B8')} /> : null}
       </g>
@@ -128,6 +146,28 @@ export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, l
     <g transform={`translate(${H0[0]},${H0[1]}) rotate(${rot})`}>
       <path d={`M${-R * 1.1} ${R * 0.2} C${-R * 1.2} ${-R * 1.1} ${R * 1.2} ${-R * 1.25} ${R * 1.12} ${R * 0.1} L${R * 1.18} ${R * 1.9} L${R * 0.82} ${R * 1.4} L${R * 0.62} ${R * 2.2} L${R * 0.3} ${R * 1.3} L${R * 0.02} ${R * 2.4} L${-R * 0.3} ${R * 1.25} L${-R * 0.6} ${R * 2.0} L${-R * 0.85} ${R * 1.1} L${-R * 1.18} ${R * 1.6} Z`} fill={L(look.hair!)} stroke={line} strokeWidth={o} strokeLinejoin="round" />
       {[-0.5, 0.1, 0.62].map((u) => <path key={u} d={`M${u * R} ${-R * 0.6} Q${u * R + R * 0.1} ${R * 0.5} ${u * R - R * 0.05} ${R * 1.6}`} stroke="#3C4A44" strokeWidth={o * 0.8} fill="none" opacity={0.55} />)}
+    </g>
+  ) : null;
+  // casquette : calotte + bouton, visière vers l'avant (profil), en largeur (face) ou cachée (dos, on voit la bride)
+  const cap = look.cap ? (
+    <g transform={`translate(${H0[0]},${H0[1]}) rotate(${rot})`}>
+      {view === 'side' ? <path d={`M${R * 0.55} ${-R * 0.42} Q${R * 1.35} ${-R * 0.5} ${R * 1.78} ${-R * 0.18} Q${R * 1.3} ${-R * 0.1} ${R * 0.55} ${-R * 0.2} Z`} fill={L(look.capDark ?? look.cap)} stroke={line} strokeWidth={o} strokeLinejoin="round" /> : null}
+      {view === 'side' ? (
+        <path d={`M${-R * 1.04} ${-R * 0.12} C${-R * 1.1} ${-R * 1.05} ${-R * 0.4} ${-R * 1.32} ${R * 0.12} ${-R * 1.28} C${R * 0.7} ${-R * 1.24} ${R * 1.08} ${-R * 0.85} ${R * 1.04} ${-R * 0.26} Q0 ${-R * 0.4} ${-R * 1.04} ${-R * 0.12} Z`} fill={L(look.cap)} stroke={line} strokeWidth={o} strokeLinejoin="round" />
+      ) : (
+        <path d={`M${-R * 1.05} ${-R * 0.16} C${-R * 1.1} ${-R * 1.12} ${R * 1.1} ${-R * 1.12} ${R * 1.05} ${-R * 0.16} Q0 ${-R * 0.3} ${-R * 1.05} ${-R * 0.16} Z`} fill={L(look.cap)} stroke={line} strokeWidth={o} strokeLinejoin="round" />
+      )}
+      <path d={`M${-R * 0.1} ${-R * 1.27} Q${R * 0.05} ${-R * 0.8} ${-R * 0.02} ${-R * 0.33}`} stroke={mixHex(L(look.cap), '#000000', 0.25)} strokeWidth={o * 0.8} fill="none" />
+      <circle cx={R * 0.06} cy={-R * 1.3} r={R * 0.1} fill={L(look.capDark ?? look.cap)} stroke={line} strokeWidth={o * 0.7} />
+      {view === 'front' ? <ellipse cx={0} cy={-R * 0.3} rx={R * 1.15} ry={R * 0.26} fill={L(look.capDark ?? look.cap)} stroke={line} strokeWidth={o} /> : null}
+      {view === 'back' ? (
+        <g>
+          {/* de dos : cheveux courts sous la casquette, nuque, petite ouverture de la bride */}
+          <path d={`M${-R * 1.01} ${-R * 0.16} Q${-R * 1.08} ${R * 0.9} 0 ${R * 1.02} Q${R * 1.08} ${R * 0.9} ${R * 1.01} ${-R * 0.16} Q0 ${-R * 0.04} ${-R * 1.01} ${-R * 0.16} Z`} fill={L('#3B2B22')} />
+          <path d={`M${-R * 0.5} ${R * 0.35} Q0 ${R * 0.5} ${R * 0.5} ${R * 0.35}`} stroke={mixHex(L('#3B2B22'), '#ffffff', 0.15)} strokeWidth={o * 0.8} fill="none" opacity={0.6} />
+          <path d={`M${-R * 0.22} ${-R * 0.2} Q0 ${-R * 0.42} ${R * 0.22} ${-R * 0.2} Z`} fill={L('#3B2B22')} stroke={mixHex(L(look.cap), '#000000', 0.45)} strokeWidth={o * 0.8} />
+        </g>
+      ) : null}
     </g>
   ) : null;
   const hat = look.hat ? (
@@ -195,7 +235,7 @@ export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, l
   const hy = hipY ?? -(0.437 * h * (look.k?.leg ?? 1));
   const rim = light.rim ? (
     <g style={{filter: `drop-shadow(0 0 ${0.025 * h}px ${light.rim})`}} opacity={0.95}>
-      {[[b.hip, b.kL, b.fL], [b.hip, b.kR, b.fR], [b.sh, b.eL, b.hL], [b.sh, b.eR, b.hR]].map((q, i) => (
+      {[[b.hpL, b.kL, b.fL], [b.hpR, b.kR, b.fR], [b.shL, b.eL, b.hL], [b.shR, b.eR, b.hR]].map((q, i) => (
         <polyline key={i} points={pts(q as Pt[])} fill="none" stroke={light.rim} strokeWidth={w * 1.12 + 4 * o} strokeLinecap="round" strokeLinejoin="round" />
       ))}
       <polygon points={pts(body)} fill={light.rim} stroke={light.rim} strokeWidth={0.05 * h + 4 * o} strokeLinejoin="round" />
@@ -206,24 +246,32 @@ export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, l
     <g transform={`translate(${x},${y}) scale(${flip ? -1 : 1},1) translate(0,${hy})`} opacity={opacity}>
       {rim}
       {bag}
-      {leg(b.kL, b.fL, true, 'lL')}
-      {arm(b.sh, b.eL, b.hL, true, 'aL')}
+      {leg(b.kL, b.fL, true, 'lL', b.hpL)}
+      {view === 'side' ? arm(b.shL, b.eL, b.hL, true, 'aL') : null}
       {fingers > 0 ? claws(b.eL, b.hL, 'fL') : null}
-      {leg(b.kR, b.fR, false, 'lR')}
+      {leg(b.kR, b.fR, false, 'lR', b.hpR)}
       {/* capuche (toi) ou col du manteau, derrière la nuque */}
       <ellipse cx={b.neck[0] - ux * 0.01 * h} cy={b.neck[1] - uy * 0.01 * h} rx={0.075 * h * (thin < 1 ? 0.8 : 1)} ry={0.045 * h} fill={L(look.topDark)} stroke={line} strokeWidth={o} transform={`rotate(${p.torso},${b.neck[0]},${b.neck[1]})`} />
       <polygon points={pts(body)} fill={L(look.top)} stroke={line} strokeWidth={0.05 * h + 2 * o} strokeLinejoin="round" />
       <polygon points={pts(body)} fill={L(look.top)} stroke={L(look.top)} strokeWidth={0.05 * h} strokeLinejoin="round" />
       {rider ? <polyline points={pts([at(0.3, 1, bw * 0.6), at(0.3, -1, bw * 0.6)])} stroke={L(look.topDark)} strokeWidth={o * 1.4} fill="none" strokeLinecap="round" /> : null}
       {look.coat ? <polyline points={pts([at(1.0, 0, 0), at(0.05, 0, 0)])} stroke={L(look.topDark)} strokeWidth={o * 1.2} fill="none" /> : null}
+      {look.vest ? (
+        <g>
+          {[0.22, 0.42, 0.62, 0.82].map((k) => <polyline key={k} points={pts([at(k, 1, lerp(bw, sw, k) * 0.92), at(k + 0.035, 0, 0), at(k, -1, lerp(bw, sw, k) * 0.92)])} stroke={L(look.topDark)} strokeWidth={o * 0.9} fill="none" opacity={0.85} />)}
+          {view !== 'back' ? <polyline points={pts([at(1.02, 0, 0), at(0.02, 0, 0)])} stroke={mixHex(L(look.top), '#ffffff', 0.35)} strokeWidth={o * 0.9} fill="none" /> : null}
+        </g>
+      ) : null}
       {straps}
       {look.scarf ? <ellipse cx={neckP[0]} cy={neckP[1] + 0.01 * h} rx={0.07 * h} ry={0.035 * h} fill={L(look.scarf)} stroke={line} strokeWidth={o} transform={`rotate(${p.torso},${neckP[0]},${neckP[1]})`} /> : null}
       <circle cx={H0[0]} cy={H0[1]} r={R + o} fill={line} />
       <circle cx={H0[0]} cy={H0[1]} r={R} fill={L(look.skin)} />
       {hair}
       {hat}
+      {cap}
       {phones}
-      {arm(b.sh, b.eR, b.hR, false, 'aR')}
+      {view !== 'side' ? arm(b.shL, b.eL, b.hL, false, 'aL') : null}
+      {arm(b.shR, b.eR, b.hR, false, 'aR')}
       {fingers > 0 ? claws(b.eR, b.hR, 'fR') : null}
       {tel}
       {news}

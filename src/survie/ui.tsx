@@ -1,5 +1,5 @@
 // DA « Survie » : habillage relevé sur les références (dossier « Vidéo Zombie », analyse dans « ANALYSE - style Survie.md »).
-// Mesures en px sur 1080×1920 : sous-titres karaoké citron à y 1220, HUD horloge en haut à gauche, étiquette + titre de règle
+// Mesures en px sur 1080×1920 : sous-titres karaoké citron à y 1400 (1220 jusqu'au 01/11), HUD horloge en haut à gauche, étiquette + titre de règle
 // (grand puis en-tête), règle censurée, titre de série, choix A/B, carte de fin avec glitch Jour N → Jour N+1.
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
@@ -59,8 +59,11 @@ export const chunksOf = (words: Word[]): Chunk[] => {
 };
 
 export type DialogSpan = {t0: number; t1: number; label: string};
+/** zone des sous-titres (depuis le 01/11/2026) : centrés vers y 1400, jamais sous y 1480 (description TikTok) ni à droite de
+ * x 960 (boutons) → bande x 120-960 centrée sur l'écran. Les vidéos rendues avant gardent leur fichier à y 1220. */
+export const CAP = {y: 1400, left: 120, right: 120, w: 820};
 
-export const Karaoke: React.FC<{words: Word[]; dialog?: DialogSpan[]; hide?: [number, number][]; y?: number}> = ({words, dialog = [], hide = [], y = 1220}) => {
+export const Karaoke: React.FC<{words: Word[]; dialog?: DialogSpan[]; hide?: [number, number][]; y?: number}> = ({words, dialog = [], hide = [], y = CAP.y}) => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
   const chunks = React.useMemo(() => chunksOf(words), [words]);
@@ -73,7 +76,7 @@ export const Karaoke: React.FC<{words: Word[]; dialog?: DialogSpan[]; hide?: [nu
   const dl = dialog.find((d) => c.t0 >= d.t0 - 0.05 && c.t0 < d.t1);
   const hot = dl ? SV.amber : SV.lime;
   const txt = c.words.map((w) => w.text.toUpperCase()).join(' ');
-  const size = fit(txt, 940, 78, 0.74);
+  const size = fit(txt, CAP.w, 78, 0.74);
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       {dl ? (
@@ -83,7 +86,7 @@ export const Karaoke: React.FC<{words: Word[]; dialog?: DialogSpan[]; hide?: [nu
           </div>
         </div>
       ) : null}
-      <div style={{position: 'absolute', left: 40, right: 40, top: y - size * 0.62, textAlign: 'center', opacity: a, transform: `scale(${pop})`}}>
+      <div style={{position: 'absolute', left: CAP.left, right: CAP.right, top: y - size * 0.62, textAlign: 'center', opacity: a, transform: `scale(${pop})`}}>
         {c.words.map((w, i) => {
           const on = t >= w.t0 - 0.02 && (i === c.words.length - 1 || t < c.words[i + 1].t0 - 0.02);
           return (
