@@ -158,7 +158,7 @@ def voice(vdir):
     eng = data['meta'].get('voice', 'henri'); rate = float(data['meta'].get('rate', '1.0'))
     cache = os.path.join(build, 'tts'); os.makedirs(cache, exist_ok=True)
     user = os.path.join(vdir, 'voice-user.wav')  # sa propre voix : remplace la TTS
-    chunks, sents_t, t = [], [], 0.25
+    chunks, sents_t, t, hold_at = [], [], 0.25, []
     chunks.append(np.zeros(int(0.25 * SR)))
     if os.path.exists(user):
         y, sr = sf.read(user); y = y.mean(1) if y.ndim > 1 else y
@@ -194,6 +194,12 @@ def voice(vdir):
                     plan.append((say_([sec['tokens'][i] for i in idx]), [off + i for i in idx], sj == len(runs) - 1, cast.get(w, eng), w))
                 off += len(sec['tokens'])
         json.dump([p[1] for p in plan], open(os.path.join(build, 'units.json'), 'w'))
+        # `silence: hook=6.5` : silence ajouté après la section (temps de faire le test), jamais raccourci par `pauses:`
+        holds = {k.strip(): float(v) for k, v in (kv.split('=', 1) for kv in data['meta'].get('silence', '').split(',') if '=' in kv)}
+        sec_of, o = {}, 0
+        for sec in data['sections']:
+            for i in range(len(sec['tokens'])): sec_of[o + i] = sec['id']
+            o += len(sec['tokens'])
         for text, gidx, end_sec, e, who in plan:
             if True:
                 h = hashlib.sha1(f'{e}|{rate}|{text}'.encode()).hexdigest()[:12]
@@ -214,6 +220,7 @@ def voice(vdir):
                 last = text.rstrip()[-1]
                 pause = 0.42 if end_sec else (0.3 if last in '.!?…' else 0.15)
                 chunks.append(np.zeros(int(pause * SR))); t += pause
+                if end_sec and sec_of.get(gidx[-1]) in holds: hold_at.append((t - pause + 0.05, holds[sec_of[gidx[-1]]]))
     raw = os.path.join(build, 'voice_raw.wav')
     yall = np.concatenate(chunks)
     # `pauses:` (front-matter, s) : plafonne chaque silence de la voix (Gemini étire parfois les pauses « dramatiques »)
@@ -221,6 +228,10 @@ def voice(vdir):
     if cap > 0:
         yall, tmap = cap_pauses(yall, cap)
         sents_t = [{**u, 'start': tmap(u['start']), 'end': tmap(u['end'])} for u in sents_t]
+        hold_at = [(tmap(h), d) for h, d in hold_at]
+    for h, d in sorted(hold_at, reverse=True):  # silences de `silence:` insérés après le plafonnement
+        i = int(h * SR); yall = np.concatenate([yall[:i], np.zeros(int(d * SR)), yall[i:]])
+        sents_t = [{**u, 'start': u['start'] + (d if u['start'] >= h else 0), 'end': u['end'] + (d if u['end'] > h else 0)} for u in sents_t]
     sf.write(raw, yall, SR)
     out = os.path.join(pub, 'voice.wav')
     # `tempo:` (front-matter) accélère la voix sans changer sa hauteur (1.03 à 1.12 conseillé)
@@ -358,12 +369,13 @@ def align(vdir):
         for g, se in zip(groups, sents):
             g = [ti for ti in g if ti in tt]
             if not g: continue
-            w0 = min(tt[ti][0] for ti in g); w1 = max(tt[ti][1] for ti in g)
+            w0 = min(tt[ti][0] for ti in g); w1 = max(min(tt[ti][1], tt[ti][0] + 0.7) for ti in g)  # un mot whisper qui déborde sur un long silence ne compte pas
             sc = (se['end'] - se['start']) / max(0.05, w1 - w0)
             for ti in g:
                 a0, b0 = tt[ti]; tt[ti] = (se['start'] + (a0 - w0) * sc, se['start'] + (b0 - w0) * sc)
         print('align: recalé sur', len(sents), 'blocs de voix')
-    if sents and sents[0].get('mode') in ('all', 'section'):
+    # `snap: non` : on garde les temps whisper recalés sur les prises (utile quand un long `silence:` trompe le calage sur les pauses)
+    if sents and sents[0].get('mode') in ('all', 'section') and data['meta'].get('snap', 'oui') != 'non':
         y, sr = sf.read(os.path.join(pub, 'voice.wav')); y = y.mean(1) if y.ndim > 1 else y
         fr = int(0.01 * sr)
         e = np.array([np.sqrt(np.mean(y[i:i + fr] ** 2) + 1e-12) for i in range(0, len(y) - fr, fr)])

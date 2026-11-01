@@ -1,0 +1,100 @@
+{
+ "fps": 30,
+ "duration": 34.14,
+ "frames": 1024,
+ "beats": {
+  "hook": 0.24,
+  "h": 0.24,
+  "go": 3.477,
+  "stop": 10.367,
+  "reveal": 11.347,
+  "bute": 11.347,
+  "bouche": 12.94,
+  "preuve": 15.803,
+  "carres": 15.803,
+  "mot": 17.66,
+  "nom": 19.592,
+  "an": 21.318,
+  "choc": 25.924,
+  "lit": 25.924,
+  "fin": 29.601,
+  "envoie": 29.601,
+  "loop": 32.345
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.24,
+   "t1": 10.367,
+   "scene": null,
+   "beats": [
+    "h",
+    "go"
+   ]
+  },
+  {
+   "id": "stop",
+   "t0": 10.367,
+   "t1": 11.347,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "reveal",
+   "t0": 11.347,
+   "t1": 15.803,
+   "scene": null,
+   "beats": [
+    "bute",
+    "bouche"
+   ]
+  },
+  {
+   "id": "preuve",
+   "t0": 15.803,
+   "t1": 19.592,
+   "scene": null,
+   "beats": [
+    "carres",
+    "mot"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 19.592,
+   "t1": 25.924,
+   "scene": null,
+   "beats": [
+    "an"
+   ]
+  },
+  {
+   "id": "choc",
+   "t0": 25.924,
+   "t1": 29.601,
+   "scene": null,
+   "beats": [
+    "lit"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 29.601,
+   "t1": 34.14,
+   "scene": null,
+   "beats": [
+    "envoie",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Dis la couleur",
+ "hook": "dis la couleur|pas le mot",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Ceux qui disent l'avoir fait sans buter l'ont lu à la vitesse d'un escargot. Ça compte pas."
+ }
+}

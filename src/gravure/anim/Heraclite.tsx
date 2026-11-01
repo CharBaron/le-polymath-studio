@@ -62,7 +62,7 @@ const Lump: React.FC<{d: string; i: number; dry: number; L: [number, number, num
         </radialGradient>
       </defs>
       <path d={d} fill={`url(#hb-r${i})`} />
-      <Shade p="hb" id={`l${i}`} d={d} box={[L[0] - L[2], L[1] - L[3], L[2] * 2, L[3] * 2]} from={[0.8, 1]} to={[0.3, 0.2]} hatch={i % 2 ? 'hm' : 'hd'} cross={i % 3 === 0} o={lerp(0.7, 0.4, dry)} />
+      <Shade p="hb" id={`l${i}`} d={d} box={[L[0] - L[2], L[1] - L[3], L[2] * 2, L[3] * 2]} from={[0.8, 1]} to={[0.3, 0.2]} hatch={i % 2 ? 'hm' : 'hd'} cross={i % 3 === 0} o={lerp(0.7, 0.65, dry)} />
       <path d={crease} fill="none" stroke={INK} strokeWidth={2.5} opacity={0.7} strokeLinecap="round" />
       <path d={d} fill="none" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" filter="url(#hb-wob)" />
     </g>
@@ -143,8 +143,8 @@ const Drops: React.FC<{t: number; at: number; until: number}> = ({t, at, until})
 };
 
 /** fissures de la bouse séchée (k : avancement du tracé) */
-const CRACKS = Array.from({length: 9}, (_, i) => {
-  const L = LUMPS[(i * 3) % LUMPS.length];
+const CRACKS = Array.from({length: 15}, (_, i) => {
+  const L = LUMPS[(i * 5) % LUMPS.length];
   let x = L[0] - L[2] * 0.6, y = L[1] + (rand(i) - 0.5) * 20;
   let d = `M ${x.toFixed(1)} ${y.toFixed(1)}`;
   for (let s = 0; s < 6; s++) { x += L[2] * 0.22; y += (rand(i * 11 + s) - 0.5) * 34; d += ` L ${x.toFixed(1)} ${y.toFixed(1)}`; }
@@ -167,6 +167,9 @@ export const Bouse: React.FC<AnimProps> = ({id, t, lt, p}) => {
   const steamK = (covering ? prog(t, cover[1], cover[1] + 0.6) * 0.5 : mode === 'dry' ? 0.25 * (1 - dry) : 0.55) + (t >= heat ? 0.6 * prog(t, heat, heat + 0.4) : 0);
   const quake = Math.max(0, ...splats.map((s) => (t >= s && t < s + 0.3 ? 1 - (t - s) / 0.3 : 0)), ...(covering ? LUMPS.map((_, i) => (t >= land(i) && t < land(i) + 0.15 ? 0.4 * (1 - (t - land(i)) / 0.15) : 0)) : [0]));
   const breathe = 1 + 0.006 * Math.sin(lt * 2.4);
+  // coups de zoom vers le visage à chaque motte du hook (comme des jump-cuts) : ×1,22 puis ×1,4
+  let zoom = 1;
+  splats.forEach((s, j) => { if (t >= s) zoom = lerp(zoom, [1.16, 1.3, 1.4][Math.min(j, 2)], prog(t, s, s + 0.12, easeOut)); });
   // une motte lancée d'un côté, en arc bas et rapide (0,24 s), qui s'écrase avec un rebond amorti
   const lumpAt = (L: [number, number, number, number], i: number, at: number) => {
     const u = t - at;
@@ -183,6 +186,7 @@ export const Bouse: React.FC<AnimProps> = ({id, t, lt, p}) => {
   };
   return (
     <>
+      <div style={{position: 'absolute', inset: 0, transformOrigin: '500px 470px', transform: `scale(${zoom})`}}>
       {/* lumière chaude d'étable derrière le sujet */}
       <div style={{position: 'absolute', left: 540 - 560, top: 320, width: 1120, height: 1100, background: `radial-gradient(ellipse at 50% 45%, rgba(${G.goldRgb},0.3), rgba(0,0,0,0) 62%)`}} />
       <div style={{position: 'absolute', left: CARD.x - CARD.w / 2, top: CARD.y - CH / 2, width: CARD.w, height: CH, filter: SHADOW, transform: `translate(${quake * Math.sin(t * 90) * 8}px, ${quake * 6}px) scale(${breathe})`, transformOrigin: '50% 70%'}}>
@@ -196,7 +200,7 @@ export const Bouse: React.FC<AnimProps> = ({id, t, lt, p}) => {
           {/* relief de la matière : bruit → éclairage diffus (lumière en haut à gauche) multiplié, reflets humides spéculaires */}
           <filter id="hb-mat" x="0" y="0" width="100%" height="100%" filterUnits="userSpaceOnUse">
             <feTurbulence type="fractalNoise" baseFrequency="0.055" numOctaves="4" seed="8" result="n" />
-            <feDiffuseLighting in="n" surfaceScale="3.5" diffuseConstant="1" lightingColor="#fff" result="d"><feDistantLight azimuth="235" elevation="48" /></feDiffuseLighting>
+            <feDiffuseLighting in="n" surfaceScale={3.5 + 3 * dry} diffuseConstant="1" lightingColor="#fff" result="d"><feDistantLight azimuth="235" elevation="48" /></feDiffuseLighting>
             <feComposite in="d" in2="SourceGraphic" operator="arithmetic" k1="1.1" k2="0" k3="0" k4="0" result="lit" />
             <feSpecularLighting in="n" surfaceScale="5" specularConstant={0.45 * (1 - dry) + 0.01} specularExponent="34" lightingColor="#FFE9C0" result="sp"><feDistantLight azimuth="235" elevation="52" /></feSpecularLighting>
             <feComposite in="sp" in2="SourceAlpha" operator="in" result="sp2" />
@@ -218,6 +222,7 @@ export const Bouse: React.FC<AnimProps> = ({id, t, lt, p}) => {
         <Drops t={t} at={heat} until={heat + 1.6} />
         {mode !== 'dry' ? [0, 1, 2].map((i) => <Fly key={i} t={t} i={i} cx={520} cy={780} flee={flee} />) : null}
       </svg>
+      </div>
       {mode === 'dry' ? <Order text="SÉCHÉE" k={prog(t, crack + 0.3, crack + 0.55, easeOut)} y={330} size={84} color={G.goldHi} /> : null}
       {p.order ? <Order text={String(p.order)} k={prog(lt, 0.05, 0.3, easeOut)} y={318} size={52} color={G.goldHi} /> : null}
     </>
@@ -311,14 +316,14 @@ export const Osselets: React.FC<AnimProps> = ({id, t, lt, p}) => {
         {[0, 1, 2, 3, 4].map((i) => {
           const st = at + i * 0.07, u = clamp01((t - st) / 0.62);
           if (t < st) return null;
-          const x0 = 540, y0 = 1300, x1 = 250 + i * 145, y1 = 1235 + (rand(i * 3) - 0.5) * 30;
+          const x0 = 540, y0 = 1300, x1 = 230 + i * 155, y1 = 1215 + (rand(i * 3) - 0.5) * 30;
           const x = lerp(x0, x1, u), y = lerp(y0, y1, u) - Math.sin(u * Math.PI) * (420 + 60 * i);
           const land = u >= 1 ? Math.exp(-(t - st - 0.62) * 10) : 0;
           const rot = lerp(0, 540 + (i % 2) * 180, easeOut(u)) + (rand(i) - 0.5) * 24;
           return (
             <g key={i}>
               {u >= 1 ? <ellipse cx={x1} cy={y1 + 58} rx={70} ry={13} fill="rgba(0,0,0,0.5)" /> : null}
-              <g transform={`translate(${x} ${y - land * 18}) rotate(${rot}) scale(1.5)`}>
+              <g transform={`translate(${x} ${y - land * 18}) rotate(${rot}) scale(1.95)`}>
                 <path d={BONE} fill="#E4D4AE" />
                 <g clipPath={`url(#os-c${i})`}><rect x={-50} y={-50} width={100} height={100} fill="url(#os-hd)" opacity={0.6} transform="translate(16 18)" /></g>
                 <path d={BONE} fill="none" stroke={INK} strokeWidth={3} filter="url(#os-wob)" />
@@ -340,7 +345,7 @@ export const Recherche: React.FC<AnimProps> = ({id, lt}) => {
   const res = ['Consultez un médecin', 'Hydropisie : causes', 'Remèdes de grand-mère'];
   return (
     <Paper id={id} x={540} y={790} w={880} h={720} rot={lerp(3, 1, k)} s={lerp(0.88, 1, k)} o={k}>
-      <div style={{position: 'absolute', left: 50, right: 50, top: 70, height: 110, borderRadius: 55, border: `5px solid ${INK}`, background: 'rgba(255,252,244,0.75)', display: 'flex', alignItems: 'center', paddingLeft: 100, fontFamily: GF.sans, fontWeight: 700, fontSize: 42, color: INK, whiteSpace: 'nowrap', overflow: 'hidden'}}>
+      <div style={{position: 'absolute', left: 50, right: 50, top: 70, height: 110, borderRadius: 55, border: `5px solid ${INK}`, background: 'rgba(255,252,244,0.75)', display: 'flex', alignItems: 'center', paddingLeft: 96, fontFamily: GF.sans, fontWeight: 700, fontSize: 42, color: INK, whiteSpace: 'nowrap', overflow: 'hidden'}}>
         {q.slice(0, n)}
         <span style={{opacity: Math.floor(lt * 2.4) % 2 ? 0 : 1, marginLeft: 2}}>|</span>
       </div>
@@ -349,10 +354,10 @@ export const Recherche: React.FC<AnimProps> = ({id, lt}) => {
         <line x1={31} y1={31} x2={45} y2={45} stroke={INK} strokeWidth={6} strokeLinecap="round" />
       </svg>
       {res.map((r, i) => {
-        const o = prog(lt, 1.0 + i * 0.1, 1.15 + i * 0.1, overshoot);
+        const o = prog(lt, 0.85 + i * 0.1, 1.0 + i * 0.1, overshoot);
         return (
           <div key={i} style={{position: 'absolute', left: 70, right: 70, top: 240 + i * 150, opacity: clamp01(o), transform: `translateY(${(1 - clamp01(o)) * 20}px)`}}>
-            <div style={{fontFamily: GF.serif, fontWeight: 900, fontSize: 46, color: '#1E3E8A', textDecoration: 'underline'}}>{r}</div>
+            <div style={{fontFamily: GF.serif, fontWeight: 900, fontSize: 54, color: '#1E3E8A', textDecoration: 'underline'}}>{r}</div>
             <div style={{marginTop: 14, height: 10, width: '86%', background: `repeating-linear-gradient(90deg, rgba(26,17,8,0.45) 0 14px, transparent 14px 20px)`}} />
           </div>
         );
