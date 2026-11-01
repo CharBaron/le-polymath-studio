@@ -66,7 +66,8 @@ export const Aire1 = makeEpisode((B) => {
     let z = sedZ0;
     jumps.forEach(([t, zz]) => { if (T >= t) z = zz; });
     const lean = T >= B.avance ? 1 : 0;
-    return {x: -3 + (z < 14 ? 0.15 : 0), z, p: lean ? {...wait(T, 1, -44), torso: 9, aL: -2, aR: 16} : wait(T, 1, TILT[1]), view: 'front'};
+    const snap = lerp(TILT[1], -66, prog(T, 1.15, 1.24, easeOut)); // la tête casse d'un coup pendant l'accroche
+    return {x: -3 + (z < 14 ? 0.15 : 0), z, p: lean ? {...wait(T, 1, -44), torso: 9, aL: -2, aR: 16} : wait(T, 1, snap), view: 'front'};
   };
   const THEM = (T: number, skip: string[] = []): Walker[] => {
     const out: Walker[] = [];
@@ -80,18 +81,18 @@ export const Aire1 = makeEpisode((B) => {
   // ce qui marche vers ta voiture (à partir de « quelque chose marche vers elle »)
   const stalker = (T: number): Walker | null => {
     if (T < B.marche - 0.2) return null;
-    const z = lerp(19, 10.2, easeOut(clamp01((T - B.marche) / (endT - B.marche))));
+    const z = lerp(17, 9.2, easeOut(clamp01((T - B.marche) / (endT - B.marche))));
     const ph = T * 0.9;
-    return {x: 7.1, z, light: {amb: 0.9, tint: '#1E2838', rim: 'rgba(196,214,255,0.6)'}, p: {...STAND, torso: 6, head: 28 + Math.sin(ph * Math.PI * 2) * 4, lL: -4 + 7 * Math.sin(ph * Math.PI * 2), lR: 4 - 7 * Math.sin(ph * Math.PI * 2), aL: -9 - 3 * Math.sin(ph * Math.PI * 2), aR: 9 + 3 * Math.sin(ph * Math.PI * 2)}, view: 'front', o: prog(T, B.marche - 0.2, B.marche + 0.6)};
+    return {x: 7.1, z, h: 1.95, light: {amb: 0.9, tint: '#1E2838', rim: 'rgba(200,218,255,0.8)'}, p: {...STAND, torso: 6, head: 28 + Math.sin(ph * Math.PI * 2) * 4, lL: -4 + 7 * Math.sin(ph * Math.PI * 2), lR: 4 - 7 * Math.sin(ph * Math.PI * 2), aL: -9 - 3 * Math.sin(ph * Math.PI * 2), aR: 9 + 3 * Math.sin(ph * Math.PI * 2)}, view: 'front', o: prog(T, B.marche - 0.2, B.marche + 0.6)};
   };
-  const warm = {amb: 1, tint: '#2A2018', rim: 'rgba(255,214,160,0.75)'};
-  const cold = {amb: 0.7, tint: '#1E2838', rim: 'rgba(140,170,220,0.32)'};
+  const warm = {amb: 1, tint: '#2A2018', rim: 'rgba(255,214,160,0.42)'};
+  const cold = {amb: 0.72, tint: '#1E2838', rim: 'rgba(140,170,220,0.22)'};
   const CLOCK: [number, number, boolean?][] = [[0, hm(2, 0)], [B.gare, hm(2, 1)], [B.pan, hm(2, 2)], [B.r3, hm(2, 3)], [B.klax, hm(2, 4)], [B.ta, hm(2, 5)], [B.choix, hm(2, 6)]];
   return {
     scenes: [
       // 1 · l'accroche : derrière la berline noire, les faisceaux, une silhouette au bout de chacun
       {t0: 0, render: (p) => (
-        <Lot uid="s1" T={p.T} cam={camK(p.T, {x: -2.85, y: 2.35, z: -1.3, pitch: 4, F: 2400, VY: 960}, [[0, {}], [B.h1b, {z: -0.4, y: 2.25}]])} cars={ROW(p.T)} them={THEM(p.T)} />
+        <Lot uid="s1" T={p.T} cam={camK(p.T, {x: -2.85, y: 2.35, z: -1.4, pitch: 4, F: 2400, VY: 960}, [[0, {}], [B.h1b, {z: 0.5, y: 2.2, F: 2650, VY: 1030}]])} cars={ROW(p.T)} them={THEM(p.T)} />
       )},
       // 2 · plan large : l'aire, la boutique, le pylône, la rangée de voitures
       {t0: B.h1b, tr: 'cut', render: (p) => (
@@ -99,11 +100,14 @@ export const Aire1 = makeEpisode((B) => {
       )},
       // 3 · habitacle vide, portière ouverte, plafonnier, clé qui balance ; au bout du faisceau, quelqu'un
       {t0: B.h2, tr: 'cut', render: (p) => (
-        <Habitacle uid="s3" T={p.T} mode="lot" dash={1} dome={1} door att={1} shake={0.4} cam={{x: lerp(540, 470, prog(p.T, B.h3 - 0.2, B.dil, easeInOut)), y: lerp(980, 1080, prog(p.T, B.h3 - 0.2, B.dil, easeInOut)), z: lerp(1.04, 1.32, prog(p.T, B.h3 - 0.2, B.dil, easeInOut))}} />
+        <Habitacle uid="s3" T={p.T} mode="lot" dash={1} dome={0.55} door att={1} shake={0.4} cam={{x: 540, y: lerp(990, 1010, prog(p.T, B.h2, B.h3)), z: lerp(1.0, 1.1, prog(p.T, B.h2, B.h3))}} />
+      )},
+      {t0: B.h3, tr: 'cut', render: (p) => (
+        <Habitacle uid="s3b" T={p.T} mode="lot" dash={1} dome={0.55} door att={1} shake={0.4} cam={{x: 548, y: lerp(800, 790, prog(p.T, B.h3, B.dil)), z: lerp(2.3, 2.6, prog(p.T, B.h3, B.dil, easeInOut))}} />
       )},
       // 4 · au ras du bitume entre deux pare-chocs : flaques, gaz d'échappement ; titre AIRE 13 · JOUR 1
       {t0: B.dil, tr: 'fade', d: 0.25, render: (p) => (
-        <Lot uid="s4" T={p.T} cam={camK(p.T, {x: -1.5, y: 0.34, z: 2.7, pitch: -2, F: 1150, VY: 1140}, [[B.dil, {}], [B.toi, {z: 3.3, x: -1.35}]])} cars={ROW(p.T, {blur: {sedan: 4, clio: 4}})} them={THEM(p.T)} ripples />
+        <Lot uid="s4" T={p.T} cam={camK(p.T, {x: -1.5, y: 0.75, z: 2.4, pitch: 1, F: 1250, VY: 1060}, [[B.dil, {}], [B.toi, {z: 3.2, x: -1.35}]])} cars={ROW(p.T, {blur: {sedan: 2, clio: 2}})} them={THEM(p.T)} ripples />
       )},
       // 5 · toi au volant sur l'autoroute, puis tu te gares (le parking dans le pare-brise)
       {t0: B.toi, tr: 'black', render: (p) => (
@@ -120,7 +124,7 @@ export const Aire1 = makeEpisode((B) => {
         const x = lerp(4.85, 1.25, k), ph = (p.T - B.sors) * 1.05;
         const pose = k > 0 && k < 1 ? walkP(ph) : P.standArmsDown;
         return (
-          <Lot uid="s7" T={p.T} cam={camK(p.T, {x: 4.9, y: 1.85, z: 0.6, pitch: 3, F: 1450, VY: 980}, [[B.sors, {}], [B.cafe, {x: 1.4, z: 1.4}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)}
+          <Lot uid="s7" T={p.T} cam={camK(p.T, {x: 4.9, y: 1.85, z: 0.6, pitch: 3, F: 1450, VY: 980}, [[B.sors, {}], [B.clio, {x: 2.6, z: 1.0}], [B.cafe, {x: 0.6, z: 1.6}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)}
             toi={{x, z: 4.7 - 0.3 * k, p: pose, flip: true, light: x < 4 ? warm : cold}} />
         );
       }},
@@ -133,7 +137,7 @@ export const Aire1 = makeEpisode((B) => {
       {t0: B.pan, tr: 'cut', render: (p) => <Boutique uid="s9" T={p.T} t0={B.pan} push={[B.pan + 0.3, B.arr + 0.6]} />},
       // 10 · règle 2 : toi debout dans le faisceau de la Clio, éclairé de dos, ton ombre file vers le fond
       {t0: B.r2, tr: 'cut', render: (p) => (
-        <Lot uid="s10" T={p.T} cam={camK(p.T, {x: 0.9, y: 2.05, z: 1.4, pitch: 3, F: 1900, VY: 980}, [[B.r2, {}], [B.bout, {z: 2.6, y: 1.95}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)}
+        <Lot uid="s10" T={p.T} cam={camK(p.T, {x: 2.3, y: 2.3, z: 2.2, pitch: 5, F: 2500, VX: 780, VY: 900}, [[B.r2, {}], [B.bout, {z: 3.2, y: 2.2}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)}
           toi={{x: 0.45, z: 12.4, p: {...BACK, head: 4 + Math.sin(p.T * 1.6) * 2}, view: 'back', light: warm, cast: 5.5}} pylon={false} />
       )},
       // 11 · le long du faisceau du break jusqu'au bout, puis la silhouette en gros plan
@@ -141,8 +145,8 @@ export const Aire1 = makeEpisode((B) => {
         <Lot uid="s11" T={p.T} cam={camK(p.T, {x: 3.05, y: 1.75, z: 11.2, pitch: 1, F: 1500, VY: 990}, [[B.bout, {}], [B.att - 0.05, {z: 13.4}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)} pylon={false} />
       )},
       {t0: B.att, tr: 'cut', render: (p) => (
-        <Lot uid="s12" T={p.T} cam={camK(p.T, {x: 3.25, y: 1.85, z: 14.6, pitch: 4, F: 1550, VY: 900}, [[B.att, {}], [B.r3, {z: 14.9}]])} cars={ROW(p.T, {mine: true})}
-          them={THEM(p.T).map((w) => (Math.abs(w.x - 3.2) < 0.5 ? {...w, p: {...w.p, head: lerp(TILT[3], -58, prog(p.T, B.att + 0.2, B.r3 + 0.3, easeInOut))}} : w))} pylon={false} />
+        <Lot uid="s12" T={p.T} cam={camK(p.T, {x: 3.2, y: 1.75, z: 15.3, pitch: 6, F: 1500, VY: 1000}, [[B.att, {}], [B.r3, {z: 15.6}]])} cars={ROW(p.T, {mine: true})}
+          them={THEM(p.T).map((w) => (Math.abs(w.x - 3.2) < 0.5 ? {...w, light: {amb: 1, tint: '#1E2430', rim: 'rgba(240,228,205,0.5)'}, p: {...w.p, aLb: 14, aRb: -14, head: lerp(lerp(TILT[3], -48, prog(p.T, B.att, B.att + 0.8, easeInOut)), -74, prog(p.T, B.att + 0.85, B.att + 0.93, easeOut))}} : w))} pylon={false} />
       )},
       // 12 · règle 3 : toi à la portière ouverte de la Clio, la main sur le montant, il la retire
       {t0: B.r3, tr: 'cut', render: (p) => {
@@ -150,17 +154,23 @@ export const Aire1 = makeEpisode((B) => {
         const pose: Pose = {...P.standArmsDown, torso: 6 * reach, head: 8 + 10 * reach, aR: lerp(8, 82, reach), aRb: lerp(-4, 18, reach), lL: -5, lR: 6};
         return (
           <Lot uid="s13" T={p.T} cam={camK(p.T, {x: -2.2, y: 1.7, z: 3.0, pitch: 3, F: 1500, VX: 470, VY: 960}, [[B.r3, {}], [B.klax, {z: 3.7}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)}
-            pylon={false} toi={{x: lerp(-1.3, -1.45, 1 - reach), z: 7.75, p: pose, flip: false, light: {amb: 0.95, tint: '#2A2018', rim: 'rgba(255,200,140,0.7)'}}} />
+            pylon={false} toi={{x: lerp(-1.3, -1.45, 1 - reach), z: 7.75, p: pose, flip: false, light: {amb: 1, tint: '#2A2018', rim: 'rgba(255,196,130,0.45)'}}} />
         );
       }},
       // 13 · un klaxon, la berline cale, ses phares meurent ; au bout, celui qui attendait est dans le noir
       {t0: B.klax, tr: 'cut', render: (p) => (
-        <Lot uid="s14" T={p.T} cam={camK(p.T, {x: -2.2, y: 5.4, z: -3.4, pitch: 15, F: 1500, VY: 1000, roll: 0}, [[B.klax, {}], [B.eteint, {z: -2.4}], [B.avance, {z: -1.4, x: -2.6}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)} />
+        <Lot uid="s14" T={p.T} cam={camK(p.T, {x: -3.0, y: 3.4, z: -2.2, pitch: 9, F: 1900, VY: 1000}, [[B.klax, {}], [B.eteint, {z: -1.6}], [B.avance, {z: -0.6}]])} cars={ROW(p.T, {mine: true})} them={THEM(p.T)} />
       )},
       // 14 · il avance par bonds dans le faisceau mort, jusqu'au capot
       {t0: B.avance, tr: 'cut', render: (p) => {
-        const j = jolt(p.T, B.avance + 1.12, 0.12) + jolt(p.T, B.avance + 0.55, 0.05);
-        return <Lot uid="s15" T={p.T} cam={{x: -2.85 + j, y: 2.15 + j, z: -0.2, pitch: 4, F: 2400, VY: 980}} cars={ROW(p.T, {mine: true})} them={THEM(p.T)} />;
+        const j = jolt(p.T, B.avance + 1.12, 0.28) + jolt(p.T, B.avance + 0.55, 0.08);
+        const punch = p.T >= B.avance + 1.12 ? 1 : 0;
+        return <Lot uid="s15" T={p.T} cam={{x: -2.85 + j, y: 2.15 + j, z: -0.2, pitch: 4, F: punch ? 3900 : 2400, VY: punch ? 1010 : 980}} cars={ROW(p.T, {mine: true})} them={THEM(p.T)} pylon={false} />;
+      }},
+      // 14 bis · flash blanc d'une fraction de seconde sur le dernier bond (même plan)
+      {t0: B.avance + 1.12, tr: 'white', d: 0.1, render: (p) => {
+        const j = jolt(p.T, B.avance + 1.12, 0.28);
+        return <Lot uid="s15b" T={p.T} cam={{x: -2.85 + j, y: 2.15 + j, z: -0.2, pitch: 4, F: 3900, VY: 1010}} cars={ROW(p.T, {mine: true})} them={THEM(p.T)} pylon={false} />;
       }},
       // 15 · il est au volant (la tête trop haute dans la lunette arrière) ; les phares se rallument, plus personne au bout
       {t0: B.monte, tr: 'black', d: 0.2, render: (p) => (
@@ -175,8 +185,8 @@ export const Aire1 = makeEpisode((B) => {
       {t0: B.choix, tr: 'cut', render: (p) => {
         const look = p.T < B.a ? 0 : p.T < B.b ? -1 : 1;
         return (
-          <Lot uid="s19" T={p.T} cam={camK(p.T, {x: 3.0, y: 1.45, z: -3.2, pitch: 1, F: 1250, VY: 1130}, [[B.choix, {}], [endT, {z: -2.5, y: 1.4}]])} cars={ROW(p.T, {mine: true})} them={[...THEM(p.T), ...((): Walker[] => { const st = stalker(p.T); return st ? [st] : []; })()]} pylon={false}
-            toi={{x: 3.0, z: 0.9, p: {...BACK, torso: look * 3, head: look * 10 + Math.sin(p.T * 2) * 2}, view: 'back', light: {amb: 0.8, tint: '#20242E', rim: 'rgba(255,214,160,0.6)'}}} />
+          <Lot uid="s19" T={p.T} cam={camK(p.T, {x: 3.0, y: 1.25, z: -0.9, pitch: 1, F: 920, VY: 1120}, [[B.choix, {}], [endT, {z: -0.5, F: 960}]])} cars={ROW(p.T, {mine: true})} them={[...THEM(p.T), ...((): Walker[] => { const st = stalker(p.T); return st ? [st] : []; })()]} pylon={false}
+            toi={{x: 3.0, z: 1.7, p: {...BACK, torso: look * 3, head: look * 10 + Math.sin(p.T * 2) * 2}, view: 'back', light: {amb: 0.85, tint: '#20242E', rim: 'rgba(255,214,160,0.35)'}}} />
         );
       }},
       // 19 · carte de fin sur l'aire assombrie

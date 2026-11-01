@@ -165,7 +165,7 @@ const Car: React.FC<{cam: ACam; c: CarSpec; T: number}> = ({cam, c, T}) => {
       const yt = D.H1 - 0.07, ybt = D.H1 - 0.2;
       n.push(<polygon key={'tl' + s} points={Fq([[xa, ybt], [xb, ybt], [xb, yt], [xa, yt]])} fill={mixHex(fk()('#2A0808'), '#C8221C', tail)} stroke={fk()('#120404')} strokeWidth={1.2} strokeLinejoin="round" />);
       n.push(<polygon key={'tc' + s} points={Fq([[xa + 0.03, ybt + 0.035], [xb - 0.03, ybt + 0.035], [xb - 0.03, yt - 0.035], [xa + 0.03, yt - 0.035]])} fill={mixHex('#3A0C0C', '#FFB4A8', tail)} opacity={0.9} />);
-      if (tail > 0.02) {
+      if (tail > 0.02 && project(cam, c.x, 0.7, z0).d > 3.2) {
         const g = F((xa + xb) / 2, (yt + ybt) / 2), s2 = project(cam, c.x, 0.7, z0).s;
         n.push(<circle key={'tg' + s} cx={g[0]} cy={g[1]} r={0.2 * s2} fill={AC.tail} opacity={0.45 * tail} filter="url(#b8)" style={{mixBlendMode: 'screen'}} />);
       }
@@ -192,6 +192,8 @@ const Car: React.FC<{cam: ACam; c: CarSpec; T: number}> = ({cam, c, T}) => {
     n.unshift(<ellipse key="spill" cx={gp.x} cy={gp.y} rx={1.3 * gp.s} ry={0.45 * gp.s} fill="#FFC27A" opacity={0.35 * (c.dome ?? 1)} filter="url(#b14)" style={{mixBlendMode: 'screen'}} />);
     // panneau intérieur éclairé par le plafonnier (chaud), garniture, accoudoir, cadre de vitre fin
     const warm = (col: string, k: number) => fk()(mixHex(col, '#FFB870', k * (c.dome ?? 1)));
+    const cg = project(cam, x0 - 0.05, 1.05, hz - 0.6);
+    n.push(<circle key="cabglow" cx={cg.x} cy={cg.y} r={0.8 * cg.s} fill="#FFC27A" opacity={0.42 * (c.dome ?? 1)} filter="url(#b24)" style={{mixBlendMode: 'screen'}} />);
     n.push(<polygon key="dp" points={pts(pnl)} fill={warm(mixHex(base, '#05060A', 0.55), 0.12)} stroke={stroke} strokeWidth={1.4} strokeLinejoin="round" />);
     n.push(<polygon key="dpi" points={pts([lerp2(pnl[0], pnl[3], 0.14), lerp2(pnl[1], pnl[2], 0.14), lerp2(pnl[1], pnl[2], 0.6), lerp2(pnl[0], pnl[3], 0.6)])} fill={warm('#23211E', 0.25)} />);
     n.push(<polygon key="dgl" points={pts(wnd)} fill={glass} opacity={0.45} />);
@@ -405,7 +407,7 @@ export const Lot: React.FC<LotProps> = ({T, cam, cars, them = [], toi, rain = 1,
       const per = 1.1 + rand(k) * 0.8, ph = ((T + rand(k * 3.3) * per) % per) / per;
       const X = cam.x + (rand(k * 7.1) - 0.5) * 3, Z = cam.z + 1.2 + rand(k * 2.9) * 4;
       const p = project(cam, X, 0, Z);
-      rip.push(<ellipse key={k} cx={p.x} cy={p.y} rx={(0.04 + 0.25 * ph) * p.s} ry={(0.04 + 0.25 * ph) * p.s * 0.22} fill="none" stroke="#D9E2EC" strokeWidth={1.4} opacity={0.5 * (1 - ph)} />);
+      rip.push(<ellipse key={k} cx={p.x} cy={p.y} rx={(0.04 + 0.25 * ph) * p.s} ry={(0.04 + 0.25 * ph) * p.s * 0.22} fill="none" stroke="#E3EAF2" strokeWidth={2} opacity={0.75 * (1 - ph)} />);
     }
   }
   return (

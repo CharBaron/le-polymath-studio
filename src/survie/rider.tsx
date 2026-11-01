@@ -234,7 +234,7 @@ export const Figure: React.FC<FigureProps> = ({look, p, x, y, h, flip = false, l
   };
   const hy = hipY ?? -(0.437 * h * (look.k?.leg ?? 1));
   const rim = light.rim ? (
-    <g style={{filter: `drop-shadow(0 0 ${0.025 * h}px ${light.rim})`}} opacity={0.95}>
+    <g style={{filter: `drop-shadow(0 0 ${0.018 * h}px ${light.rim})`}} opacity={look.cap ? 0.7 : 0.95}>
       {[[b.hpL, b.kL, b.fL], [b.hpR, b.kR, b.fR], [b.shL, b.eL, b.hL], [b.shR, b.eR, b.hR]].map((q, i) => (
         <polyline key={i} points={pts(q as Pt[])} fill="none" stroke={light.rim} strokeWidth={w * 1.12 + 4 * o} strokeLinecap="round" strokeLinejoin="round" />
       ))}

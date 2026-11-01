@@ -348,7 +348,7 @@ export const Gobelet: React.FC<{T: number; t0: number; uid: string}> = ({T, t0, 
 // ---------------- la porte vitrée de la boutique et le panneau de consignes ----------------
 export const Boutique: React.FC<{T: number; t0: number; push: [number, number]; uid: string; toiP?: Pose}> = ({T, t0, push, uid, toiP}) => {
   const k = prog(T, push[0], push[1], easeInOut);
-  const cam = {x: lerp(540, 560, k), y: lerp(960, 990, k), z: lerp(1, 1.1, k) + 0.012 * (T - t0)};
+  const cam = {x: lerp(540, 556, k), y: 975, z: lerp(1, 1.1, k) + 0.01 * (T - t0)};
   const tube = rand(Math.floor(T * 18) * 3.7) > 0.15 ? 1 : 0.2;
   const neon = rand(Math.floor(T * 11) * 5.1 + 2) > 0.1 ? 1 : 0.3;
   const sway = Math.sin(T * 1.9) * 0.8;
@@ -363,7 +363,7 @@ export const Boutique: React.FC<{T: number; t0: number; push: [number, number]; 
         {/* façade sombre, néon OUVERT 24H rouge qui grésille */}
         <rect x={-300} y={-300} width={1680} height={2600} fill="#14171B" />
         <rect x={-300} y={1720} width={1680} height={600} fill="#0E1013" />
-        <text x={540} y={210} textAnchor="middle" fontFamily={SF.title} fontSize={110} fill="#FF4A3A" opacity={neon} letterSpacing={8} style={{filter: 'drop-shadow(0 0 18px rgba(255,60,40,0.9))'}}>OUVERT 24H</text>
+        <text x={540} y={240} textAnchor="middle" fontFamily={SF.title} fontSize={96} fill="#FF4A3A" opacity={neon} letterSpacing={8} style={{filter: 'drop-shadow(0 0 18px rgba(255,60,40,0.9))'}}>OUVERT 24H</text>
         {/* intérieur vu à travers la vitre : plafond aux tubes, rayons vides en perspective, comptoir, machine à café */}
         <g>
           <rect x={160} y={300} width={760} height={1420} fill={SH(0.55)} />
@@ -397,6 +397,10 @@ export const Boutique: React.FC<{T: number; t0: number; push: [number, number]; 
         {/* le panneau jaune scotché sur la vitre ; la première consigne arrachée */}
         <g transform={`translate(0,150) rotate(${-2.5 + sway * 0.2},540,820)`}>
           <path d="M300 520 L780 520 L780 1180 L300 1180 L300 690 L420 660 L520 700 L640 650 L780 690 L780 600 L300 600 Z" fill="none" />
+          {/* derrière la déchirure : le dos du papier resté collé, un reste de scotch */}
+          <rect x={300} y={640} width={480} height={130} fill="#D8CFA8" />
+          <rect x={300} y={640} width={480} height={130} fill="#000" opacity={0.12} />
+          <rect x={470} y={672} width={150} height={30} fill="#E8EEF2" opacity={0.45} transform="rotate(-6,545,687)" />
           {/* morceau du haut (en-tête) */}
           <rect x={300} y={500} width={480} height={150} fill="#F2D23C" stroke="#8C7414" strokeWidth={2} />
           <text x={540} y={566} textAnchor="middle" fontFamily={SF.title} fontSize={58} fill="#1A1608" letterSpacing={3}>AIRE 13</text>
