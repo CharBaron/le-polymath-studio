@@ -71,6 +71,8 @@ const LABEL = {montserrat: mont.fontFamily, elite: elite.fontFamily, plex: plex.
 /** identité visuelle d'une vidéo : couleur, polices, fond clair ou sombre, ornements, étalonnage, habillage */
 export type Theme = {
   accent: Accent;
+  /** hook en énorme (insulte, règle 21) : capitales, jusqu'à 132 px, au lieu des 82 px du titre d'accroche */
+  hookBig?: boolean;
   display?: keyof typeof DISPLAY;
   label?: keyof typeof LABEL;
   /** light : le fond « marble » de la vidéo est clair (parchemin) → textes en encre, bande sombre sous les sous-titres */
@@ -82,11 +84,11 @@ export type Theme = {
   /** texte affiché en petit dans l'habillage (hud) */
   overlayLabel?: string;
 };
-export const THEME: Required<Omit<Theme, 'overlay' | 'overlayLabel'>> & Pick<Theme, 'overlay' | 'overlayLabel'> = {accent: 'or', display: 'playfair', label: 'montserrat', base: 'dark', ornament: 'greek'};
+export const THEME: Required<Omit<Theme, 'overlay' | 'overlayLabel' | 'hookBig'>> & Pick<Theme, 'overlay' | 'overlayLabel' | 'hookBig'> = {accent: 'or', display: 'playfair', label: 'montserrat', base: 'dark', ornament: 'greek'};
 /** appelé par la scène avant ses enfants : toute la vidéo prend le thème (accent, polices, couleurs de texte) */
 export const applyTheme = (t: Accent | Theme) => {
   const th: Theme = typeof t === 'string' ? {accent: t} : t;
-  Object.assign(THEME, {display: 'playfair', label: 'montserrat', base: 'dark', ornament: 'greek', overlay: undefined, overlayLabel: undefined}, th);
+  Object.assign(THEME, {display: 'playfair', label: 'montserrat', base: 'dark', ornament: 'greek', overlay: undefined, overlayLabel: undefined, hookBig: false}, th);
   applyAccent(THEME.accent);
   GF.serif = `${DISPLAY[THEME.display]}, Georgia, serif`;
   GF.label = `${LABEL[THEME.label]}, "Arial Black", sans-serif`;
@@ -459,7 +461,12 @@ export {easeIn, easeOut, overshoot};
 // ---------- idées reprises du kit de Hark (kit_style_gravure/PROMPT_MAITRE.txt) ----------
 /** titre d'accroche doré écrit en haut dès l'image 0 (miniature) ; « | » = retour à la ligne ; k = opacité */
 export const HookTitle: React.FC<{text: string; k: number}> = ({text, k}) =>
-  k <= 0 ? null : (
+  k <= 0 ? null : THEME.hookBig ? (
+    // hook insulte (règle 21) : le texte en énorme, capitales, assez gros pour se lire avant que le doigt ne parte
+    <div style={{position: 'absolute', left: 30, right: 30, top: 150, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, textTransform: 'uppercase', fontSize: Math.min(132, 1440 / Math.max(...text.split('|').map((l) => l.length))), lineHeight: 1.08, whiteSpace: 'nowrap', color: THEME.base === 'light' ? G.goldDeep : G.goldHi, opacity: k, WebkitTextStroke: THEME.base === 'light' ? '10px rgba(250,240,220,0.95)' : '3px rgba(10,6,3,0.9)', paintOrder: 'stroke fill', textShadow: THEME.base === 'light' ? '0 4px 18px rgba(60,20,10,0.5)' : '0 6px 26px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.7)'}}>
+      {text.split('|').map((ln, i) => <div key={i}>{ln}</div>)}
+    </div>
+  ) : (
     <div style={{position: 'absolute', left: 70, right: 70, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: Math.min(82, 1500 / Math.max(...text.split('|').map((l) => l.length))), whiteSpace: 'nowrap', lineHeight: 1.08, color: G.gold, textTransform: 'uppercase', opacity: k, textShadow: THEME.base === 'light' ? G.shadow : `0 0 28px rgba(${G.goldRgb},0.4), 0 6px 18px rgba(0,0,0,0.9)`}}>
       {text.split('|').map((ln, i) => <div key={i}>{ln}</div>)}
     </div>

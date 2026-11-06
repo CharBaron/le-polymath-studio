@@ -28,6 +28,8 @@ STYLES = {
     'ecole':    {'ink': (14, 22, 40), 'paper': (238, 234, 222), 'card': (242, 238, 228), 'rim': (96, 150, 255)},
     'boudoir': {'ink': (22, 10, 24), 'paper': (238, 230, 214), 'card': (242, 235, 222), 'rim': (196, 92, 200)},
     'imprimerie': {'ink': (12, 14, 22), 'paper': (232, 226, 210), 'card': (238, 233, 220), 'rim': (63, 208, 255)},
+    'corinthe': {'ink': (24, 14, 8), 'paper': (232, 212, 176), 'card': (236, 218, 184), 'rim': (214, 112, 58)},
+    'ecorche':  {'ink': (32, 8, 8), 'paper': (238, 224, 204), 'card': (242, 230, 212), 'rim': (205, 40, 34)},
     'etable':   {'ink': (34, 22, 10), 'paper': (234, 218, 178), 'card': (238, 224, 188), 'rim': (214, 150, 52)},
 }
 S = dict(STYLES['or'])
@@ -280,6 +282,16 @@ def textures(out, style):
         base = base * (1 - 0.5 * ink[..., None])
         light = np.array([232, 226, 210], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
         vel = cloth((14, 26, 64), 21)
+    elif style == 'corinthe':  # mur de terre cuite fissuré d'une ruelle de Corinthe, papier ocre, velours rouille
+        crack = np.clip(1 - np.abs(fbm(H, W, 61, 5, 240) - 0.5) * 42, 0, 1)
+        base = np.array([44, 24, 14], np.float32)[None, None] * (0.72 + 0.5 * n1[..., None]) * (1 - 0.55 * crack[..., None])
+        light = np.array([232, 212, 176], np.float32)[None, None] * (0.93 + 0.1 * n2[..., None])
+        vel = cloth((78, 32, 16), 21)
+    elif style == 'ecorche':   # table de dissection : fibres de muscle obliques rouge sombre, papier de planche, velours sang
+        fib = ndi.rotate(ndi.gaussian_filter(rng.normal(0, 1, (H + 900, W + 900)).astype(np.float32), (1.3, 60)), 24, reshape=False, order=1)[450:450 + H, 450:450 + W] * 3.2
+        base = np.array([40, 12, 12], np.float32)[None, None] * (0.72 + 0.4 * n1[..., None] + 0.3 * fib[..., None])
+        light = np.array([238, 224, 204], np.float32)[None, None] * (0.93 + 0.1 * n2[..., None])
+        vel = cloth((84, 14, 14), 21)
     elif style == 'etable':    # étable de nuit : planches verticales mal jointes, brins de paille ; papier paille ; velours brun fumier
         board = ((xx // 135) * 7919 % 97) / 97
         gap = (xx % 135) < 4

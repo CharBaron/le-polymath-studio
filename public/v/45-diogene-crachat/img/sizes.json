@@ -1,0 +1,86 @@
+{
+ "ribera_plein": [
+  1080,
+  1920
+ ],
+ "ribera_bouche": [
+  1080,
+  1920
+ ],
+ "ribera_rond": [
+  463,
+  464
+ ],
+ "couture_plein": [
+  1080,
+  1920
+ ],
+ "couture_salle": [
+  898,
+  597
+ ],
+ "riche": [
+  778,
+  1079
+ ],
+ "giordano": [
+  778,
+  684
+ ],
+ "coin": [
+  490,
+  490
+ ],
+ "crayer_dio": [
+  878,
+  919
+ ],
+ "crayer_dio_plein": [
+  1080,
+  1920
+ ],
+ "crayer_alex": [
+  818,
+  1128
+ ],
+ "crayer_alex_rond": [
+  232,
+  232
+ ],
+ "castig": [
+  1080,
+  1920
+ ],
+ "rosa": [
+  1080,
+  1920
+ ],
+ "poulet": [
+  878,
+  1061
+ ],
+ "poulet_plein": [
+  1080,
+  1920
+ ],
+ "chiens": [
+  878,
+  691
+ ],
+ "foule_plein": [
+  1080,
+  1920
+ ],
+ "vieux": [
+  818,
+  1059
+ ],
+ "pieuvre": [
+  658,
+  511
+ ],
+ "mortalex": [
+  1080,
+  1920
+ ]
+}

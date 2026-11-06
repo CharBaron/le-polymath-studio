@@ -1,0 +1,139 @@
+{
+ "fps": 30,
+ "duration": 74.934,
+ "frames": 2248,
+ "beats": {
+  "hook": 0.19,
+  "h": 0.19,
+  "h2": 1.92,
+  "test": 3.5,
+  "tel": 3.5,
+  "touche": 5.68,
+  "mou": 6.7,
+  "tourne": 7.82,
+  "dur": 11.23,
+  "brachial": 12.18,
+  "eteint": 15.56,
+  "visse": 18.32,
+  "force": 20.22,
+  "chicago": 22.11,
+  "pan": 25.78,
+  "monte": 28.1,
+  "hypnose": 29.51,
+  "cerveau": 32.61,
+  "decharge": 35.19,
+  "relance": 39.52,
+  "protege": 41.58,
+  "an39": 43.56,
+  "frac": 47.84,
+  "leurs": 50.35,
+  "bdf": 51.72,
+  "personne": 54.06,
+  "esprit": 55.26,
+  "serrer": 55.26,
+  "clev": 57.4,
+  "imagine": 58.46,
+  "bouge": 61.24,
+  "pct": 62.18,
+  "gramme": 65.84,
+  "fin": 68.48,
+  "toi": 68.48,
+  "loop": 71.33
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.19,
+   "t1": 3.5,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "test",
+   "t0": 3.5,
+   "t1": 12.18,
+   "scene": null,
+   "beats": [
+    "tel",
+    "touche",
+    "mou",
+    "tourne",
+    "dur"
+   ]
+  },
+  {
+   "id": "brachial",
+   "t0": 12.18,
+   "t1": 20.22,
+   "scene": null,
+   "beats": [
+    "eteint",
+    "visse"
+   ]
+  },
+  {
+   "id": "force",
+   "t0": 20.22,
+   "t1": 39.52,
+   "scene": null,
+   "beats": [
+    "chicago",
+    "pan",
+    "monte",
+    "hypnose",
+    "cerveau",
+    "decharge"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 39.52,
+   "t1": 55.26,
+   "scene": null,
+   "beats": [
+    "protege",
+    "an39",
+    "frac",
+    "leurs",
+    "bdf",
+    "personne"
+   ]
+  },
+  {
+   "id": "esprit",
+   "t0": 55.26,
+   "t1": 68.48,
+   "scene": null,
+   "beats": [
+    "serrer",
+    "clev",
+    "imagine",
+    "bouge",
+    "pct",
+    "gramme"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 68.48,
+   "t1": 74.934,
+   "scene": null,
+   "beats": [
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le mensonge du biceps",
+ "hook": "cet enculé|de biceps",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Ceux qui font 4 séances de bras par semaine viennent d'apprendre qu'ils ont entraîné un tournevis."
+ }
+}

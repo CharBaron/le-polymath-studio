@@ -1,0 +1,166 @@
+{
+ "fps": 30,
+ "duration": 69.84,
+ "frames": 2095,
+ "beats": {
+  "hook": 0.2,
+  "h": 0.2,
+  "h2": 3.31,
+  "crachat": 4.21,
+  "regle": 4.21,
+  "racle": 7.156,
+  "pire": 10.17,
+  "faussaire": 12.47,
+  "qui": 12.47,
+  "jarre": 14.53,
+  "lanterne": 15.9,
+  "lampe": 15.9,
+  "homme": 18.44,
+  "poulet": 22.24,
+  "platon": 19.57,
+  "chien": 24.88,
+  "os": 24.88,
+  "pisse": 27.7,
+  "relance": 29.24,
+  "pirates": 30.445,
+  "metier": 33.37,
+  "commander": 34.269,
+  "acheteur": 35.514,
+  "achete": 39.026,
+  "enfants": 40.22,
+  "alexandre": 41.59,
+  "alex": 41.59,
+  "demande": 44.16,
+  "ombre": 45.06,
+  "mort": 47.23,
+  "ans": 47.23,
+  "versions": 49.17,
+  "jour": 54.12,
+  "babylone": 56.401,
+  "meurt": 57.41,
+  "fin": 58.61,
+  "pareil": 58.61,
+  "toi": 62.07,
+  "loop": 65.17
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.2,
+   "t1": 4.21,
+   "scene": null,
+   "beats": [
+    "h",
+    "h2"
+   ]
+  },
+  {
+   "id": "crachat",
+   "t0": 4.21,
+   "t1": 12.47,
+   "scene": null,
+   "beats": [
+    "regle",
+    "racle",
+    "pire"
+   ]
+  },
+  {
+   "id": "faussaire",
+   "t0": 12.47,
+   "t1": 15.9,
+   "scene": null,
+   "beats": [
+    "qui",
+    "jarre"
+   ]
+  },
+  {
+   "id": "lanterne",
+   "t0": 15.9,
+   "t1": 22.24,
+   "scene": null,
+   "beats": [
+    "lampe",
+    "homme"
+   ]
+  },
+  {
+   "id": "poulet",
+   "t0": 22.24,
+   "t1": 24.88,
+   "scene": null,
+   "beats": [
+    "platon"
+   ]
+  },
+  {
+   "id": "chien",
+   "t0": 24.88,
+   "t1": 29.24,
+   "scene": null,
+   "beats": [
+    "os",
+    "pisse"
+   ]
+  },
+  {
+   "id": "relance",
+   "t0": 29.24,
+   "t1": 41.59,
+   "scene": null,
+   "beats": [
+    "pirates",
+    "metier",
+    "commander",
+    "acheteur",
+    "achete",
+    "enfants"
+   ]
+  },
+  {
+   "id": "alexandre",
+   "t0": 41.59,
+   "t1": 47.23,
+   "scene": null,
+   "beats": [
+    "alex",
+    "demande",
+    "ombre"
+   ]
+  },
+  {
+   "id": "mort",
+   "t0": 47.23,
+   "t1": 58.61,
+   "scene": null,
+   "beats": [
+    "ans",
+    "versions",
+    "jour",
+    "babylone",
+    "meurt"
+   ]
+  },
+  {
+   "id": "fin",
+   "t0": 58.61,
+   "t1": 69.84,
+   "scene": null,
+   "beats": [
+    "pareil",
+    "toi",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Le crachat de Diogène",
+ "hook": "ce fils de pute|de Diogène",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Il a vécu 90 ans dans une jarre en crachant sur les riches. Toi tu pleures quand ton wifi saute."
+ }
+}

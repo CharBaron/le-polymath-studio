@@ -233,7 +233,7 @@ def make(cue_file, shots_module, semis=0):
         b = tl['beats']; dur = tl['duration']
         subprocess.run(['node', 'scripts/shots.mjs', os.path.relpath(here, ROOT), shots_module], cwd=ROOT, check=True)
         shots = json.load(open(os.path.join(here, 'build', 'shots.json')))
-        nom, fin, loop = b['nom'], b.get('toi', b.get('fin', dur - 6)), b['loop']
+        nom, fin, loop = b.get('nom', b.get('relance', dur * 0.5)), b.get('toi', b.get('fin', dur - 6)), b['loop']  # sans mot-concept : le pivot est la relance
         harm = sorted([(0, 'Dm'), (nom * 0.33, 'Bb'), (nom * 0.66, 'Gm'), (nom, 'Dm'), (nom + (fin - nom) * 0.4, 'Bb'), (nom + (fin - nom) * 0.75, 'Gm'), (fin, 'A'), (loop, 'Dm')])
         chord_at = lambda t: [h for h in harm if h[0] <= t + 0.06][-1][1]
         if music:
