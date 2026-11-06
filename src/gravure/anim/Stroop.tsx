@@ -104,14 +104,14 @@ export const Stroop: React.FC<AnimProps> = ({t, lt, t1, p}) => {
   const push = mode === 'test' ? 1 + 0.04 * prog(t, 0.5, Math.min(go, 5), easeOut) : 1; // avant « Vas-y » seulement : le tableau est fixe pendant le test
   const open = Number(p.open ?? 0); // ouverture : les encres s'affolent et le tableau recule jusqu'à `open`, puis tout se pose pour le test
   const shuffle = p.shuffle ? 1 + Math.floor(lt / 0.42) : mode === 'test' && t > 0.07 && t < open ? 1 + Math.floor(t / 0.13) : 0;
-  const crash = mode === 'test' ? 1 + 0.4 * (1 - prog(t, 0, 0.5, easeOut)) : mode === 'loop' && !p.order ? 1 + 0.4 * prog(t, t1 - 0.45, t1 - 0.03, easeOut) : 1;
+  const crash = mode === 'test' ? 1 + 0.16 * (1 - prog(t, 0, 0.5, easeOut)) : mode === 'loop' && !p.order ? 1 + 0.16 * prog(t, t1 - 0.45, t1 - 0.03, easeOut) : 1;
   const beat = punch(t, nums(p, 'hits'));
   const P0 = pos(0);
   const sz = 1 + 0.9 * zk;
   const stopped = mode === 'test' && t >= stop;
   return (
     <>
-      <div style={{position: 'absolute', inset: 0, transformOrigin: `${P0.x}px ${P0.y}px`, transform: `translate(${(540 - P0.x) * zk}px, ${(800 - P0.y) * zk}px) scale(${sz * push * beat * crash})`}}>
+      <div style={{position: 'absolute', inset: 0, transformOrigin: `${P0.x}px ${P0.y}px`, transform: `translate(${(540 - P0.x) * zk + (1 - crash) * (540 - P0.x)}px, ${(800 - P0.y) * zk + (1 - crash) * (875 - P0.y)}px) scale(${sz * push * beat * crash})`}}>
         <Casse dim={stopped ? 0.5 * prog(t, stop, stop + 0.2) : 0} />
         <svg style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}} width={1080} height={1920}>
           <InkFilters />

@@ -6,7 +6,7 @@ tempo: 1.04
 pauses: 0.45
 tail: 0.8
 fx: 0.42
-hook: ton connard|de cerveau|va te mentir
+hook: ton connard|de cerveau ment
 motcle: femme
 hashtags: #test #illusiondoptique #psychologie #cerveau #lepolymath
 description: Test psychologique, illusion d'optique : quel âge a cette femme ? Un seul essai. La figure ambiguë de W. E. Hill (1915) et ce que ton chiffre dit de toi (Nicholls et al., 2018).

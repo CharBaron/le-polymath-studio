@@ -16,9 +16,9 @@ const BOX = {x: 190, y: 175, w: 920, h: 975};
 type Cam = {ox: number; oy: number; sx: number; sy: number; z: number};
 const BASE: Cam = {ox: 650, oy: 662, sx: 520, sy: 870, z: 1};
 const CLOSE: Cam = {ox: 672, oy: 720, sx: 520, sy: 830, z: 2.7};
-const EAR: Cam = {ox: 685, oy: 618, sx: 520, sy: 800, z: 6.5};
-const CHIN: Cam = {ox: 622, oy: 748, sx: 520, sy: 800, z: 6};
-const NECK: Cam = {ox: 725, oy: 796, sx: 520, sy: 800, z: 5.5};
+const EAR: Cam = {ox: 685, oy: 618, sx: 520, sy: 800, z: 4.5};
+const CHIN: Cam = {ox: 622, oy: 748, sx: 520, sy: 800, z: 3.8};
+const NECK: Cam = {ox: 725, oy: 796, sx: 520, sy: 800, z: 3.5};
 const mix = (a: Cam, b: Cam, k: number): Cam => ({ox: lerp(a.ox, b.ox, k), oy: lerp(a.oy, b.oy, k), sx: lerp(a.sx, b.sx, k), sy: lerp(a.sy, b.sy, k), z: a.z * Math.pow(b.z / a.z, k)});
 const at = (c: Cam, x: number, y: number): [number, number] => [c.sx + (x - c.ox) * K0 * c.z, c.sy + (y - c.oy) * K0 * c.z];
 /** courbe lissée passant par les points (repères du dessin → écran) */
@@ -62,7 +62,7 @@ const Tag: React.FC<{text: string; x: number; y: number; px: number; py: number;
   </>
 );
 const Age: React.FC<{text: string; col: string; k: number}> = ({text, col, k}) => k <= 0 ? null : (
-  <div style={{position: 'absolute', left: 0, right: 0, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 138, color: col, opacity: Math.min(1, k * 2), transform: `scale(${lerp(1.3, 1, k)})`, textShadow: '0 8px 24px rgba(0,0,0,0.9)'}}>{text}</div>
+  <div style={{position: 'absolute', left: 0, right: 0, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: text.length > 8 ? 106 : 138, color: col, opacity: Math.min(1, k * 2), transform: `scale(${lerp(1.3, 1, k)})`, textShadow: '0 8px 24px rgba(0,0,0,0.9)'}}>{text}</div>
 );
 
 export const Hill: React.FC<AnimProps> = ({id, t, lt, t1, p}) => {
@@ -113,7 +113,7 @@ export const Hill: React.FC<AnimProps> = ({id, t, lt, t1, p}) => {
         <Tag text={who ? 'NEZ' : 'MENTON'} x={210} y={1110} px={cx} py={cy} col={col} k={k} />
         <Tag text={who ? 'BOUCHE' : 'COLLIER'} x={800} y={1180} px={nx} py={ny} col={col} k={k} />
         {who ? <Tag text="MENTON" x={460} y={1262} px={mx} py={my} col={col} k={k} /> : null}
-        {t < quatre ? <Age text="20 ANS" col={OR} k={prog(t, Number(p.vingt) + 0.05, Number(p.vingt) + 0.3, easeOut)} /> : t < meme ? <Age text="80 ANS" col={RED} k={prog(t, quatre + 0.05, quatre + 0.25, easeOut)} /> : <Age text="LE MÊME" col={G.goldHi} k={prog(t, meme, meme + 0.15, easeOut)} />}
+        {t < quatre ? <Age text="20 ANS" col={OR} k={prog(t, Number(p.vingt) + 0.05, Number(p.vingt) + 0.3, easeOut)} /> : t < meme ? <Age text="80 ANS" col={RED} k={prog(t, quatre + 0.05, quatre + 0.25, easeOut)} /> : <Age text={String(p.label ?? 'LE MÊME')} col={G.goldHi} k={prog(t, meme, meme + 0.15, easeOut)} />}
       </div>
     );
   }
@@ -132,8 +132,7 @@ export const Hill: React.FC<AnimProps> = ({id, t, lt, t1, p}) => {
         <circle cx={px} cy={py} r={ear ? 120 : neck ? 170 : 96} fill="none" stroke={s > 0.5 ? RED : OR} strokeWidth={10} strokeDasharray="1000" strokeDashoffset={1000 * (1 - prog(lt, 0.2, 0.55, easeOut))} />
       </svg>
       <div style={{position: 'absolute', left: 0, right: 0, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 120, lineHeight: 1, whiteSpace: 'nowrap'}}>
-        <span style={{color: OR, opacity: 1 - 0.55 * s, textDecoration: s > 0.4 ? `line-through ${RED} 10px` : 'none'}}>{a}</span>
-        {s > 0 ? <span style={{color: RED, display: 'inline-block', marginLeft: 34, transform: `scale(${lerp(1.5, 1, s)})`, opacity: s}}>{b}</span> : null}
+        {s < 0.5 ? <span style={{color: OR}}>{a}</span> : <span style={{color: RED, display: 'inline-block', transform: `scale(${lerp(1.5, 1, s)})`}}>{b}</span>}
       </div>
     </>
   );
@@ -147,8 +146,8 @@ export const Flash: React.FC<AnimProps> = ({id, t, p}) => {
   return (
     <>
       <div style={{position: 'absolute', inset: 0, background: '#07030A'}} />
-      {on ? <Dessin id={id} c={BASE} win={WIN0} /> : null}
-      {t < a ? <Order text="REGARDE" k={1} y={860} size={72} color={G.goldHi} /> : null}
+      {on ? <><Dessin id={id} c={BASE} win={WIN0} /><Order text="0,5 SECONDE" k={1} y={250} size={84} color={G.goldHi} /></> : null}
+      {t < a ? <Order text="REGARDE" k={1} y={830} size={120} color={G.goldHi} /> : null}
       {after > 0 ? <div style={{position: 'absolute', left: 0, right: 0, top: 640, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 250, color: G.goldHi, transform: `scale(${lerp(1.4, 1, after)})`, textShadow: `0 0 40px rgba(${G.goldRgb},0.5)`}}>0,5 s</div> : null}
     </>
   );
@@ -173,23 +172,23 @@ export const Foule: React.FC<AnimProps> = ({id, lt, t1, t0}) => {
 /** la règle des âges : les 10 % les plus jeunes (18-22 ans) lui donnent 34 ans, les 10 % les plus âgés (49-68 ans) 46 */
 export const Ages: React.FC<AnimProps> = ({id, t, p}) => {
   const a = Number(p.a), b = Number(p.b);
-  const X = (v: number) => 110 + ((v - 20) / 40) * 800, Y = 1000;
+  const X = (v: number) => 110 + ((v - 30) / 20) * 800, Y = 1060;
   const ka = pop(t, a, 0.22), kb = pop(t, b, 0.22), kd = prog(t, b + 0.45, b + 0.65, overshoot);
   const col = (v: number, c: string, k: number, who: string) => k <= 0 ? null : (
-    <div style={{position: 'absolute', left: X(v), top: Y - 330, width: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: Math.min(1, k * 2), transform: `translateY(${(1 - k) * 40}px)`}}>
-      <div style={{fontFamily: GF.serif, fontWeight: 900, fontSize: 200, lineHeight: 1, color: c, textShadow: '0 8px 24px rgba(0,0,0,0.9)'}}>{v}</div>
-      <div style={{fontFamily: GF.label, fontWeight: 700, fontSize: 40, color: G.text, whiteSpace: 'nowrap', marginTop: 6}}>{who}</div>
+    <div style={{position: 'absolute', left: X(v), top: Y - 400, width: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: Math.min(1, k * 2), transform: `translateY(${(1 - k) * 40}px)`}}>
+      <div style={{fontFamily: GF.serif, fontWeight: 900, fontSize: 270, lineHeight: 1, color: c, textShadow: '0 8px 24px rgba(0,0,0,0.9)'}}>{v}</div>
+      <div style={{fontFamily: GF.label, fontWeight: 700, fontSize: 52, color: G.text, whiteSpace: 'nowrap', marginTop: 6}}>{who}</div>
       <div style={{width: 8, height: 62, background: c, marginTop: 8}} />
     </div>
   );
   return (
     <>
-      <div style={{position: 'absolute', left: 390, top: 240, width: 300, height: 340, overflow: 'hidden', boxShadow: `0 20px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(${G.goldRgb},0.5)`}}>
-        <Img src={src(id, 'hill_mini')} style={{position: 'absolute', left: 0, top: 0, width: 300, height: 340}} />
+      <div style={{position: 'absolute', left: 410, top: 300, width: 260, height: 300, overflow: 'hidden', boxShadow: `0 20px 40px rgba(0,0,0,0.7), 0 0 0 3px rgba(${G.goldRgb},0.5)`}}>
+        <Img src={src(id, 'hill_mini')} style={{position: 'absolute', left: 0, top: 0, width: 260, height: 300}} />
       </div>
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
-        <line x1={X(20)} y1={Y} x2={X(60)} y2={Y} stroke={G.text} strokeWidth={6} />
-        {Array.from({length: 9}, (_, i) => <line key={i} x1={X(20 + i * 5)} y1={Y - 14} x2={X(20 + i * 5)} y2={Y + 14} stroke={G.text} strokeWidth={4} />)}
+        <line x1={X(30)} y1={Y} x2={X(50)} y2={Y} stroke={G.text} strokeWidth={6} />
+        {Array.from({length: 5}, (_, i) => <line key={i} x1={X(30 + i * 5)} y1={Y - 14} x2={X(30 + i * 5)} y2={Y + 14} stroke={G.text} strokeWidth={4} />)}
         {kd > 0 ? <path d={`M ${X(34)} ${Y + 40} v 34 H ${X(46)} v -34`} fill="none" stroke={G.goldHi} strokeWidth={7} opacity={Math.min(1, kd)} /> : null}
       </svg>
       {col(34, OR, ka, '18-22 ANS')}{col(46, RED, kb, '49-68 ANS')}
