@@ -2,7 +2,7 @@
 // Stroop : le vrai test. 10 mots de couleur en caractères d'imprimerie (encre qui accroche, foulage), tous écrits dans une autre
 //   couleur, sur une casse en bois ; chrono gravé qui tourne de go à stop, puis « STOP. ». Le tableau ne bouge jamais pendant le test.
 //   mode 'test' (go, stop) · 'reveal' : tout s'éteint sauf « ROUGE » écrit en bleu, entouré ; zoomAt = gros plan, « ROU… » en
-//   rouge sous le mot · 'carres' : chaque mot devient un carré de sa couleur (la condition contrôle de Stroop) ; easyAt = « FACILE. »
+//   rouge sous le mot · 'carres' : chaque mot devient un carré de sa couleur (la condition contrôle de Stroop) ; les carrés s'allument un par un
 //   · 'loop' : le tableau au repos, chrono à zéro (dernière image = première) ; order = consigne en haut.
 // Barres : les vrais temps de Stroop (1935, expérience 2) : 63,3 s pour nommer des carrés, 110,3 s pour les mots ; at = départ.
 import React from 'react';
@@ -10,7 +10,7 @@ import {easeOut, lerp, overshoot, prog} from '../../theme';
 import type {AnimProps} from '../Reel';
 import {G, GF} from '../Gravure';
 import {InkDefs} from './ink';
-import {InkStroke, Order, RED, Stop} from './tests';
+import {InkStroke, nums, Order, punch, RED, Stop} from './tests';
 
 const INK = '#0C0E16';
 export const COL = {rouge: '#FF4B4B', bleu: '#4A93FF', vert: '#3BD872', jaune: '#FFD43B', violet: '#BC82FF'} as const;
@@ -23,6 +23,9 @@ export const WORDS: [string, C][] = [
   ['VERT', 'rouge'], ['BLEU', 'violet'],
   ['JAUNE', 'bleu'], ['VIOLET', 'rouge'],
 ];
+const KEYS = Object.keys(COL) as C[];
+/** fin de vidéo : l'encre de chaque mot change au rythme de `k`, sans jamais tomber sur la couleur écrite */
+const inkAt = (w: string, c: C, i: number, k: number): C => { if (k <= 0) return c; const o = KEYS.filter((x) => x !== w.toLowerCase()); return o[(o.indexOf(c) + k * (1 + (i % 3))) % o.length]; };
 const COLS = [300, 735], ROW0 = 585, ROWH = 150;
 const pos = (i: number) => ({x: COLS[i % 2], y: ROW0 + Math.floor(i / 2) * ROWH});
 const PANEL = {x: 60, y: 480, w: 920, h: 790};
@@ -93,16 +96,20 @@ const Chrono: React.FC<{sec: number; state: 'idle' | 'run' | 'stop'}> = ({sec, s
 export const Stroop: React.FC<AnimProps> = ({t, lt, t1, p}) => {
   const mode = String(p.mode ?? 'test');
   const go = Number(p.go ?? 1e9), stop = Number(p.stop ?? 1e9);
-  const zoomAt = Number(p.zoomAt ?? 1e9), easyAt = Number(p.easyAt ?? 1e9);
+  const zoomAt = Number(p.zoomAt ?? 1e9);
   const reveal = mode === 'reveal', carres = mode === 'carres';
   const dimOthers = reveal ? prog(lt, 0.05, 0.35, easeOut) : 0;
   const zk = reveal ? prog(t, zoomAt, zoomAt + 0.4, easeOut) : 0;
+  const rouAt = Number(p.rouAt ?? 1e9);
+  const push = mode === 'test' ? 1 + 0.04 * prog(t, 0, Math.min(go, 4), easeOut) : 1; // avant « Vas-y » seulement : le tableau est fixe pendant le test
+  const shuffle = p.shuffle ? 1 + Math.floor(lt / 0.42) : 0;
+  const beat = punch(t, nums(p, 'hits'));
   const P0 = pos(0);
   const sz = 1 + 0.9 * zk;
   const stopped = mode === 'test' && t >= stop;
   return (
     <>
-      <div style={{position: 'absolute', inset: 0, transformOrigin: `${P0.x}px ${P0.y}px`, transform: `translate(${(540 - P0.x) * zk}px, ${(800 - P0.y) * zk}px) scale(${sz})`}}>
+      <div style={{position: 'absolute', inset: 0, transformOrigin: `${P0.x}px ${P0.y}px`, transform: `translate(${(540 - P0.x) * zk}px, ${(800 - P0.y) * zk}px) scale(${sz * push * beat})`}}>
         <Casse dim={stopped ? 0.5 * prog(t, stop, stop + 0.2) : 0} />
         <svg style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}} width={1080} height={1920}>
           <InkFilters />
@@ -110,13 +117,14 @@ export const Stroop: React.FC<AnimProps> = ({t, lt, t1, p}) => {
           {WORDS.map(([w, c], i) => {
             const {x, y} = pos(i);
             const m = carres ? prog(lt, 0.1 + i * 0.035, 0.45 + i * 0.035, easeOut) : 0;
-            const o = (reveal && i > 0 ? 1 - 0.8 * dimOthers - 0.17 * zk : 1) * (stopped ? 1 - 0.45 * prog(t, stop, stop + 0.2) : 1);
+            const o = (reveal && i > 0 ? 1 - 0.8 * dimOthers - 0.17 * zk : 1) * (stopped ? 1 - 0.72 * prog(t, stop, stop + 0.2) : 1);
             const bw = 230, bh = 104;
+            const lit = carres && lt > 0.55 ? Math.max(0, 1 - Math.abs(lt - 0.55 - i * 0.11) / 0.1) : 0;
             return (
               <g key={i}>
-                {m < 1 ? <TypeWord w={w} c={c} x={x} y={y} o={o * (1 - m)} s={1 - 0.3 * m} id={i} /> : null}
+                {m < 1 ? <TypeWord w={w} c={inkAt(w, c, i, shuffle)} x={x} y={y} o={o * (1 - m)} s={1 - 0.3 * m} id={i} /> : null}
                 {m > 0 ? (
-                  <g opacity={m} transform={`translate(${x} ${y}) scale(${lerp(0.6, 1, overshoot(m))})`}>
+                  <g opacity={m} transform={`translate(${x} ${y}) scale(${lerp(0.6, 1, overshoot(m)) * (1 + 0.14 * lit)})`}>
                     <rect x={-bw / 2 + 4} y={-bh / 2 + 6} width={bw} height={bh} rx={12} fill="#000" opacity={0.8} />
                     <rect x={-bw / 2} y={-bh / 2} width={bw} height={bh} rx={12} fill={COL[c]} filter={`url(#st-ink${i % 3})`} />
                     <rect x={-bw / 2} y={-bh / 2} width={bw} height={bh} rx={12} fill="url(#sq-hl)" opacity={0.35} />
@@ -131,16 +139,20 @@ export const Stroop: React.FC<AnimProps> = ({t, lt, t1, p}) => {
       </div>
       {reveal ? (
         <>
-          <div style={{position: 'absolute', left: 60, right: 60, top: zk > 0.5 ? 1010 : 1290, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 50, letterSpacing: '0.06em', color: G.text, background: zk > 0.5 ? 'rgba(8,8,12,0.82)' : 'transparent', padding: '10px 0', opacity: prog(lt, 0.5, 0.75) * (1 - zk) + zk * prog(t, zoomAt + 0.3, zoomAt + 0.5), textShadow: '0 4px 14px rgba(0,0,0,0.9)'}}>
-            {zk > 0.5 ? <>TA BOUCHE : <span style={{color: RED}}>« ROU… »</span></> : <>ÉCRIT <span style={{color: RED}}>ROUGE</span> · ENCRE <span style={{color: COL.bleu}}>BLEUE</span></>}
+          <div style={{position: 'absolute', left: 60, right: 60, top: zk > 0.5 ? 960 : 1290, textAlign: 'center', fontFamily: GF.label, fontWeight: 700, fontSize: 54, letterSpacing: '0.06em', color: G.text, background: 'transparent', padding: '10px 0', opacity: prog(lt, 0.5, 0.75) * (1 - zk) + zk * prog(t, zoomAt + 0.3, zoomAt + 0.5), textShadow: '0 4px 14px rgba(0,0,0,0.9)'}}>
+            {zk > 0.5 ? <>TA BOUCHE A DIT</> : <>ÉCRIT <span style={{color: RED}}>ROUGE</span> · ENCRE <span style={{color: COL.bleu}}>BLEUE</span></>}
           </div>
         </>
       ) : null}
+      {reveal && t >= rouAt ? (
+        <div style={{position: 'absolute', left: 0, right: 0, top: 1035, textAlign: 'center', fontFamily: GF.sans, fontWeight: 900, fontSize: 250, lineHeight: 1, color: RED, letterSpacing: '0.02em', textShadow: '0 10px 30px rgba(0,0,0,0.9)', transform: `scale(${lerp(1.5, 1, prog(t, rouAt, rouAt + 0.16, easeOut))})`}}>
+          {'ROU…'.slice(0, Math.min(4, 1 + Math.floor((t - rouAt) / 0.11)))}
+        </div>
+      ) : null}
       {/* le chrono laisse la place au titre d'accroche (début, et fin de la boucle) et à la consigne finale */}
       {(mode === 'test' || mode === 'loop') && !p.order ? <div style={{opacity: Math.min(prog(t, 2.85, 3.15), mode === 'loop' ? 1 - prog(t, t1 - 0.62, t1 - 0.32) : 1)}}><Chrono sec={mode === 'test' && t >= go ? Math.min(t, stop) - go : 0} state={mode === 'test' && t >= stop ? 'stop' : mode === 'test' && t >= go ? 'run' : 'idle'} /></div> : null}
-      {mode === 'test' && t >= 2.9 && t < stop ? <Order text="LA COULEUR · PAS LE MOT" k={prog(t, 2.9, 3.15, easeOut)} y={1296} size={46} /> : null}
+      {mode === 'test' && t >= 2.9 && t < stop ? <Order text="LA COULEUR · PAS LE MOT" k={prog(t, 2.9, 3.15, easeOut)} y={1292} size={50} color={G.goldHi} /> : null}
       {mode === 'test' ? <Stop t={t} at={stop} y={760} /> : null}
-      {carres ? <Order text="FACILE." k={prog(t, easyAt, easyAt + 0.2, overshoot)} y={1296} size={70} color={G.goldHi} /> : null}
       {p.order ? <Order text={String(p.order)} k={prog(lt, 0.05, 0.3, easeOut)} y={330} size={48} color={G.goldHi} /> : null}
     </>
   );
@@ -153,20 +165,20 @@ export const Barres: React.FC<AnimProps> = ({t, lt, p}) => {
   const X0 = 110, WMAX = 760;
   return (
     <>
-      <Order text="STROOP, 1935 · 100 ÉTUDIANTS" k={prog(lt, 0, 0.25, easeOut)} y={470} size={44} color={G.goldHi} />
+      <Order text="STROOP, 1935 · 100 ÉTUDIANTS" k={prog(lt, 0, 0.25, easeOut)} y={440} size={52} color={G.goldHi} />
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
         <InkDefs p="ba" />
         {rows.map(([lab, v, c], i) => {
           const k = prog(t, at + i * 0.35, at + i * 0.35 + 0.8, easeOut);
-          const y = 660 + i * 270, w = (v / 110.3) * WMAX * k;
-          const d = `M ${X0} ${y} L ${X0 + w} ${y + 3} L ${X0 + w + 4} ${y + 120} L ${X0} ${y + 118} Z`;
+          const y = 640 + i * 340, w = (v / 110.3) * WMAX * k;
+          const d = `M ${X0} ${y} L ${X0 + w} ${y + 3} L ${X0 + w + 4} ${y + 190} L ${X0} ${y + 188} Z`;
           return (
             <g key={i}>
-              <text x={X0} y={y - 26} fontFamily={GF.label} fontWeight={700} fontSize={52} letterSpacing={4} fill={G.text}>{lab}</text>
+              <text x={X0} y={y - 26} fontFamily={GF.label} fontWeight={700} fontSize={64} letterSpacing={4} fill={G.text}>{lab}</text>
               <path d={d} fill={c} opacity={0.92} />
               <path d={d} fill="url(#ba-hd)" opacity={0.45} />
               <path d={d} fill="none" stroke={INK} strokeWidth={5} filter="url(#ba-wob)" />
-              <text x={Math.max(X0 + 20, X0 + w - 20)} y={y + 82} textAnchor={w > 260 ? 'end' : 'start'} fontFamily={GF.serif} fontWeight={900} fontSize={64} fill={INK}>{`${(v * k).toFixed(0)} s`}</text>
+              <text x={Math.max(X0 + 20, X0 + w - 20)} y={y + 125} textAnchor={w > 330 ? 'end' : 'start'} fontFamily={GF.serif} fontWeight={900} fontSize={100} fill={INK}>{`${(v * k).toFixed(0)} s`}</text>
             </g>
           );
         })}

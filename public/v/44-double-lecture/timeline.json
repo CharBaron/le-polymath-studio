@@ -1,0 +1,115 @@
+{
+ "fps": 30,
+ "duration": 36.672,
+ "frames": 1100,
+ "beats": {
+  "hook": 0.22,
+  "h": 0.22,
+  "c3": 2.53,
+  "c2": 3.29,
+  "c1": 4.19,
+  "stop": 4.9,
+  "reveal": 5.72,
+  "vingt": 5.72,
+  "jeune": 7.29,
+  "quatre": 9.25,
+  "vieille": 10.16,
+  "meme": 11.84,
+  "preuve": 12.98,
+  "oreille": 12.98,
+  "menton": 15.23,
+  "nom": 17.02,
+  "exp": 19.01,
+  "an": 19.01,
+  "n393": 22.005,
+  "jeunes": 24.09,
+  "ages": 26.251,
+  "choc": 28.53,
+  "fin": 31.91,
+  "envoie": 31.91,
+  "loop": 34.4
+ },
+ "sections": [
+  {
+   "id": "hook",
+   "t0": 0.22,
+   "t1": 5.72,
+   "scene": null,
+   "beats": [
+    "h",
+    "c3",
+    "c2",
+    "c1",
+    "stop"
+   ]
+  },
+  {
+   "id": "reveal",
+   "t0": 5.72,
+   "t1": 12.98,
+   "scene": null,
+   "beats": [
+    "vingt",
+    "jeune",
+    "quatre",
+    "vieille",
+    "meme"
+   ]
+  },
+  {
+   "id": "preuve",
+   "t0": 12.98,
+   "t1": 17.02,
+   "scene": null,
+   "beats": [
+    "oreille",
+    "menton"
+   ]
+  },
+  {
+   "id": "nom",
+   "t0": 17.02,
+   "t1": 19.01,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "exp",
+   "t0": 19.01,
+   "t1": 28.53,
+   "scene": null,
+   "beats": [
+    "an",
+    "n393",
+    "jeunes",
+    "ages"
+   ]
+  },
+  {
+   "id": "choc",
+   "t0": 28.53,
+   "t1": 31.91,
+   "scene": null,
+   "beats": []
+  },
+  {
+   "id": "fin",
+   "t0": 31.91,
+   "t1": 36.672,
+   "scene": null,
+   "beats": [
+    "envoie",
+    "loop"
+   ]
+  }
+ ],
+ "title": "Quel âge a cette femme",
+ "hook": "quel âge|a cette femme ?",
+ "retention": {
+  "choc": null,
+  "sous": null,
+  "fin": 1.2,
+  "boucle": false,
+  "commente": "Ceux qui ont dit 80 ans ne l'avoueront jamais. Ceux qui ont dit 20 ans sont en couple avec une illusion."
+ }
+}

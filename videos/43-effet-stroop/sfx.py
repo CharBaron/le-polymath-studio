@@ -57,6 +57,7 @@ def score(mix, tl):
             mix.put(t0 + 0.2, scratch(0.4), 0.12); mix.put(a['zoomAt'], thud(0.25), 0.1)
         elif n == 'Stroop' and mode == 'carres':
             for i in range(10): mix.put(t0 + 0.12 + i * 0.035, pop(600 + 60 * i, 900, 0.1), 0.06, pan=-0.3 if i % 2 == 0 else 0.3)
+            for i in range(10): mix.put(t0 + 0.55 + i * 0.11, click(1800 + 90 * i, 0.02), 0.07, pan=-0.3 if i % 2 == 0 else 0.3)  # les carrés qui s'allument
         elif n == 'Barres':
             mix.put(a['at'], riser(0.8, 300, 1400), 0.06); mix.put(a['at'] + 0.35, riser(0.8, 300, 1800), 0.06)
     b = tl['beats']

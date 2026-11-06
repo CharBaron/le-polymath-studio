@@ -1,0 +1,10 @@
+# Sources, vidéo 44 (TEST N°11)
+- **Le dessin** : W. E. Hill, « My Wife and My Mother-in-Law. They are both in this picture. Find them », *Puck*, 6 novembre 1915 (Wikipédia ; une source allemande dit 16 novembre, on ne dit donc que « 1915 »). Hill a repris une idée plus ancienne (carte postale allemande anonyme, attestée vers 1888). Introduit en psychologie par E. G. Boring, « A new ambiguous figure », *American Journal of Psychology*, 42, 1930. https://en.wikipedia.org/wiki/My_Wife_and_My_Mother-in-Law
+- **L'étude** : Nicholls, Churches & Loetscher, « Perception of an ambiguous figure is affected by own-age social biases », *Scientific Reports* 8:12661, 2018. https://pmc.ncbi.nlm.nih.gov/articles/PMC6107502/
+  393 participants américains retenus (Mechanical Turk), 18 à 68 ans, image montrée 500 ms, âge à estimer. 10 % les plus jeunes (18-22 ans, n = 40) : 33,85 ans. 10 % les plus âgés (49-68 ans, n = 45) : 45,91 ans. Écart 12,06 ans. Corrélation r = 0,237.
+  **Arrondis dits** : 34 et 46. « Les plus jeunes », « les plus âgés » = les 10 % extrêmes de chaque côté.
+- **La réplication qui nuance** : Brouwer, Jin, Waldi & Verheyen, « Age biases the judgment rather than the perception of an ambiguous figure », *Scientific Reports* 11:8627, 2021. https://pmc.ncbi.nlm.nih.gov/articles/PMC8060281/
+  N = 246. L'écart d'âge estimé se réplique (33,5 contre 41,0 ans ; r = 0,22), mais l'âge du participant ne change pas quelle femme il voit (χ² = 0,01). Conclusion : l'âge pèse sur le jugement (ancrage sur son propre âge), pas sur la perception.
+  **Conséquence pour le script** : on ne dit jamais « selon ton âge, tu vois une autre femme ». On dit « lui donnent 34 ans / 46 » et « ton chiffre en dit plus sur toi ». La phrase « tu vois une jeune fille » concerne l'image vue, pas l'âge du spectateur.
+- **Oreille = œil, menton = nez, collier = bouche** : lecture classique du dessin, vérifiée sur l'image (Wikipédia, page ci-dessus).
+- **Images** : Library of Congress via Wikimedia Commons, domaine public (`img_src/meta.json`).

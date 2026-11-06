@@ -13,6 +13,11 @@ SEUILS = {'coupes_10s': 4.0, 'premiere_coupe_s': 2.5, 'fige_max_s': 2.5, 'luma_i
 def ff(args):
     return subprocess.run(['ffmpeg', '-hide_banner', '-nostats', *args], capture_output=True, text=True).stderr
 
+def nom(p):
+    """final.mp4 ne dit rien : on prend le dossier de la vidéo"""
+    b = os.path.basename(p)[:-4]
+    return os.path.basename(os.path.dirname(os.path.abspath(p))) if b.startswith('final') else b
+
 def mesure(path):
     dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', path],
                                capture_output=True, text=True).stdout)
@@ -48,5 +53,5 @@ if __name__ == '__main__':
         if new: w.writeheader()
         for p in sys.argv[1:]:
             m = mesure(p)
-            row = {'date': datetime.date.today().isoformat(), 'video': os.path.basename(p)[:-4], **m, 'alertes': alertes(m)}
+            row = {'date': datetime.date.today().isoformat(), 'video': nom(p), **m, 'alertes': alertes(m)}
             w.writerow(row); print(row)
