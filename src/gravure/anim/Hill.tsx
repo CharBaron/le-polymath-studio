@@ -18,6 +18,7 @@ const BASE: Cam = {ox: 650, oy: 662, sx: 520, sy: 870, z: 1};
 const CLOSE: Cam = {ox: 672, oy: 720, sx: 520, sy: 830, z: 2.7};
 const EAR: Cam = {ox: 685, oy: 618, sx: 520, sy: 800, z: 6.5};
 const CHIN: Cam = {ox: 622, oy: 748, sx: 520, sy: 800, z: 6};
+const NECK: Cam = {ox: 725, oy: 796, sx: 520, sy: 800, z: 5.5};
 const mix = (a: Cam, b: Cam, k: number): Cam => ({ox: lerp(a.ox, b.ox, k), oy: lerp(a.oy, b.oy, k), sx: lerp(a.sx, b.sx, k), sy: lerp(a.sy, b.sy, k), z: a.z * Math.pow(b.z / a.z, k)});
 const at = (c: Cam, x: number, y: number): [number, number] => [c.sx + (x - c.ox) * K0 * c.z, c.sy + (y - c.oy) * K0 * c.z];
 /** courbe lissée passant par les points (repères du dessin → écran) */
@@ -69,8 +70,11 @@ export const Hill: React.FC<AnimProps> = ({id, t, lt, t1, p}) => {
   const hits = nums(p, 'hits');
   if (mode === 'test' || mode === 'loop') {
     const stop = Number(p.stop ?? 1e9);
-    const push = mode === 'test' ? 1 + 0.07 * prog(t, 0, Math.min(stop, 5), easeOut) : 1;
-    const c = {...BASE, z: push * punch(t, hits, 0.09)};
+    // ouverture : le dessin arrive de très près (la tête) et recule d'un coup ; la dernière image revient à ce cadre pour la boucle
+    const crash = mode === 'test' ? 1 - prog(t, 0, 0.55, easeOut) : !p.order ? prog(t, t1 - 0.45, t1 - 0.03, easeOut) : 0;
+    const push = mode === 'test' ? 1 + 0.07 * prog(t, 0.55, Math.min(stop, 5), easeOut) : 1;
+    const c0 = mix(BASE, {...CLOSE, oy: 660, z: 2}, crash);
+    const c = {...c0, z: c0.z * push * punch(t, hits, 0.09)};
     const shut = mode === 'test' ? prog(t, stop - 0.02, stop + 0.1, easeOut) : 0;
     const tintOn = p.order ? Math.floor(lt / 0.5) % 2 : -1; // pendant « Envoie-la » : la jeune, la vieille, la jeune…
     return (
@@ -81,6 +85,7 @@ export const Hill: React.FC<AnimProps> = ({id, t, lt, t1, p}) => {
           <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 960 * shut, background: '#0C060E'}} />
           <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 960 * shut, background: '#0C060E'}} />
         </> : null}
+        {mode === 'test' && t < stop ? <Order text="QUEL ÂGE ?" k={prog(t, Number(p.ask ?? 1e9), Number(p.ask ?? 1e9) + 0.15, overshoot)} y={1236} size={84} color={G.goldHi} /> : null}
         {mode === 'test' ? <Stop t={t} at={stop} y={700} /> : null}
         {mode === 'test' && t > stop ? <Order text="GARDE TON CHIFFRE" k={prog(t, stop + 0.2, stop + 0.4, easeOut)} y={940} size={66} color={G.goldHi} /> : null}
         {p.order ? <Order text={String(p.order)} k={prog(lt, 0.05, 0.3, easeOut)} y={230} size={52} color={G.goldHi} /> : null}
@@ -113,18 +118,18 @@ export const Hill: React.FC<AnimProps> = ({id, t, lt, t1, p}) => {
     );
   }
   // détail : très gros plan, un mot barré, l'autre arrive
-  const ear = p.focus === 'ear';
+  const ear = p.focus === 'ear', neck = p.focus === 'neck';
   const swap = Number(p.swap);
-  const c = mix(CLOSE, ear ? EAR : CHIN, prog(lt, 0, 0.35, easeOut));
+  const c = mix(CLOSE, ear ? EAR : neck ? NECK : CHIN, prog(lt, 0, 0.35, easeOut));
   c.z *= 1 + 0.03 * clamp01(lt / 2);
   const s = prog(t, swap - 0.03, swap + 0.14, easeOut);
   const a = String(p.from), b = String(p.to);
-  const [px, py] = ear ? at(c, 685, 618) : at(c, 615, 757);
+  const [px, py] = ear ? at(c, 685, 618) : neck ? at(c, 725, 796) : at(c, 615, 757);
   return (
     <>
       <Dessin id={id} c={c} win={WIN1} tint={s > 0.5 ? '#FF9A8E' : '#FFD98A'} tintK={0.8} />
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
-        <circle cx={px} cy={py} r={ear ? 120 : 96} fill="none" stroke={s > 0.5 ? RED : OR} strokeWidth={10} strokeDasharray="1000" strokeDashoffset={1000 * (1 - prog(lt, 0.2, 0.55, easeOut))} />
+        <circle cx={px} cy={py} r={ear ? 120 : neck ? 170 : 96} fill="none" stroke={s > 0.5 ? RED : OR} strokeWidth={10} strokeDasharray="1000" strokeDashoffset={1000 * (1 - prog(lt, 0.2, 0.55, easeOut))} />
       </svg>
       <div style={{position: 'absolute', left: 0, right: 0, top: 170, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 120, lineHeight: 1, whiteSpace: 'nowrap'}}>
         <span style={{color: OR, opacity: 1 - 0.55 * s, textDecoration: s > 0.4 ? `line-through ${RED} 10px` : 'none'}}>{a}</span>

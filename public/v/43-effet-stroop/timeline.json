@@ -1,48 +1,50 @@
 {
  "fps": 30,
- "duration": 34.14,
- "frames": 1024,
+ "duration": 36.31,
+ "frames": 1089,
  "beats": {
   "hook": 0.24,
   "h": 0.24,
-  "go": 3.477,
-  "stop": 10.367,
-  "reveal": 11.347,
-  "bute": 11.347,
-  "bouche": 12.94,
-  "preuve": 15.803,
-  "carres": 15.803,
-  "mot": 17.66,
-  "nom": 19.592,
-  "an": 21.318,
-  "choc": 25.924,
-  "lit": 25.924,
-  "fin": 29.601,
-  "envoie": 29.601,
-  "loop": 32.345
+  "consigne": 3.924,
+  "go": 6.034,
+  "stop": 12.885,
+  "reveal": 13.865,
+  "bute": 13.865,
+  "bouche": 15.912,
+  "preuve": 18.322,
+  "carres": 18.322,
+  "mot": 20.219,
+  "nom": 22.11,
+  "an": 23.852,
+  "choc": 28.442,
+  "lit": 28.442,
+  "fin": 32.119,
+  "envoie": 32.119,
+  "loop": 34.715
  },
  "sections": [
   {
    "id": "hook",
    "t0": 0.24,
-   "t1": 10.367,
+   "t1": 12.885,
    "scene": null,
    "beats": [
     "h",
+    "consigne",
     "go"
    ]
   },
   {
    "id": "stop",
-   "t0": 10.367,
-   "t1": 11.347,
+   "t0": 12.885,
+   "t1": 13.865,
    "scene": null,
    "beats": []
   },
   {
    "id": "reveal",
-   "t0": 11.347,
-   "t1": 15.803,
+   "t0": 13.865,
+   "t1": 18.322,
    "scene": null,
    "beats": [
     "bute",
@@ -51,8 +53,8 @@
   },
   {
    "id": "preuve",
-   "t0": 15.803,
-   "t1": 19.592,
+   "t0": 18.322,
+   "t1": 22.11,
    "scene": null,
    "beats": [
     "carres",
@@ -61,8 +63,8 @@
   },
   {
    "id": "nom",
-   "t0": 19.592,
-   "t1": 25.924,
+   "t0": 22.11,
+   "t1": 28.442,
    "scene": null,
    "beats": [
     "an"
@@ -70,8 +72,8 @@
   },
   {
    "id": "choc",
-   "t0": 25.924,
-   "t1": 29.601,
+   "t0": 28.442,
+   "t1": 32.119,
    "scene": null,
    "beats": [
     "lit"
@@ -79,8 +81,8 @@
   },
   {
    "id": "fin",
-   "t0": 29.601,
-   "t1": 34.14,
+   "t0": 32.119,
+   "t1": 36.31,
    "scene": null,
    "beats": [
     "envoie",
@@ -89,7 +91,7 @@
   }
  ],
  "title": "Dis la couleur",
- "hook": "dis la couleur|pas le mot",
+ "hook": "ton fils de pute|de cerveau",
  "retention": {
   "choc": null,
   "sous": null,

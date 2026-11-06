@@ -72,7 +72,7 @@ export const InkStroke: React.FC<{d: string; k: number; w?: number; color?: stri
     </svg>
   );
 
-/** coups de zoom sur des mots dits : ×(1 + amp) qui retombent en `d` s. À multiplier au scale d'un plan long, pour ne jamais finir sur une image figée (règle 12). */
+/** coups de zoom sur des mots dits : ×(1 + amp) qui retombent en `d` s. À multiplier au scale d'un plan long, pour ne jamais finir sur une image figée (règle 16). */
 export const punch = (t: number, at: number[], amp = 0.07, d = 0.45) =>
   1 + at.reduce((m, a) => (t >= a - 0.02 && t < a + d ? Math.max(m, amp * (1 - easeOut(clamp01((t - a) / d)))) : m), 0);
 export const pop = (t: number, at: number, d = 0.18) => prog(t, at - 0.04, at - 0.04 + d, overshoot);

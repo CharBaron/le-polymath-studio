@@ -46,9 +46,10 @@ def score(mix, tl):
         a, t0, t1 = s.get('anim') or {}, s['t0'], s['t1']
         n, mode = a.get('name'), a.get('mode')
         if n == 'Hill' and mode == 'test':
+            mix.put(0.0, impact(0.8), 0.12); mix.put(0.0, whoosh(0.45, 2600, 500, peak=0.5), 0.14)  # l'ouverture : le dessin recule d'un coup
             for c in a['at']: mix.put(c, click(2400, 0.03), 0.12); mix.put(c, thud(0.2), 0.08)
             mix.put(a['stop'] - 0.03, S['stop'], 0.3); mix.put(a['stop'], impact(1.0), 0.14)
-        elif n == 'Hill' and mode == 'lecture':
+        elif n == 'Hill' and mode == 'lecture' and a['vingt'] > 0:
             mix.put(a['jeune'], whoosh(0.5, 900, 3200, peak=0.5), 0.09); mix.put(a['jeune'] + 0.05, S['plume'], 0.14)
             mix.put(a['vieille'], boom(0.9, 58), 0.12); mix.put(a['vieille'] + 0.05, S['plume'], 0.14)
             k = 0

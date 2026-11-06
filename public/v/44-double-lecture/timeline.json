@@ -1,39 +1,41 @@
 {
  "fps": 30,
- "duration": 34.548,
- "frames": 1036,
+ "duration": 43.583,
+ "frames": 1307,
  "beats": {
-  "hook": 0.21,
-  "h": 0.21,
-  "c3": 2.38,
-  "c2": 3.12,
-  "c1": 3.92,
-  "stop": 4.59,
-  "reveal": 5.32,
-  "vingt": 5.32,
-  "jeune": 6.82,
-  "quatre": 8.69,
-  "vieille": 9.57,
-  "meme": 11.17,
-  "preuve": 12.19,
-  "oreille": 12.19,
-  "menton": 14.34,
-  "nom": 15.99,
-  "exp": 17.83,
-  "an": 17.83,
-  "n393": 20.731,
-  "jeunes": 22.68,
-  "ages": 24.752,
-  "choc": 26.84,
-  "fin": 30.02,
-  "envoie": 30.02,
-  "loop": 32.4
+  "hook": 0.22,
+  "h": 0.22,
+  "c3": 5.43,
+  "c2": 6.26,
+  "c1": 7.09,
+  "stop": 7.79,
+  "reveal": 8.58,
+  "vingt": 8.58,
+  "jeune": 10.13,
+  "quatre": 12.07,
+  "vieille": 12.98,
+  "meme": 14.64,
+  "preuve": 15.75,
+  "oreille": 15.75,
+  "menton": 17.97,
+  "collier": 19.8,
+  "nom": 21.69,
+  "exp": 23.67,
+  "an": 23.67,
+  "n393": 27.07,
+  "jeunes": 28.69,
+  "ages": 30.98,
+  "choc": 35.88,
+  "juge": 33.1,
+  "fin": 39.37,
+  "envoie": 39.37,
+  "loop": 41.82
  },
  "sections": [
   {
    "id": "hook",
-   "t0": 0.21,
-   "t1": 5.32,
+   "t0": 0.22,
+   "t1": 8.58,
    "scene": null,
    "beats": [
     "h",
@@ -45,8 +47,8 @@
   },
   {
    "id": "reveal",
-   "t0": 5.32,
-   "t1": 12.19,
+   "t0": 8.58,
+   "t1": 15.75,
    "scene": null,
    "beats": [
     "vingt",
@@ -58,25 +60,26 @@
   },
   {
    "id": "preuve",
-   "t0": 12.19,
-   "t1": 15.99,
+   "t0": 15.75,
+   "t1": 21.69,
    "scene": null,
    "beats": [
     "oreille",
-    "menton"
+    "menton",
+    "collier"
    ]
   },
   {
    "id": "nom",
-   "t0": 15.99,
-   "t1": 17.83,
+   "t0": 21.69,
+   "t1": 23.67,
    "scene": null,
    "beats": []
   },
   {
    "id": "exp",
-   "t0": 17.83,
-   "t1": 26.84,
+   "t0": 23.67,
+   "t1": 35.88,
    "scene": null,
    "beats": [
     "an",
@@ -87,15 +90,17 @@
   },
   {
    "id": "choc",
-   "t0": 26.84,
-   "t1": 30.02,
+   "t0": 35.88,
+   "t1": 39.37,
    "scene": null,
-   "beats": []
+   "beats": [
+    "juge"
+   ]
   },
   {
    "id": "fin",
-   "t0": 30.02,
-   "t1": 34.548,
+   "t0": 39.37,
+   "t1": 43.583,
    "scene": null,
    "beats": [
     "envoie",
@@ -104,7 +109,7 @@
   }
  ],
  "title": "Quel âge a cette femme",
- "hook": "quel âge|a cette femme ?",
+ "hook": "ton connard|de cerveau|va te mentir",
  "retention": {
   "choc": null,
   "sous": null,

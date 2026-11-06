@@ -10,7 +10,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
   const W = (w: string, after: number) => wordAt(words, w, after) - 0.04;
   return [
     // --- le test : un seul plan, le tableau ne bouge pas ---
-    {t0: 0, bg: 'marble', still: true, anim: {name: 'Stroop', mode: 'test', go: W('vasy', 2), stop: B.stop}},
+    {t0: 0, bg: 'marble', still: true, anim: {name: 'Stroop', mode: 'test', go: W('vasy', 2), stop: B.stop, open: B.consigne - 0.1}},
     // --- la révélation ---
     {t0: B.bute - 0.04, bg: 'marble', tr: 'invert', still: true, anim: {name: 'Stroop', mode: 'reveal', zoomAt: B.bouche, rouAt: W('dire', B.bouche)}},
     // --- la preuve : des carrés ---

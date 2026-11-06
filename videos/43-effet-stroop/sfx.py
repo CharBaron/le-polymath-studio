@@ -9,7 +9,7 @@ import numpy as np
 import soundfile as sf
 
 from sfx.gravure import make
-from sfx.synth import SR, click, pop, riser, scratch, thud, impact
+from sfx.synth import SR, click, impact, pop, riser, scratch, thud, whoosh
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
@@ -47,6 +47,8 @@ def score(mix, tl):
         a, t0, t1 = s.get('anim') or {}, s['t0'], s['t1']
         n, mode = a.get('name'), a.get('mode')
         if n == 'Stroop' and mode == 'test':
+            mix.put(0.0, impact(0.8), 0.12); mix.put(0.0, whoosh(0.45, 2600, 500, peak=0.5), 0.14)  # l'ouverture
+            for k in range(int(a['open'] / 0.13)): mix.put(0.1 + k * 0.13, click(1200 + (k * 331) % 1500, 0.02), 0.05, pan=-0.4 + (k % 5) / 5)  # les encres qui s'affolent
             go, stop = a['go'], a['stop']
             mix.put(go - 0.02, S['start'], 0.22)
             k = 0
