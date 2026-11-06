@@ -165,7 +165,7 @@ export const Barres: React.FC<AnimProps> = ({t, lt, p}) => {
   const X0 = 110, WMAX = 760;
   return (
     <>
-      <Order text="STROOP, 1935 · 100 ÉTUDIANTS" k={prog(lt, 0, 0.25, easeOut)} y={440} size={52} color={G.goldHi} />
+      <Order text="100 ÉTUDIANTS · 2 ÉPREUVES" k={prog(lt, 0, 0.25, easeOut)} y={440} size={48} color={G.goldHi} />
       <svg style={{position: 'absolute', left: 0, top: 0}} width={1080} height={1920}>
         <InkDefs p="ba" />
         {rows.map(([lab, v, c], i) => {

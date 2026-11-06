@@ -19,7 +19,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
     // --- le nom, la référence ---
     {t0: B.nom - 0.04, bg: 'velvet', tr: 'blur', concept: {word: 'L’EFFET|STROOP', sub: '« Stroop effect » · J. R. Stroop, 1935'}},
     {t0: B.an - 0.04, bg: 'white', tr: 'invert', num: {text: '1935', color: 'ink', label: 'J. R. STROOP · 100 ÉTUDIANTS', strobe: true}},
-    {t0: W('etudiants', B.an) + 0.15, bg: 'velvet', tr: 'swipe', still: true, anim: {name: 'Barres', at: W('mettent', B.an) + 0.05}, stamp: {text: '+74 %', at: W('plus', B.an), y: 1180, size: 120}},
+    {t0: W('etudiants', B.an) + 0.15, bg: 'velvet', tr: 'swipe', still: true, anim: {name: 'Barres', at: W('mettent', B.an) + 0.05}, stamp: {text: '+74 %', at: W('plus', B.an), y: 1262, size: 110}},
     // --- le cerveau lit tout seul ---
     {t0: B.lit - 0.04, bg: 'marble', tr: 'flashRed', pic: {name: 'cerveau', w: 760, zoom: 0.25, focus: [0.4, 0.4]}},
     {t0: W('avant', B.lit), bg: 'marble', tr: 'whip', still: true, anim: {name: 'Stroop', mode: 'reveal', zoomAt: -9, rouAt: W('avant', B.lit) + 0.1}},

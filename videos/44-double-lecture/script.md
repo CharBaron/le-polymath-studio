@@ -2,8 +2,8 @@
 title: Quel âge a cette femme
 voice: eleven:ohItIVrXTBI80RrUECOD
 rate: 1.0
-tempo: 1.03
-pauses: 0.45
+tempo: 1.08
+pauses: 0.38
 tail: 0.8
 fx: 0.42
 hook: quel âge|a cette femme ?

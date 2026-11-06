@@ -26,6 +26,7 @@ STYLES = {
     'caverne':  {'ink': (26, 16, 26), 'paper': (232, 222, 210), 'card': (238, 230, 220), 'rim': (196, 120, 230)},
     'cabinet':  {'ink': (28, 14, 22), 'paper': (238, 228, 212), 'card': (242, 234, 220), 'rim': (186, 110, 220)},
     'ecole':    {'ink': (14, 22, 40), 'paper': (238, 234, 222), 'card': (242, 238, 228), 'rim': (96, 150, 255)},
+    'boudoir': {'ink': (22, 10, 24), 'paper': (238, 230, 214), 'card': (242, 235, 222), 'rim': (196, 92, 200)},
     'imprimerie': {'ink': (12, 14, 22), 'paper': (232, 226, 210), 'card': (238, 233, 220), 'rim': (63, 208, 255)},
     'etable':   {'ink': (34, 22, 10), 'paper': (234, 218, 178), 'card': (238, 224, 188), 'rim': (214, 150, 52)},
 }
@@ -264,6 +265,12 @@ def textures(out, style):
         light[bold] = light[bold] * 0.78 + np.array([90, 120, 210]) * 0.22
         mg = np.abs(xx - 150) < 2; light[mg] = light[mg] * 0.5 + np.array([210, 60, 70]) * 0.5
         vel = cloth((14, 30, 74), 21)
+    elif style == 'boudoir':   # salon 1915 : papier peint damassé prune (motif en losanges), papier de magazine crème, velours aubergine
+        mot = np.sin(xx / 46.0) * np.sin(yy / 62.0) + 0.5 * np.sin((xx + yy) / 31.0) * np.sin((xx - yy) / 37.0)
+        dam = np.clip((mot - 0.25) / 0.5, 0, 1)
+        base = np.array([30, 14, 30], np.float32)[None, None] * (0.72 + 0.4 * n1[..., None] + 0.3 * dam[..., None])
+        light = np.array([238, 230, 214], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
+        vel = cloth((62, 18, 60), 21)
     elif style == 'imprimerie':  # casse de typographe (casiers de bois noircis d'encre), papier journal, velours bleu encre
         cell = ((xx % 180) < 5) | ((yy % 150) < 5) | (((xx + 90) % 180 < 4) & ((yy // 150) % 2 == 0))
         wood = ndi.gaussian_filter(rng.normal(0, 1, (H, W)).astype(np.float32), (1.2, 50)) * 3
