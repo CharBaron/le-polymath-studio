@@ -17,7 +17,9 @@ const sh = (cmd, args, quiet) => execFileSync(cmd, args, {cwd: ROOT, encoding: '
 const lastRun = () => sh(GH, ['run', 'list', '--workflow', 'render.yml', '-L', '1', '--json', 'databaseId', '-q', '.[0].databaseId'], true).trim();
 const t0 = Date.now();
 
-sh('git', ['add', '-A']);
+// CLOUD_SAUF : ce qui ne doit jamais partir sur le dépôt public sans qu'on le décide (cours de Charles en chantier, voir src/cours).
+const CLOUD_SAUF = ['src/cours', 'src/Root.tsx', 'public/v/c0*', 'videos/c0*'];
+sh('git', ['add', '-A', '--', '.', ...CLOUD_SAUF.map((p) => `:(exclude,glob)${p}${p.endsWith('*') ? '/**' : ''}`)]);
 if (sh('git', ['status', '--porcelain'], true).trim()) sh('git', ['commit', '-q', '-m', `rendu ${vdirs.map((v) => path.basename(v)).join(', ')}`]);
 sh('git', ['push', '-q', 'origin', 'main']);
 

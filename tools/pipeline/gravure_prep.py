@@ -26,6 +26,7 @@ STYLES = {
     'caverne':  {'ink': (26, 16, 26), 'paper': (232, 222, 210), 'card': (238, 230, 220), 'rim': (196, 120, 230)},
     'cabinet':  {'ink': (28, 14, 22), 'paper': (238, 228, 212), 'card': (242, 234, 220), 'rim': (186, 110, 220)},
     'ecole':    {'ink': (14, 22, 40), 'paper': (238, 234, 222), 'card': (242, 238, 228), 'rim': (96, 150, 255)},
+    'imprimerie': {'ink': (12, 14, 22), 'paper': (232, 226, 210), 'card': (238, 233, 220), 'rim': (63, 208, 255)},
     'etable':   {'ink': (34, 22, 10), 'paper': (234, 218, 178), 'card': (238, 224, 188), 'rim': (214, 150, 52)},
 }
 S = dict(STYLES['or'])
@@ -263,6 +264,15 @@ def textures(out, style):
         light[bold] = light[bold] * 0.78 + np.array([90, 120, 210]) * 0.22
         mg = np.abs(xx - 150) < 2; light[mg] = light[mg] * 0.5 + np.array([210, 60, 70]) * 0.5
         vel = cloth((14, 30, 74), 21)
+    elif style == 'imprimerie':  # casse de typographe (casiers de bois noircis d'encre), papier journal, velours bleu encre
+        cell = ((xx % 180) < 5) | ((yy % 150) < 5) | (((xx + 90) % 180 < 4) & ((yy // 150) % 2 == 0))
+        wood = ndi.gaussian_filter(rng.normal(0, 1, (H, W)).astype(np.float32), (1.2, 50)) * 3
+        base = np.array([20, 18, 20], np.float32)[None, None] * (0.75 + 0.45 * n1[..., None] + 0.08 * wood[..., None])
+        base[cell] = base[cell] * 0.4 + np.array([92, 70, 46]) * 0.35
+        ink = np.clip((fbm(H, W, 59, 5, 90) - 0.62) / 0.38, 0, 1)
+        base = base * (1 - 0.5 * ink[..., None])
+        light = np.array([232, 226, 210], np.float32)[None, None] * (0.94 + 0.08 * n2[..., None])
+        vel = cloth((14, 26, 64), 21)
     elif style == 'etable':    # étable de nuit : planches verticales mal jointes, brins de paille ; papier paille ; velours brun fumier
         board = ((xx // 135) * 7919 % 97) / 97
         gap = (xx % 135) < 4

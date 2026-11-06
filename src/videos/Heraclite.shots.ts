@@ -11,7 +11,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
   const hook = {name: 'Bouse', mode: 'hook'};
   return [
     // --- hook : le tas de bouse, en entier ---
-    {t0: 0, bg: 'marble', still: true, anim: {...hook, splats: [W('enterre', 0) + 0.05, W('bouse', 0) + 0.05]}},
+    {t0: 0, bg: 'marble', still: true, anim: {...hook, splats: [W('philosophe', 0) + 0.12, W('enterre', 0) + 0.05, W('bouse', 0) + 0.05]}},
     {t0: B.h2 - 0.04, bg: 'velvet', tr: 'slam', pic: {name: 'portrait_plein', w: 1080, full: true, zoom: 0.14, focus: [0.42, 0.42]}, slam: {text: 'IL L’A VOULU', at: W('voulu', B.h2) - B.h2 + 0.04, color: 'gold', y: 470}},
     // --- qui : Héraclite, la légende ---
     {t0: B.qui - 0.04, bg: 'marble', tr: 'whip', pic: {name: 'pleure', w: 600, y: 900, zoom: 0.08}, title: 'HÉRACLITE'},
@@ -20,7 +20,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
     {t0: B.osselets - 0.04, bg: 'velvet', tr: 'slam', still: true, anim: {name: 'Osselets', at: W('osselets', B.osselets) - 0.1}},
     // --- la montagne, l'herbe ---
     {t0: B.hait - 0.04, bg: 'marble', tr: 'flashRed', pic: {name: 'heraclite', w: 780, zoom: 0.55, focus: [0.14, 0.66]}, stamp: {text: 'MISANTHROPE', at: W('humains', B.hait) + 0.1, y: 1120, size: 74}},
-    {t0: B.herbe - 0.04, bg: 'velvet', tr: 'swipe', pic: {name: 'montagne', w: 880, zoom: 0.5, focus: [0.15, 0.85]}},
+    {t0: B.herbe - 0.04, bg: 'velvet', tr: 'swipe', pic: {name: 'montagne', w: 880, zoom: 1.3, focus: [0.1, 0.9]}},
     {t0: W('lherbe', B.herbe), bg: 'marble', tr: 'whip', pic: {name: 'koe', w: 860, zoom: 0.25, focus: [0.75, 0.72]}},
     // --- l'eau, l'énigme ---
     {t0: B.gonfle - 0.04, bg: 'velvet', tr: 'zoom', still: true, anim: {name: 'Gonfle'}},

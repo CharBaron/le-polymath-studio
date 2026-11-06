@@ -414,7 +414,8 @@ export const Balance: React.FC<{k: number; tilt: number; left: string; right: st
 };
 
 // ---------- sous-titres ----------
-/** pages de 1 à 4 mots coupées à la ponctuation ; le mot dit passe du gris au blanc, le mot clé est doré et souligné */
+/** pages de 1 à 4 mots coupées à la ponctuation ; le mot dit passe du gris au blanc, le mot clé est doré et souligné.
+ * Le mot entre en grandissant depuis son bord gauche (06/11) : centré, il mordait sur le mot d'avant pendant 0,2 s (« DEENFANTS »). */
 export const GCaptions: React.FC<{words: Word[]; t: number; hidden?: boolean; y?: number; fade?: number}> = ({words, t, hidden, y = 1355, fade = 1}) => {
   const pages = React.useMemo(() => {
     const out: Word[][] = [];
@@ -442,7 +443,7 @@ export const GCaptions: React.FC<{words: Word[]; t: number; hidden?: boolean; y?
         const u = w.key ? prog(t, s + 0.05, s + 0.35, easeOut) : 0;
         const col = w.key ? G.gold : G.white;
         return (
-          <span key={i} style={{position: 'relative', display: 'inline-block', marginRight: '0.26em', color: k < 1 ? `color-mix(in srgb, ${col} ${Math.round(k * 100)}%, #6B6862)` : col, textShadow: '0 4px 16px rgba(0,0,0,0.85), 3px 4px 0 rgba(0,0,0,0.55)', WebkitTextStroke: '2px rgba(8,6,4,0.9)', paintOrder: 'stroke fill', transform: `scale(${lerp(1.35, 1, k)})`, transformOrigin: '50% 70%'}}>
+          <span key={i} style={{position: 'relative', display: 'inline-block', marginRight: '0.26em', color: k < 1 ? `color-mix(in srgb, ${col} ${Math.round(k * 100)}%, #6B6862)` : col, textShadow: '0 4px 16px rgba(0,0,0,0.85), 3px 4px 0 rgba(0,0,0,0.55)', WebkitTextStroke: '2px rgba(8,6,4,0.9)', paintOrder: 'stroke fill', transform: `scale(${lerp(1.22, 1, k)})`, transformOrigin: '0% 70%'}}>
             {fr(w.text)}
             {u > 0 ? <span style={{position: 'absolute', left: 0, bottom: -4, height: 7, width: `${u * 100}%`, background: G.gold, borderRadius: 2, boxShadow: `0 0 8px rgba(${G.goldRgb},0.6)`}} /> : null}
           </span>

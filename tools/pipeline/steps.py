@@ -179,6 +179,18 @@ def voice(vdir):
         if mode == 'all':
             text = '\n\n'.join(say_(sec['tokens']) for sec in data['sections'])
             plan.append((text, list(range(n_all)), True, eng, ''))
+        elif mode == 'group':
+            # `chunk: group` : une prise par groupe de sections de même préfixe (ex2-q1, ex2-q2 → « ex2 ») — cours longs :
+            # peu de requêtes (quota Gemini) et une voix qui garde son élan dans un exercice
+            groups = []
+            for sec in data['sections']:
+                g = sec['id'].split('-')[0]
+                if not groups or groups[-1][0] != g: groups.append((g, []))
+                groups[-1][1].append(sec)
+            for g, secs in groups:
+                n = sum(len(sc['tokens']) for sc in secs)
+                plan.append(('\n\n'.join(say_(sc['tokens']) for sc in secs), list(range(off, off + n)), True, eng, ''))
+                off += n
         else:
             for sec in data['sections']:
                 groups_s = [list(range(len(sec['tokens'])))] if mode == 'section' else sec['sentences']
