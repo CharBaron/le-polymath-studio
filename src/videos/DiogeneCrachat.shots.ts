@@ -21,7 +21,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
     {t0: B.jarre - 0.04, bg: 'velvet', tr: 'whip', pic: {name: 'crayer_dio', w: 860, y: 780, zoom: 0.2, focus: [0.55, 0.45]}, title: 'SA MAISON'},
     // --- la lampe ---
     {t0: B.lampe - 0.04, bg: 'marble', tr: 'shutter', still: true, anim: {name: 'Lanterne'}, slam: {text: 'EN PLEIN JOUR', at: 0.25, color: 'gold', y: 450, size: 110}},
-    {t0: B.homme - 0.04, bg: 'marble', tr: 'zoom', pic: {name: 'vieux', w: 800, y: 790, zoom: 0.5, focus: [0.2, 0.74]}, slam: {text: 'UN HOMME', at: 0.5, color: 'gold', y: 450, size: 150}},
+    {t0: B.homme - 0.04, bg: 'marble', tr: 'zoom', pic: {name: 'vieux', w: 800, y: 790, zoom: 0.5, focus: [0.2, 0.74]}, slam: {text: 'UN HOMME', at: 0.5, color: 'gold', y: 450, size: 130}},
     // --- le poulet ---
     {t0: B.platon - 0.04, bg: 'velvet', tr: 'swipe', pic: {name: 'poulet', w: 760, y: 790, zoom: 0.5, focus: [0.3, 0.32]}, title: 'PLATON'},
     {t0: W('bipède', B.platon), bg: 'marble', tr: 'whip', pic: {name: 'poulet', w: 760, y: 790, zoom: 0.25, focus: [0.3, 0.4]}, slam: {text: 'SANS PLUMES', at: W('plumes', B.platon) - W('bipède', B.platon), color: 'gold', y: 1120, size: 104}},
@@ -43,7 +43,7 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
     // --- Alexandre ---
     {t0: B.alex - 0.04, bg: 'velvet', tr: 'spin', leak: true, pic: {name: 'crayer_alex', w: 720, y: 800, zoom: 0.16, focus: [0.5, 0.2]}, title: 'ALEXANDRE', crown: {at: 0.5, y: 215, w: 240}},
     {t0: B.demande - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'rosa', w: 1080, full: true, zoom: 0.2, focus: [0.4, 0.5]}},
-    {t0: B.ombre - 0.04, bg: 'marble', tr: 'zoom', still: true, anim: {name: 'Ombre', at: W('poussetoi', B.ombre) + 0.1}, slam: {text: 'POUSSE-TOI', at: 0.14, color: 'gold', y: 450, size: 142}},
+    {t0: B.ombre - 0.04, bg: 'marble', tr: 'zoom', still: true, anim: {name: 'Ombre', at: W('poussetoi', B.ombre) + 0.1}, slam: {text: 'POUSSE-TOI', at: 0.14, color: 'gold', y: 450, size: 116}},
     // --- la mort ---
     {t0: B.ans - 0.04, bg: 'velvet', tr: 'flash', num: {text: '90', color: 'gold', label: 'ANS, OU PRESQUE', strobe: true}},
     {t0: B.versions - 0.04, bg: 'velvet', tr: 'swipe', still: true, anim: {name: 'Versions', at: [W('pieuvre', B.versions), W('morsure', B.versions), W('souffle', B.versions)]}},
@@ -51,9 +51,9 @@ export const shotsOf = (B: Record<string, number>, words: Word[], dur: number): 
     {t0: B.babylone - 0.04, bg: 'velvet', tr: 'whip', pic: {name: 'mortalex', w: 1080, full: true, zoom: 0.16, focus: [0.5, 0.42]}, slam: {text: 'BABYLONE', at: 0.1, color: 'white', y: 450, size: 130}},
     {t0: B.meurt - 0.04, bg: 'velvet', tr: 'flashRed', pic: {name: 'mortalex', w: 1080, full: true, zoom: 0.8, focus: [0.48, 0.44]}, stamp: {text: 'MORT', at: W('meurt', B.meurt) + 0.04, y: 1120}},
     // --- fin ---
-    {t0: B.pareil - 0.04, bg: 'velvet', tr: 'swipe', still: true, anim: {name: 'Duo', at: [B.pareil + 0.15, W('jarre', B.pareil) - 0.45], hits: [W('jour', B.pareil)]}, slam: {text: 'MÊME JOUR', at: W('jour', B.pareil) - B.pareil, color: 'red', y: 760, size: 96}},
+    {t0: B.pareil - 0.04, bg: 'velvet', tr: 'swipe', still: true, anim: {name: 'Duo', at: [B.pareil + 0.15, W('jarre', B.pareil) - 0.45], hits: [W('jour', B.pareil)]}, slam: {text: 'MÊME JOUR', at: W('jour', B.pareil) - B.pareil, color: 'red', y: 1250, size: 110}},
     {t0: B.toi - 0.04, bg: 'marble', tr: 'whip', still: true, anim: {name: 'Liste', lines: 'TA MAISON|TON FRIC|TON IMAGE', at: [B.toi + 0.5, B.toi + 1.3, B.toi + 2.1]}},
-    {t0: B.loop - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'palais', w: 1080, full: true, zoom: 0.35, focus: [0.55, 0.5]}, slam: {text: 'MÉFIE-TOI', at: W('mefietoi', B.loop) - B.loop + 0.08, color: 'gold', y: 520, size: 150}},
+    {t0: B.loop - 0.04, bg: 'marble', tr: 'swipe', pic: {name: 'palais', w: 1080, full: true, zoom: 0.35, focus: [0.55, 0.5]}, slam: {text: 'MÉFIE-TOI', at: W('mefietoi', B.loop) - B.loop + 0.08, color: 'gold', y: 520, size: 118}},
     {t0: W('parce', B.loop), bg: 'marble', tr: 'zoom', still: true, anim: {name: 'Crachat', z0: 1.02, z1: 1.45, rumble: [W('parce', B.loop) + 0.3, 99]}},
   ];
 };
