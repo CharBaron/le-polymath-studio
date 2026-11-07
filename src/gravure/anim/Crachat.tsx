@@ -81,7 +81,8 @@ const Crachat: React.FC<AnimProps> = ({id, lt, t, t0, t1, p}) => {
   }
   // grondement dans la gorge (`rumble` : [début, fin]) : le visage vibre
   const rb = nums(p, 'rumble');
-  const vib = rb.length && t >= rb[0] && t < rb[1] ? 7 * prog(t, rb[0], rb[1]) : 0;
+  const vib = rb.length && t >= rb[0] && t < rb[1] ? 7 * prog(t, rb[0], Math.min(rb[1], rb[0] + 1.2)) : 0;
+  s *= punch(t, nums(p, 'nod'), 0.1, 0.3);
   const shake = hit !== undefined && t >= hit ? 34 * (1 - clamp01((t - hit) / 0.32)) ** 2 : 0;
   const sx = (rand(t * 91) - 0.5) * (vib + shake), sy = (rand(t * 57 + 3) - 0.5) * (vib + shake);
   const fly = spit !== undefined && hit !== undefined && t >= spit && t < hit ? clamp01((t - spit) / (hit - spit)) : -1;
@@ -128,14 +129,14 @@ const Plumes: React.FC<AnimProps> = ({id, t, t0, t1, p}) => {
   const s = 1.04 + 0.1 * clamp01((t - t0) / (t1 - t0));
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{transform: `scale(${s * punch(t, [at], 0.14)})`}}><Img src={src(id, 'poulet_plein')} style={{width: 1080, height: 1920}} /></AbsoluteFill>
+      <AbsoluteFill style={{transform: `scale(${s * punch(t, [at], 0.14)})`, transformOrigin: '50% 40%'}}><Img src={src(id, 'rooster')} style={{position: 'absolute', left: 110, top: 300, width: 860}} /></AbsoluteFill>
       <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
-        {Array.from({length: 34}, (_, i) => {
+        {Array.from({length: 22}, (_, i) => {
           const u = t - at - rand(i * 2.9) * 0.2;
           if (u < 0) return null;
           const a = rand(i * 1.3) * Math.PI * 2, v = 420 + rand(i * 3.1) * 820, dmp = 1 - Math.exp(-u * 2.6);
-          const x = 480 + Math.cos(a) * v * dmp * 0.72 + 44 * Math.sin(u * 3 + i), y = 830 + Math.sin(a) * v * dmp * 0.72 + 130 * u * u;
-          return <Feather key={i} x={x} y={y} a={rand(i * 5.7) * 360 + u * 90 * (i % 2 ? 1 : -1) + 34 * Math.sin(u * 3 + i)} s={0.75 + rand(i * 7.7) * 0.95} />;
+          const x = 540 + Math.cos(a) * v * dmp * 0.72 + 44 * Math.sin(u * 3 + i), y = 830 + Math.sin(a) * v * dmp * 0.72 + 130 * u * u;
+          return <Feather key={i} x={x} y={y} a={rand(i * 5.7) * 360 + u * 90 * (i % 2 ? 1 : -1) + 34 * Math.sin(u * 3 + i)} s={0.6 + rand(i * 7.7) * 0.7} />;
         })}
       </svg>
     </AbsoluteFill>
@@ -194,7 +195,7 @@ const Fiche: React.FC<{id: string; img: string; label: string; k: number; x: num
 
 const Versions: React.FC<AnimProps> = ({id, t, p}) => {
   const at = nums(p, 'at');
-  const C: [string, string, number, number, number, number, number][] = [['pieuvre', 'PIEUVRE CRUE', 420, 480, 640, 400, -3], ['chiens', 'MORSURE', 660, 830, 640, 400, 3], ['ribera_bouche', 'SOUFFLE RETENU', 420, 1160, 640, 330, -2]];
+  const C: [string, string, number, number, number, number, number][] = [['pieuvre', 'PIEUVRE CRUE', 470, 450, 700, 310, -3], ['chiens', 'MORSURE', 560, 800, 700, 310, 2], ['ribera_bouche', 'SOUFFLE RETENU', 480, 1150, 700, 310, -2]];
   return <AbsoluteFill>{C.map((c, i) => <Fiche key={i} id={id} img={c[0]} label={c[1]} k={pop(t, at[i], 0.22)} x={c[2]} y={c[3]} w={c[4]} h={c[5]} rot={c[6]} on={i === at.filter((a) => t >= a).length - 1 ? 1 : 0} />)}</AbsoluteFill>;
 };
 
@@ -217,7 +218,7 @@ const Liste: React.FC<AnimProps> = ({t, p}) => {
   return (
     <AbsoluteFill style={{transform: `scale(${punch(t, at, 0.05)})`}}>
       {L.map((l, i) => {
-        const y = 480 + i * 240, k = pop(t, at[i] - 0.45, 0.16);
+        const y = 480 + i * 240, k = pop(t, at[i] - 0.5, 0.16);
         return k <= 0 ? null : (
           <React.Fragment key={i}>
             <div style={{position: 'absolute', left: 0, right: 0, top: y, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, fontSize: 124, color: G.gold, opacity: clamp01(k * 3) * (t >= at[i] + 0.2 ? 0.55 : 1), transform: `scale(${lerp(1.3, 1, k)})`}}>{l}</div>

@@ -72,7 +72,7 @@ const LABEL = {montserrat: mont.fontFamily, elite: elite.fontFamily, plex: plex.
 export type Theme = {
   accent: Accent;
   /** hook en énorme (insulte, règle 21) : capitales, jusqu'à 132 px, au lieu des 82 px du titre d'accroche */
-  hookBig?: boolean;
+  hookBig?: boolean | 'ink';
   display?: keyof typeof DISPLAY;
   label?: keyof typeof LABEL;
   /** light : le fond « marble » de la vidéo est clair (parchemin) → textes en encre, bande sombre sous les sous-titres */
@@ -257,7 +257,7 @@ export const Stamp: React.FC<{text: string; t: number; t0: number; x?: number; y
   const shake = lt > 0 && lt < 0.18 ? Math.sin(lt * 90) * 7 * (1 - lt / 0.18) : 0;
   return (
     <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%, -50%) translate(${shake}px, 0) rotate(${rot}deg) scale(${s})`, opacity: 0.25 + 0.68 * k}}>
-      <div style={{fontFamily: GF.sans, fontWeight: 900, fontSize: size, letterSpacing: '0.04em', color, border: `${Math.round(size * 0.09)}px solid ${color}`, padding: `${size * 0.02}px ${size * 0.22}px`, lineHeight: 1.05, whiteSpace: 'nowrap', textTransform: 'uppercase', filter: 'url(#rough)', mixBlendMode: 'normal', textShadow: '0 0 1px rgba(0,0,0,0.3)'}}>
+      <div style={{fontFamily: GF.sans, fontWeight: 900, fontSize: size, letterSpacing: '0.04em', color, background: 'rgba(242,233,214,0.9)', boxShadow: '0 10px 30px rgba(0,0,0,0.45)', border: `${Math.round(size * 0.09)}px solid ${color}`, padding: `${size * 0.02}px ${size * 0.22}px`, lineHeight: 1.05, whiteSpace: 'nowrap', textTransform: 'uppercase', filter: 'url(#rough)', mixBlendMode: 'normal', textShadow: '0 0 1px rgba(0,0,0,0.3)'}}>
         {text}
       </div>
     </div>
@@ -463,7 +463,7 @@ export {easeIn, easeOut, overshoot};
 export const HookTitle: React.FC<{text: string; k: number}> = ({text, k}) =>
   k <= 0 ? null : THEME.hookBig ? (
     // hook insulte (règle 21) : le texte en énorme, capitales, assez gros pour se lire avant que le doigt ne parte
-    <div style={{position: 'absolute', left: 30, right: 30, top: 150, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, textTransform: 'uppercase', fontSize: Math.min(132, 1440 / Math.max(...text.split('|').map((l) => l.length))), lineHeight: 1.08, whiteSpace: 'nowrap', color: THEME.base === 'light' ? G.goldDeep : G.goldHi, opacity: k, WebkitTextStroke: THEME.base === 'light' ? '10px rgba(250,240,220,0.95)' : '3px rgba(10,6,3,0.9)', paintOrder: 'stroke fill', textShadow: THEME.base === 'light' ? '0 4px 18px rgba(60,20,10,0.5)' : '0 6px 26px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.7)'}}>
+    <div style={{position: 'absolute', left: 30, right: 30, top: 150, textAlign: 'center', fontFamily: GF.serif, fontWeight: 900, textTransform: 'uppercase', fontSize: Math.min(132, 1440 / Math.max(...text.split('|').map((l) => l.length))), lineHeight: 1.08, whiteSpace: 'nowrap', color: THEME.base === 'light' || THEME.hookBig === 'ink' ? G.goldDeep : G.goldHi, opacity: k, WebkitTextStroke: THEME.base === 'light' || THEME.hookBig === 'ink' ? '10px rgba(250,240,220,0.95)' : '3px rgba(10,6,3,0.9)', paintOrder: 'stroke fill', textShadow: THEME.base === 'light' || THEME.hookBig === 'ink' ? '0 4px 18px rgba(60,20,10,0.5)' : '0 6px 26px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.7)'}}>
       {text.split('|').map((ln, i) => <div key={i}>{ln}</div>)}
     </div>
   ) : (

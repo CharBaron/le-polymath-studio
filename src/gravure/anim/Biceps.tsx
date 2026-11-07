@@ -45,10 +45,10 @@ const Forearm: React.FC<{p: string; twist: number; phone?: boolean; ghost?: bool
       ) : (
         <>
           <path d={mass} fill={`url(#${p}-mus)`} />
-          <Shade p={p} id="fa" d={mass} box={[-10, -110, 570, 210]} from={[0.5, 1]} to={[0.5, 0.25]} hatch="hd" cross o={0.8} />
-          <g fill="none" stroke={INK} strokeWidth={2} opacity={0.55}>{fibres.map((d, i) => <path key={i} d={d} />)}</g>
+          <Shade p={p} id="fa" d={mass} box={[-10, -110, 570, 210]} from={[0.5, 1]} to={[0.5, 0.2]} hatch="hb" o={0.85} />
+          <g fill="none" stroke={INK} strokeWidth={3.4} opacity={0.7}>{fibres.map((d, i) => <path key={i} d={d} />)}</g>
           <path d={`M 40 ${ry * 0.3} C 200 ${ry * 0.7} 400 ${-ry} 556 ${-ry * 1.1}`} fill="none" stroke="#F0E2C4" strokeWidth={15} strokeLinecap="round" opacity={0.8} />
-          <path d={mass} fill="none" stroke={INK} strokeWidth={4} filter={`url(#${p}-wob)`} />
+          <path d={mass} fill="none" stroke={INK} strokeWidth={6} filter={`url(#${p}-wob)`} />
           <g transform={`translate(600 0) scale(1 ${sq})`}>
             <Engraved p={p} id="ha" d="M -46 -56 C 30 -92 110 -76 118 -14 C 124 44 66 84 -46 56 Z" box={[-46, -90, 170, 170]} fill="#C96A52" from={[0.3, 1]} to={[0.6, 0.1]} hatch="hm" stroke={4} ink={INK} />
             {[-46, -16, 14, 44].map((y, i) => <path key={i} d={`M 34 ${y} C 86 ${y - 6} 116 ${y + 2} 112 ${y + 16}`} fill="none" stroke={INK} strokeWidth={3.5} />)}
@@ -94,21 +94,23 @@ export const Arm: React.FC<{flex: number; hard: number; peel: number; off: numbe
         <linearGradient id={`${p}-hl`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FFE6B0" /><stop offset="1" stopColor="#5A3A20" /></linearGradient>
       </defs>
       <InkDefs p={p} ink={INK} />
-      <Engraved p={p} id="tri" d={tri} box={box} fill="#8E2C22" from={[0.5, 1]} to={[0.5, 0.5]} hatch="hd" cross stroke={4} ink={INK} />
+      <Engraved p={p} id="tri" d={tri} box={box} fill="#8E2C22" from={[0.5, 1]} to={[0.5, 0.4]} hatch="hb" cross stroke={6} ink={INK} />
+      <g fill="none" stroke={INK} strokeWidth={3.2} opacity={0.6}>{[-150, -120, -90, -60].map((n) => <path key={n} d={`M ${P(pt(0.08, n * 0.3))} Q ${P(pt(0.5, n))} ${P(pt(0.96, n * 0.4))}`} />)}</g>
       <path d={`M ${P(S)} L ${P(E)}`} stroke="#EFE3C8" strokeWidth={62} strokeLinecap="round" />
       <path d={`M ${P(pt(0, 31))} L ${P(pt(1, 31))} M ${P(pt(0, -31))} L ${P(pt(1, -31))}`} stroke={INK} strokeWidth={4} />
       <circle cx={E[0]} cy={E[1]} r={52} fill="#EFE3C8" stroke={INK} strokeWidth={4} />
       <g transform={`translate(${E[0]} ${E[1]}) rotate(${twistA(0)})`}><Forearm p={p} twist={twist} phone={phone} /></g>
       {ghost !== undefined ? <g transform={`translate(${E[0]} ${E[1]}) rotate(${ang(ghost) * 180 / Math.PI})`}><Forearm p={p} twist={0} ghost /></g> : null}
-      <Engraved p={p} id="bra" d={brach} box={box} fill={`url(#${p}-bra)`} from={[0.5, 0.95]} to={[0.5, 0.4]} hatch="hm" stroke={peel > 0.5 ? 6 : 4} ink={INK} />
-      <g opacity={lerp(1, 0.62, peel)}>
+      <Engraved p={p} id="bra" d={brach} box={box} fill={`url(#${p}-bra)`} from={[0.5, 0.95]} to={[0.5, 0.4]} hatch="hb" stroke={peel > 0.5 ? 8 : 5} ink={INK} />
+      {peel > 0 ? <path d={brach} fill="none" stroke="#FFE2A0" strokeWidth={14} opacity={0.6 * peel} style={{filter: 'blur(8px)'}} /> : null}
+      <g opacity={lerp(1, 0.14, peel)}>
         <path d={bic} fill={`url(#${p}-bic)`} />
-        <Shade p={p} id="bic" d={bic} box={[0, 400, 1080, 700]} from={[0.55, 0.92]} to={[0.5, 0.38]} hatch="hd" cross o={0.72} />
-        <g fill="none" stroke={INK} strokeWidth={2.4} opacity={0.6}>{fib.map((d, i) => <path key={i} d={d} />)}</g>
-        <path d={bic} fill="none" stroke={INK} strokeWidth={5} filter={`url(#${p}-wob)`} />
+        <Shade p={p} id="bic" d={bic} box={[0, 400, 1080, 800]} from={[0.55, 0.95]} to={[0.5, 0.42]} hatch="hb" o={0.8} />
+        <g fill="none" stroke={INK} strokeWidth={3.6} opacity={0.72}>{fib.map((d, i) => <path key={i} d={d} />)}</g>
+        <path d={bic} fill="none" stroke={INK} strokeWidth={7} filter={`url(#${p}-wob)`} />
         <path d={`M ${P(lerpP(A, B, 0.34))} Q ${P(pt(0.5, h * 0.92 + lift))} ${P(lerpP(A, B, 0.66))}`} fill="none" stroke="rgba(255,235,210,0.5)" strokeWidth={9} strokeLinecap="round" opacity={0.25 + 0.75 * hard} transform={`translate(${N[0] * h * 0.42} ${N[1] * h * 0.42})`} />
       </g>
-      <Engraved p={p} id="del" d={delt} box={box} fill="#A23A2C" from={[0.1, 0.9]} to={[0.4, 0.2]} hatch="hm" stroke={4} ink={INK} />
+      <Engraved p={p} id="del" d={delt} box={box} fill="#A23A2C" from={[0.1, 0.9]} to={[0.5, 0.1]} hatch="hb" cross stroke={6} ink={INK} />
       {ring > 0 ? (
         <g transform={`translate(${pt(0.52, h * 0.82)[0]} ${pt(0.52, h * 0.82)[1]})`}>
           <circle r={70 + 24 * Math.sin(ring * 9)} fill="none" stroke="#FFEFC8" strokeWidth={9} opacity={0.95} />
@@ -129,17 +131,32 @@ const Tag: React.FC<{text: string; x: number; y: number; tx: number; ty: number;
     </>
   );
 
+/** flèche courbe gravée qui tourne autour du poignet (« tourne ta main ») */
+const Twist: React.FC<{t: number; k: number}> = ({t, k}) => {
+  const cx = 560, cy = 560, a0 = t * 5;
+  const arc = (r: number) => Array.from({length: 24}, (_, i) => { const a = a0 + (i / 23) * 4.2; return `${i ? 'L' : 'M'} ${(cx + r * Math.cos(a)).toFixed(0)} ${(cy + r * 0.42 * Math.sin(a)).toFixed(0)}`; }).join(' ');
+  const ae = a0 + 4.2, hx = cx + 190 * Math.cos(ae), hy = cy + 80 * Math.sin(ae);
+  return k <= 0 ? null : (
+    <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0, opacity: k}}>
+      <path d={arc(190)} fill="none" stroke="#F6E7C6" strokeWidth={30} strokeLinecap="round" />
+      <path d={arc(190)} fill="none" stroke="#A81E14" strokeWidth={16} strokeLinecap="round" />
+      <circle cx={hx} cy={hy} r={30} fill="#A81E14" stroke="#F6E7C6" strokeWidth={6} />
+    </svg>
+  );
+};
+
 const Bras: React.FC<AnimProps> = ({t, t0, t1, p}) => {
   const f = kf(t, nums(p, 'flex'), 0.85), hard = kf(t, nums(p, 'hard'), 0), peel = kf(t, nums(p, 'peel'), 0), off = kf(t, nums(p, 'off'), 0), tw = kf(t, nums(p, 'twist'), 0);
   const pump = p.pump ? 0.14 * Math.sin((t - t0) * 7.5) : 0;
   const wob = p.wob ? 0.05 * Math.sin((t - (p.wob as number)) * 16) * Math.exp(-(t - (p.wob as number)) * 2.4) * (t >= (p.wob as number) ? 1 : 0) : 0;
-  const zoom = (p.z as number) ?? 0.05, u = clamp01((t - t0) / (t1 - t0));
+  const zoom = (p.z as number) ?? 0.05, u = clamp01((t - t0) / (t1 - t0)), ox = (p.ox as number) ?? 50, oy = (p.oy as number) ?? 48;
   const g = nums(p, 'ghost');
   const ghost = g.length ? 0.55 + 0.42 * (0.5 - 0.5 * Math.cos((t - g[0]) * 3.4)) : undefined;
   const tag = String(p.tag ?? '');
   return (
-    <AbsoluteFill style={{transform: `scale(${(1 + zoom * u) * punch(t, nums(p, 'hits'), 0.08)})`, transformOrigin: '50% 48%'}}>
+    <AbsoluteFill style={{transform: `scale(${(1 + zoom * u) * punch(t, nums(p, 'hits'), 0.08)})`, transformOrigin: `${ox}% ${oy}%`}}>
       <Arm flex={clamp01(f + pump)} hard={clamp01(hard + (p.pump ? 0.45 + 0.4 * Math.sin((t - t0) * 7.5) : 0) + wob)} peel={peel} off={off} twist={tw} ghost={ghost} phone={!!p.phone} ring={p.ring !== undefined && t >= (p.ring as number) ? t - (p.ring as number) + 0.01 : 0} />
+      {p.arrow ? <Twist t={t} k={prog(t, t0 + 0.2, t0 + 0.5)} /> : null}
       {tag ? <Tag text={tag} x={(p.tx as number) ?? 700} y={(p.ty as number) ?? 1270} tx={(p.ax as number) ?? 560} ty={(p.ay as number) ?? 910} k={prog(t, (p.tagAt as number) ?? t0, ((p.tagAt as number) ?? t0) + 0.25, easeOut)} /> : null}
     </AbsoluteFill>
   );
@@ -223,12 +240,12 @@ const Vis: React.FC<AnimProps> = ({t, t0}) => {
 const Crack: React.FC<AnimProps> = ({id, t, t0, t1, p}) => {
   const at = p.at as number, name = String(p.img), w = p.w as number, h = p.h as number, fy = (p.fy as number) ?? 0.5;
   const x0 = 540 - w / 2, y0 = (p.y as number ?? 760) - h / 2;
-  const k = prog(t, at, at + 0.14, easeOut), sep = 22 * prog(t, at + 0.05, at + 0.4, overshoot);
+  const k = prog(t, at, at + 0.14, easeOut), sep = 46 * prog(t, at + 0.05, at + 0.4, overshoot);
   const zig = Array.from({length: 11}, (_, i) => [(i / 10) * 100, fy * 100 + (i % 2 ? 2.6 : -2.2) * (1 + rand(i * 3.3))]);
   const top = `polygon(0% 0%, 100% 0%, ${zig.slice().reverse().map((q) => `${q[0]}% ${q[1]}%`).join(', ')})`;
   const bot = `polygon(${zig.map((q) => `${q[0]}% ${q[1]}%`).join(', ')}, 100% 100%, 0% 100%)`;
   const shake = t >= at ? 26 * (1 - clamp01((t - at) / 0.35)) ** 2 : 0;
-  const s = 1 + 0.06 * clamp01((t - t0) / (t1 - t0));
+  const s = (1.25 + 0.1 * clamp01((t - t0) / (t1 - t0))) * (1 + 0.35 * prog(t, at, at + 0.3, easeOut));
   const part = (clip: string, dy: number, r: number) => <Img src={src(id, name)} style={{position: 'absolute', left: x0, top: y0, width: w, height: h, clipPath: clip, transform: `translate(${r * 7}px, ${dy}px) rotate(${r}deg)`}} />;
   return (
     <AbsoluteFill style={{transform: `translate(${(rand(t * 83) - 0.5) * shake}px, ${(rand(t * 47) - 0.5) * shake}px) scale(${s})`, transformOrigin: `50% ${((y0 + h * fy) / 1920) * 100}%`}}>
@@ -236,6 +253,7 @@ const Crack: React.FC<AnimProps> = ({id, t, t0, t1, p}) => {
       {t >= at ? (
         <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
           <circle cx={540} cy={y0 + h * fy} r={120 + 240 * (t - at)} fill="none" stroke={RED} strokeWidth={8} opacity={Math.max(0, 1 - (t - at) * 2.5)} />
+          <path d={zig.map((q, i) => `${i ? 'L' : 'M'} ${x0 - 30 + (q[0] / 100) * (w + 60)} ${y0 + (q[1] / 100) * h}`).join(' ')} fill="none" stroke={RED} strokeWidth={12} strokeLinejoin="miter" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - k} />
         </svg>
       ) : null}
     </AbsoluteFill>
@@ -245,7 +263,7 @@ const Crack: React.FC<AnimProps> = ({id, t, t0, t1, p}) => {
 /** décharges sur la photo de Duchenne : arcs en dents de scie depuis les 2 électrodes, flash blanc */
 const Eclair: React.FC<AnimProps> = ({id, t, t0, t1, p}) => {
   const at = nums(p, 'at');
-  const on = at.some((a) => t >= a && t < a + 0.2);
+  const on = at.some((a) => t >= a && t < a + 0.16);
   const fr = Math.floor(t * 30);
   const bolt = (x: number, y: number, seed: number) => {
     let d = `M ${x} ${y}`, cx = x, cy = y;
@@ -254,7 +272,7 @@ const Eclair: React.FC<AnimProps> = ({id, t, t0, t1, p}) => {
   };
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{transform: `scale(${1.06 + 0.1 * clamp01((t - t0) / (t1 - t0))})`, filter: on ? 'brightness(1.5) contrast(1.2)' : undefined}}><Img src={src(id, 'duchenne')} style={{width: 1080, height: 1920}} /></AbsoluteFill>
+      <AbsoluteFill style={{transform: `scale(${1.06 + 0.1 * clamp01((t - t0) / (t1 - t0))})`, filter: on ? 'brightness(1.18) contrast(1.15)' : undefined}}><Img src={src(id, 'duchenne')} style={{width: 1080, height: 1920}} /></AbsoluteFill>
       {on ? (
         <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
           {[[420, 900, 1], [660, 920, 7], [540, 1000, 13]].map(([x, y, s]) => <g key={s} fill="none" strokeLinejoin="round"><path d={bolt(x, y, s)} stroke={`rgba(${G.goldHiRgb},0.5)`} strokeWidth={22} /><path d={bolt(x, y, s)} stroke="#FFF9E4" strokeWidth={7} /></g>)}

@@ -6,7 +6,7 @@ import React from 'react';
 /** motifs de hachures et filtre de trait tremblé, préfixés par `p` (plusieurs SVG dans la même image) */
 export const InkDefs: React.FC<{p: string; ink?: string}> = ({p, ink = '#1A120A'}) => (
   <defs>
-    {([['hl', 10, 1.1, 45], ['hm', 6.5, 1.4, 45], ['hd', 4.2, 1.6, 45], ['hx', 6.5, 1.3, -45], ['hh', 7, 1.2, 0], ['hv', 7, 1.2, 90]] as const).map(([id, sp, w, a]) => (
+    {([['hl', 10, 1.1, 45], ['hb', 9, 2.6, 45], ['hc', 9, 2.2, -45], ['hm', 6.5, 1.4, 45], ['hd', 4.2, 1.6, 45], ['hx', 6.5, 1.3, -45], ['hh', 7, 1.2, 0], ['hv', 7, 1.2, 90]] as const).map(([id, sp, w, a]) => (
       <pattern key={id} id={`${p}-${id}`} width={sp} height={sp} patternUnits="userSpaceOnUse" patternTransform={`rotate(${a})`}>
         <line x1={0} y1={0} x2={0} y2={sp} stroke={ink} strokeWidth={w} />
       </pattern>

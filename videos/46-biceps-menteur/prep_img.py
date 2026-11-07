@@ -6,10 +6,10 @@ from tools.pipeline.gravure_prep import run
 
 C = {'color': True}
 JOBS = {
-    'vesale_plein': ('plein', 'vesale', (0.1, 0.08, 0.9, 0.62), 0),
+    'vesale_plein': ('plein', 'vesale', (0.27, 0.06, 0.73, 0.5), 0),
     'vesale_bras': ('carte', 'vesale', (0.0, 0.2, 0.42, 0.56), 760, {'up': True}),
     'vesale_tete': ('plein', 'vesale', (0.3, 0.08, 0.72, 0.36), 0),
-    'dos_plein': ('plein', 'vesale_dos', (0.08, 0.1, 0.92, 0.64), 0),
+    'dos_plein': ('plein', 'vesale_dos', (0.27, 0.08, 0.73, 0.52), 0),
     'salpe': ('carte', 'salpe', (0.5, 0.05, 1.0, 1.0), 860, C),
     'duchenne': ('plein', 'duchenne', (0.14, 0.05, 0.86, 0.72), 0),
     'cerveau': ('carte', 'cerveau', (0.0, 0.06, 1.0, 0.64), 800, {'up': True}),
